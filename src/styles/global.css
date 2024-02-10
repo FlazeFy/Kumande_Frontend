@@ -1,3 +1,75 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+:root {   
+    /* Typography */
+    --textHuge : 78px;
+    --textXJumbo : 48px;
+    --textJumbo : 26px;
+    --textXLG : 18px;
+    --textLG : 16px;
+    --textXMD : 14px;
+    --textMD : 13px;
+    --textSM : 12px;
+    --textXSM : 11px;
+  
+    /* Rounded */
+    --roundedCircle : 100%;
+    --roundedJumbo : 34px;
+    --roundedXLG : 20px;
+    --roundedLG : 18px;
+    --roundedMD : 14px;
+    --roundedSM : 10px;
+    --roundedMini : 6px;
+  
+    /* Spacing */
+    --spaceJumbo : 35px;
+    --spaceXLG : 24px;
+    --spaceLG : 20px;
+    --spaceXMD : 16px;
+    --spaceMD : 12px;
+    --spaceSM : 10px;
+    --spaceXSM : 8px;
+    --spaceXXSM : 6px;
+    --spaceMini : 4px;
+  
+    /* Table column min width */
+    --tcolMinXSM : 60px;
+    --tcolMinSM : 120px;
+    --tcolMinMD : 140px;
+    --tcolMinLG : 180px;
+    --tcolMinJumbo : 240px;
+    --tcolMinHuge : 360px;
+  
+    /* Color Pallete */
+    --primaryLightBG : #3366FF;
+    --successBG : #2EC193;
+    --successDarkBG : #009B56;
+    --warningBG : #F48C0D;
+    --dangerBG : #F87469;
+    --infoBG : #2e80d9;
+    --infoLightBG : #E7F4FE;
+    --hoverBG : #F2F2F2;
+  
+    --primaryColor : #00A7EA;
+    --blackColor : #414141;
+    --darkColor : #5B5B5B;
+    --whiteColor : #FFFFFF;
+}
+
+body {
+    font-family: "Poppins", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.8;
+    font-weight: normal;
+    background: #fff4eb;
+    color: gray; 
+}
+#content {
+    width: 100%;
+    padding: 0;
+    min-height: 100vh;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s; 
+}
+a {
+    text-decoration: none !important;
+}
