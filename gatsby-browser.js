@@ -1,4 +1,5 @@
 import "./src/styles/global.css"
+import "./src/styles/button.css"
 
 // Component CSS
 import "./src/components/bars/bars.css"

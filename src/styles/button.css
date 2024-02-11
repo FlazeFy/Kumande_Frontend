@@ -1,0 +1,12 @@
+.btn-primary{
+    background: var(--primaryColor) !important;
+    border-color: var(--primaryColor) !important;
+}
+.btn-danger{
+    background: var(--dangerBG) !important;
+    border-color: var(--dangerBG) !important;
+}
+.btn-success{
+    background: var(--successBG) !important;
+    border-color: var(--successBG) !important;
+}

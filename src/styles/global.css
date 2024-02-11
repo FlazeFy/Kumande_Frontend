@@ -56,10 +56,10 @@
 
 body {
     font-family: "Poppins", Arial, sans-serif;
-    font-size: 14px;
+    font-size: var(--textMD);
     line-height: 1.8;
     font-weight: normal;
-    background: #fff4eb;
+    background: var(--whiteColor);
     color: gray; 
 }
 #content {
@@ -69,6 +69,9 @@ body {
     -webkit-transition: all 0.3s;
     -o-transition: all 0.3s;
     transition: all 0.3s; 
+}
+#content-body {
+    margin-top: calc(var(--spaceJumbo) + var(--spaceMD));
 }
 a {
     text-decoration: none !important;

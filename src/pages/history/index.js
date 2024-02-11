@@ -2,11 +2,11 @@ import * as React from "react"
 import GetNavbar from "../../components/bars/navbar"
 import GetNavbarToggle from "../../components/bars/navbartoggle"
 
-const DashboardPage = () => {
+const HistoryPage = () => {
   return (
     <main>
       <div className="wrapper d-flex align-items-stretch">
-        <GetNavbar active="dashboard"/>
+        <GetNavbar active="history"/>
         <div id="content" className="p-4 p-md-5">
           <GetNavbarToggle/>
           <div id="content-body">
@@ -18,6 +18,6 @@ const DashboardPage = () => {
   )
 }
 
-export default DashboardPage
+export default HistoryPage
 
-export const Head = () => <title>Dashboard Page</title>
+export const Head = () => <title>History Page</title>
