@@ -71,8 +71,17 @@ body {
     transition: all 0.3s; 
 }
 #content-body {
-    margin-top: calc(var(--spaceJumbo) + var(--spaceMD));
+    margin-top: calc(var(--spaceJumbo) + var(--spaceLG));
 }
 a {
     text-decoration: none !important;
+}
+
+.container-fluid, .container {
+    border: 1.5px solid var(--primaryColor) !important;
+    border-radius: var(--roundedSM);
+}
+.img-icon-lg {
+    height: 80px;
+    width: 80px;
 }
