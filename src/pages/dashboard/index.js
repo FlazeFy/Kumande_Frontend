@@ -1,6 +1,8 @@
 import * as React from "react"
 import GetNavbar from "../../components/bars/navbar"
 import GetNavbarToggle from "../../components/bars/navbartoggle"
+import GetBreakLine from "../../components/others/breakline"
+import GetAnalyticPaymentMonth from "./usecases/get_analytic_payment_month"
 import GetTodaySchedule from "./usecases/get_today_schedule"
 
 const DashboardPage = () => {
@@ -12,6 +14,8 @@ const DashboardPage = () => {
           <GetNavbarToggle/>
           <div id="content-body">
             <GetTodaySchedule ctx="Today's Schedule"/>
+            <GetBreakLine length={1}/>
+            <GetAnalyticPaymentMonth ctx="Payment's Analytic (Monthly)"/>
           </div>
         </div>
       </div>

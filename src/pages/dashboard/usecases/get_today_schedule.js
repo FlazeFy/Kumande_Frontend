@@ -1,16 +1,14 @@
 "use client"
 import React from 'react'
 import { useState, useEffect } from "react"
-import { ucFirstWord } from '../../../modules/helpers/converter'
 
+// Modules
+import { ucFirstWord } from '../../../modules/helpers/converter'
 import { getLocal } from '../../../modules/storages/local'
 
-//Font awesome classicon
-import { library } from "@fortawesome/fontawesome-svg-core"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBowlRice, faCake, faMugSaucer } from "@fortawesome/free-solid-svg-icons"
+// Components
 import GetScheduleBox from '../../../components/containers/schedule_box'
-import { getTodayDayName } from '../../../modules/helpers/generator'
+import { getTodayDate } from '../../../modules/helpers/generator'
 
 export default function GetTodaySchedule({ctx,slug}) {
     //Initial variable
@@ -18,7 +16,7 @@ export default function GetTodaySchedule({ctx,slug}) {
     const [isLoaded, setIsLoaded] = useState(false)
     const [items, setItems] = useState(null)
     const token = '285|BMsYhez6WDc3YKXCOWxXxIL3dp5cEDuRshUHczUu' // for now
-    const day = getTodayDayName()
+    const day = getTodayDate('day')
 
     useEffect(() => {
         fetch(`http://127.0.0.1:8000/api/v1/schedule/day/`+day, {

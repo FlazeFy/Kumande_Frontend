@@ -1,3 +1,5 @@
+import React from 'react'
+
 export default function GetBreakLine({length}) {
     const builder = Array(length).fill(1)
 
