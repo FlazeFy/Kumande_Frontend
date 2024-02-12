@@ -1,25 +1,21 @@
 "use client"
 import React from 'react'
 import { useState, useEffect } from "react"
-
-// Modules
 import { ucFirstWord } from '../../../modules/helpers/converter'
-import { getLocal } from '../../../modules/storages/local'
-
-// Components
-import GetScheduleBox from '../../../components/containers/schedule_box'
 import { getTodayDate } from '../../../modules/helpers/generator'
 
-export default function GetTodaySchedule({ctx}) {
+import { getLocal } from '../../../modules/storages/local'
+
+export default function GetFullfilCalorie({ctx}) {
     //Initial variable
     const [error, setError] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)
-    const [items, setItems] = useState(null)
+    const [item, setItem] = useState(null)
     const token = '285|BMsYhez6WDc3YKXCOWxXxIL3dp5cEDuRshUHczUu' // for now
-    const day = getTodayDate('day')
+    const date = getTodayDate('yyyy-MM-dd')
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:8000/api/v1/schedule/day/`+day, {
+        fetch('http://127.0.0.1:8000/api/v1/count/calorie/fulfill/'+date, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -28,12 +24,12 @@ export default function GetTodaySchedule({ctx}) {
             .then(
             (result) => {
                 setIsLoaded(true)
-                setItems(result.data)        
+                setItem(result.data)        
             },
             (error) => {
                 if(getLocal(ctx + "_sess") !== undefined){
                     setIsLoaded(true)
-                    setItems(JSON.parse(getLocal(ctx + "_sess")))
+                    setItem(JSON.parse(getLocal(ctx + "_sess")))
                 } else {
                     setIsLoaded(true)
                     setError(error)
@@ -52,18 +48,13 @@ export default function GetTodaySchedule({ctx}) {
         )
     } else {
         return (
-            <div className='container-fluid p-0' style={{background:"var(--primaryColor)"}}>
-                <h3 className='m-2 text-white'>{ucFirstWord(ctx)}</h3>
-                <div className='row'>
-                    <div className='col-lg-4 col-md-4 col-sm-6 pe-0'>
-                        <GetScheduleBox time="breakfast" items={items} />
-                    </div>
-                    <div className='col-lg-4 col-md-4 col-sm-6 px-0'>
-                        <GetScheduleBox time="lunch" items={items} />
-                    </div>
-                    <div className='col-lg-4 col-md-4 col-sm-6 ps-0'>
-                        <GetScheduleBox time="dinner" items={items} />
-                    </div>
+            <div className='container p-2 d-flex justify-content-start text-white' style={{backgroundImage: "linear-gradient(to right, var(--primaryColor) , var(--primaryLightBG))"}}>
+                <div>
+                    <img className='img-icon-lg' src={'/icons/Calorie.png'}/>
+                </div>
+                <div className='pt-2 ps-3'>
+                    <h5>{ucFirstWord(ctx)}</h5>
+                    <h4><b>{item[0]['total']}</b> / {item[0]['target']}</h4>
                 </div>
             </div>
         )

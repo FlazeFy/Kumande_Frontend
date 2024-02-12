@@ -1,8 +1,8 @@
 import * as React from "react"
 import GetNavbar from "../../components/bars/navbar"
 import GetNavbarToggle from "../../components/bars/navbartoggle"
-import GetBreakLine from "../../components/others/breakline"
 import GetAnalyticPaymentMonth from "./usecases/get_analytic_payment_month"
+import GetFullfilCalorie from "./usecases/get_fullfil_calorie"
 import GetTodaySchedule from "./usecases/get_today_schedule"
 
 const DashboardPage = () => {
@@ -14,8 +14,14 @@ const DashboardPage = () => {
           <GetNavbarToggle/>
           <div id="content-body">
             <GetTodaySchedule ctx="Today's Schedule"/>
-            <GetBreakLine length={1}/>
+            <div style={{marginBottom:"var(--spaceMD)"}}/>
             <GetAnalyticPaymentMonth ctx="Payment's Analytic (Monthly)"/>
+            <div style={{marginBottom:"var(--spaceMD)"}}/>
+            <div className="row">
+              <div className="col-lg-3 col-md-4 col-sm-6">
+                <GetFullfilCalorie ctx="Today Calories"/>
+              </div>
+            </div>
           </div>
         </div>
       </div>

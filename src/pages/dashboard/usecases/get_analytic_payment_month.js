@@ -6,7 +6,7 @@ import { getTodayDate } from '../../../modules/helpers/generator'
 
 import { getLocal } from '../../../modules/storages/local'
 
-export default function GetAnalyticPaymentMonth({ctx,slug}) {
+export default function GetAnalyticPaymentMonth({ctx}) {
     //Initial variable
     const [error, setError] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)
