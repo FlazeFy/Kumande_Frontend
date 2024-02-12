@@ -1,6 +1,7 @@
 import * as React from "react"
 import GetNavbar from "../../components/bars/navbar"
 import GetNavbarToggle from "../../components/bars/navbartoggle"
+import GetMostConsumeFrom from "./usecases/get_most_consume_from"
 import GetMostConsumeType from "./usecases/get_most_consume_type"
 
 const StatsPage = () => {
@@ -14,6 +15,9 @@ const StatsPage = () => {
                     <div className="row">
                         <div className="col-lg-4 col-md-4 col-sm-6">
                             <GetMostConsumeType ctx="most consume type"/>
+                        </div>
+                        <div className="col-lg-4 col-md-4 col-sm-6">
+                            <GetMostConsumeFrom ctx="most consume from"/>
                         </div>
                     </div>
                 </div>

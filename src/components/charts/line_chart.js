@@ -1,6 +1,5 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
-import GetLimit from '../controls/limit'
 
 export default function GetLineChart({items, filter_name}) {
     //Initial variable
