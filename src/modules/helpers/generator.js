@@ -12,6 +12,10 @@ export const getTodayDate = (type) => {
             options = { 
                 month: 'numeric'
             }
+        } else if(type == 'month_name'){
+            options = { 
+                month: 'short'
+            }
         } else if(type == 'year'){
             options = { 
                 year: 'numeric'  
