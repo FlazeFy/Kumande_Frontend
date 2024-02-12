@@ -1,5 +1,7 @@
-import React from 'react';
-import Chart from 'react-apexcharts';
+import React from 'react'
+import Chart from 'react-apexcharts'
+import { getLocal } from '../../modules/storages/local'
+import GetLimit from '../controls/limit'
 
 export default function GetLineChart({items, filter_name}) {
     //Initial variable
@@ -13,13 +15,13 @@ export default function GetLineChart({items, filter_name}) {
         val.forEach(e => { 
             catSeries.push({
                 x: e.context,
-                y: parseInt(e.total_ammount)
+                y: parseInt(e.total)
             });
         });
         return catSeries;
     }
 
-    const keyType = sessionStorage.getItem("flow_type")
+    const keyType = getLocal("stats_type_sess")
 
     chart = {
         //series: getSeries(data),
@@ -43,7 +45,7 @@ export default function GetLineChart({items, filter_name}) {
             },
             grid: {
                 row: {
-                colors: ['#f9aa0c', 'transparent'], 
+                colors: ['#00A7EA', 'transparent'], 
                 opacity: 0.5
                 },
             },
