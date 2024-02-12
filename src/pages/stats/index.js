@@ -8,6 +8,7 @@ import GetMostConsumeMainIng from "./usecases/get_most_consume_main_ing"
 import GetMostConsumeProvide from "./usecases/get_most_consume_provide"
 import GetMostConsumeType from "./usecases/get_most_consume_type"
 import GetStatsType from "./usecases/get_stats_type"
+import GetTotalBudget from "./usecases/get_total_budget"
 import GetTotalDailyCal from "./usecases/get_total_daily_cal"
 import GetTotalSpending from "./usecases/get_total_spending"
 
@@ -50,6 +51,12 @@ const StatsPage = () => {
                                 <div className="row">
                                     <div className="col-lg-6 col-md-6 col-sm-12 py-3">
                                         <GetTotalDailyCal ctx={"total daily cal "+mon+" "+yr} filter_name="total_daily_cal"/>
+                                    </div>
+                                </div>
+                            : selectedStatsType == "budget" ?
+                                <div className="row">
+                                    <div className="col-lg-6 col-md-6 col-sm-12 py-3">
+                                        <GetTotalBudget ctx={"all budget in "+yr} filter_name="total_budget"/>
                                     </div>
                                 </div>
                             :
