@@ -1,0 +1,14 @@
+.manage_btn {
+    background: var(--primaryColor);
+    color: var(--whiteColor);
+    padding: var(--spaceMD) var(--spaceLG);
+    border: none;
+    border-radius: var(--roundedSM);
+}
+.btn_close_modal {
+    background: var(--warningBG) !important;
+    border-radius: var(--roundedLG);
+    border: none;
+    padding: var(--spaceSM) var(--spaceXMD);
+    color: var(--whiteColor) !important;
+}

@@ -19,6 +19,17 @@ const DashboardPage = () => {
             <div style={{marginBottom:"var(--spaceMD)"}}/>
             <div className="row">
               <div className="col-lg-3 col-md-4 col-sm-6">
+                <a className='container p-2 d-flex justify-content-start text-white' href="/stats" style={{backgroundImage: "linear-gradient(to right, var(--primaryColor) , var(--primaryLightBG))", cursor:"pointer"}}>
+                  <div>
+                      <img className='img-icon-lg' src={'/icons/Statistics.png'}/>
+                  </div>
+                  <div className='pt-2 ps-3'>
+                    <h5 className="mb-1">Statistic</h5>
+                    <p className="my-0" style={{fontSize:"var(--textMD)"}}>Consume, Spending, Health, Budget</p>
+                  </div>
+                </a>
+              </div>
+              <div className="col-lg-3 col-md-4 col-sm-6">
                 <GetFullfilCalorie ctx="Today Calories"/>
               </div>
             </div>
