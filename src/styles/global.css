@@ -85,3 +85,10 @@ a {
     height: 80px;
     width: 80px;
 }
+.consume-box {
+    border-radius: var(--roundedMD);
+    width: 100%;
+    padding: var(--spaceLG);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    margin-bottom: var(--spaceLG);
+}
