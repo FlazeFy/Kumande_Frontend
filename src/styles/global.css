@@ -63,7 +63,9 @@ body {
     color: gray; 
 }
 #content {
+    height: 100vh;
     width: 100%;
+    overflow: auto;
     padding: 0;
     min-height: 100vh;
     -webkit-transition: all 0.3s;
@@ -91,4 +93,19 @@ a {
     padding: var(--spaceLG);
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     margin-bottom: var(--spaceLG);
+}
+table {
+    border: 2px solid var(--darkColor) !important;
+    text-align: center;
+}
+th, td {
+    vertical-align: middle !important;
+}
+table th {
+    background: var(--primaryColor) !important;
+    color: var(--whiteColor) !important;
+}
+.bg-success-light {
+    background: var(--successBG) !important;
+    opacity: 0.9;
 }

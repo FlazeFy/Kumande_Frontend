@@ -36,3 +36,15 @@ export const getTodayDate = (type) => {
         throw err
     }
 }
+
+export const getAllDay = () => {
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    const today = new Date()
+    const day = today.getDay()
+    const dayName = daysOfWeek[day]
+
+    const startIdx = daysOfWeek.indexOf(dayName)
+    const newDays = daysOfWeek.slice(startIdx).concat(daysOfWeek.slice(0, startIdx))
+
+    return newDays
+}
