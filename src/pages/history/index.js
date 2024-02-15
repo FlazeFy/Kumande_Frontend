@@ -11,7 +11,7 @@ const HistoryPage = () => {
         <div id="content" className="p-4 p-md-5">
           <GetNavbarToggle/>
           <div id="content-body">
-            <GetAllConsumePagination ctx="All Consume"/>
+            <GetAllConsumePagination ctx="all_consume"/>
           </div>
         </div>
       </div>

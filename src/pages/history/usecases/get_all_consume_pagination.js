@@ -2,10 +2,10 @@
 import React from 'react'
 import { useState, useEffect } from "react"
 import GetConsumeBox from '../../../components/containers/consume_box'
-import { ucFirstWord } from '../../../modules/helpers/converter'
-import { getTodayDate } from '../../../modules/helpers/generator'
+import { getCleanTitleFromCtx, ucFirstWord } from '../../../modules/helpers/converter'
 
-import { getLocal } from '../../../modules/storages/local'
+import { getLocal, storeLocal } from '../../../modules/storages/local'
+import FilterOrderConsume from './filter_order_consume'
 
 export default function GetAllConsumePagination({ctx}) {
     //Initial variable
@@ -17,13 +17,13 @@ export default function GetAllConsumePagination({ctx}) {
     useEffect(() => {
         //Default config
         const keyPage = sessionStorage.getItem("Table_"+ctx)
-        const keyOrder = sessionStorage.getItem("Table_order_"+ctx)
+        const keyOrder = getLocal("Table_order_"+ctx)
 
-        if(keyPage == null){
+        if(keyPage === null){
             sessionStorage.setItem("Table_"+ctx, "1")
         }
-        if(keyOrder == null){
-            sessionStorage.setItem("Table_order_"+ctx, "asc")
+        if(keyOrder === null){
+            storeLocal("Table_order_"+ctx,"ASC")
         }
 
         fetch(`http://127.0.0.1:8000/api/v1/consume/limit/10/order/${keyOrder}/favorite/0/type/All/provide/all?page=${keyPage}`, {
@@ -61,7 +61,8 @@ export default function GetAllConsumePagination({ctx}) {
         return (
             <div>
                 <div className='d-block mx-auto' style={{width:"1080px"}}>
-                    <h3 className='m-2 text-primary'>{ucFirstWord(ctx)}</h3>
+                    <h3 className='m-2 text-primary'>{getCleanTitleFromCtx(ucFirstWord(ctx))}</h3>
+                    <FilterOrderConsume/>
                     {
                         items.map((elmt, idx) => {
                             return (

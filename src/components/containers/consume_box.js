@@ -6,6 +6,7 @@ import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBowlRice, faCake, faMugSaucer } from "@fortawesome/free-solid-svg-icons"
 import GetBreakLine from '../others/breakline'
+import { convertDatetime } from '../../modules/helpers/converter'
 
 export default function GetConsumeBox({items}) {
     return (
@@ -62,6 +63,13 @@ export default function GetConsumeBox({items}) {
                         )
                     })
                 }
+            </div>
+            <GetBreakLine length={1}/>
+            <div className="d-flex justify-content-between">
+                <div></div>
+                <div>
+                    <a className='text-secondary'>At {convertDatetime(items['created_at'], 'calendar')}</a>
+                </div>
             </div>
         </div>
     )
