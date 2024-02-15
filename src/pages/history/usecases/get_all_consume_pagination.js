@@ -6,6 +6,8 @@ import GetAnimaText from '../../../components/messages/anima_text'
 import { getCleanTitleFromCtx, ucFirstWord } from '../../../modules/helpers/converter'
 
 import { getLocal, storeLocal } from '../../../modules/storages/local'
+import FilterConsumeLimit from './filter_consume_limit'
+import FilterConsumeType from './filter_consume_type'
 import FilterIsFavoriteConsume from './filter_is_favorite'
 import FilterOrderConsume from './filter_order_consume'
 
@@ -21,6 +23,8 @@ export default function GetAllConsumePagination({ctx}) {
         const keyPage = sessionStorage.getItem("Table_"+ctx)
         const keyOrder = getLocal("Table_order_"+ctx)
         const keyFav = getLocal("Table_filter_favorite_"+ctx)
+        const keyType = getLocal("Table_filter_type_"+ctx)
+        const keyLimit = getLocal("Table_limit_"+ctx)
 
         if(keyPage === null){
             sessionStorage.setItem("Table_"+ctx, "1")
@@ -31,8 +35,14 @@ export default function GetAllConsumePagination({ctx}) {
         if(keyFav === null){
             storeLocal("Table_filter_favorite_"+ctx,"all")
         }
+        if(keyType === null){
+            storeLocal("Table_filter_type_"+ctx,"all")
+        }
+        if(keyLimit === null){
+            storeLocal("Table_limit_"+ctx,"10")
+        }
 
-        fetch(`http://127.0.0.1:8000/api/v1/consume/limit/10/order/${keyOrder}/favorite/${keyFav}/type/All/provide/all?page=${keyPage}`, {
+        fetch(`http://127.0.0.1:8000/api/v1/consume/limit/${keyLimit}/order/${keyOrder}/favorite/${keyFav}/type/${keyType}/provide/all?page=${keyPage}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -73,6 +83,8 @@ export default function GetAllConsumePagination({ctx}) {
                     <div className="d-flex justify-content-start">
                         <FilterOrderConsume/>
                         <FilterIsFavoriteConsume/>
+                        <FilterConsumeType/>
+                        <FilterConsumeLimit/>
                     </div>
                     {
                         items.length > 0 ?
