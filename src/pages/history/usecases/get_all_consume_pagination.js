@@ -60,7 +60,7 @@ export default function GetAllConsumePagination({ctx}) {
     } else {
         return (
             <div>
-                <div className='d-block mx-auto' style={{width:"720px"}}>
+                <div className='d-block mx-auto' style={{width:"1080px"}}>
                     <h3 className='m-2 text-primary'>{ucFirstWord(ctx)}</h3>
                     {
                         items.map((elmt, idx) => {
