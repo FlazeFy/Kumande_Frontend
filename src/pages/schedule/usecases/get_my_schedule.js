@@ -3,7 +3,7 @@ import React from 'react'
 import { useState, useEffect } from "react"
 
 // Modules
-import { ucFirstWord } from '../../../modules/helpers/converter'
+import { getCleanTitleFromCtx, ucFirstWord } from '../../../modules/helpers/converter'
 import { getLocal } from '../../../modules/storages/local'
 
 // Components
@@ -53,6 +53,7 @@ export default function GetMySchedule({ctx}) {
         let i = 0
         return (
             <div>
+                <h3 className='m-2 text-primary'>{getCleanTitleFromCtx(ucFirstWord(ctx))}</h3>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
