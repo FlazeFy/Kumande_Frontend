@@ -4,15 +4,29 @@ import React from 'react'
 //Font awesome classicon
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBowlRice, faCake, faMugSaucer } from "@fortawesome/free-solid-svg-icons"
+import { faBowlRice, faCake, faCalendar, faHeart, faMugSaucer } from "@fortawesome/free-solid-svg-icons"
 import GetBreakLine from '../others/breakline'
 import { convertDatetime } from '../../modules/helpers/converter'
 
 export default function GetConsumeBox({items}) {
+    const getFavorite = (val) => {
+        if(val == 1){
+            return 'var(--spaceSM) solid var(--dangerBG)'
+        } else {
+            return 'none'
+        }
+    }
+
     return (
-        <div className='consume-box'>
+        <div className='consume-box' style={{borderLeft:getFavorite(items['is_favorite'])}}>
             <div className='d-flex justify-content-between mb-2'>
                 <div>
+                    {
+                        items['is_favorite'] == 1 ?
+                            <FontAwesomeIcon icon={faHeart} className='me-2 text-danger' size='lg' title='Favorite'/>
+                        : 
+                            <></>
+                    }
                     <a style={{color:"var(--primaryColor)", fontWeight:"500", fontSize:"var(--textXLG)"}}>
                     {
                         items['consume_type'] == 'Food' ?
@@ -68,7 +82,7 @@ export default function GetConsumeBox({items}) {
             <div className="d-flex justify-content-between">
                 <div></div>
                 <div>
-                    <a className='text-secondary'>At {convertDatetime(items['created_at'], 'calendar')}</a>
+                    <a className='text-secondary'><FontAwesomeIcon icon={faCalendar}/> At {convertDatetime(items['created_at'], 'calendar')}</a>
                 </div>
             </div>
         </div>

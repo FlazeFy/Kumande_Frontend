@@ -2,22 +2,25 @@
 import React from 'react'
 import { useState, useEffect } from "react"
 import GetConsumeBox from '../../../components/containers/consume_box'
+import GetAnimaText from '../../../components/messages/anima_text'
 import { getCleanTitleFromCtx, ucFirstWord } from '../../../modules/helpers/converter'
 
 import { getLocal, storeLocal } from '../../../modules/storages/local'
+import FilterIsFavoriteConsume from './filter_is_favorite'
 import FilterOrderConsume from './filter_order_consume'
 
 export default function GetAllConsumePagination({ctx}) {
     //Initial variable
     const [error, setError] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)
-    const [items, setItems] = useState(null)
+    const [items, setItems] = useState([])
     const token = '285|BMsYhez6WDc3YKXCOWxXxIL3dp5cEDuRshUHczUu' // for now
 
     useEffect(() => {
         //Default config
         const keyPage = sessionStorage.getItem("Table_"+ctx)
         const keyOrder = getLocal("Table_order_"+ctx)
+        const keyFav = getLocal("Table_filter_favorite_"+ctx)
 
         if(keyPage === null){
             sessionStorage.setItem("Table_"+ctx, "1")
@@ -25,8 +28,11 @@ export default function GetAllConsumePagination({ctx}) {
         if(keyOrder === null){
             storeLocal("Table_order_"+ctx,"ASC")
         }
+        if(keyFav === null){
+            storeLocal("Table_filter_favorite_"+ctx,"all")
+        }
 
-        fetch(`http://127.0.0.1:8000/api/v1/consume/limit/10/order/${keyOrder}/favorite/0/type/All/provide/all?page=${keyPage}`, {
+        fetch(`http://127.0.0.1:8000/api/v1/consume/limit/10/order/${keyOrder}/favorite/${keyFav}/type/All/provide/all?page=${keyPage}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -35,7 +41,9 @@ export default function GetAllConsumePagination({ctx}) {
             .then(
             (result) => {
                 setIsLoaded(true)
-                setItems(result.data.data)        
+                if(result.data != null){
+                    setItems(result.data.data)
+                }        
             },
             (error) => {
                 if(getLocal(ctx + "_sess") !== undefined){
@@ -62,13 +70,19 @@ export default function GetAllConsumePagination({ctx}) {
             <div>
                 <div className='d-block mx-auto' style={{width:"1080px"}}>
                     <h3 className='m-2 text-primary'>{getCleanTitleFromCtx(ucFirstWord(ctx))}</h3>
-                    <FilterOrderConsume/>
+                    <div className="d-flex justify-content-start">
+                        <FilterOrderConsume/>
+                        <FilterIsFavoriteConsume/>
+                    </div>
                     {
-                        items.map((elmt, idx) => {
-                            return (
-                                <GetConsumeBox items={elmt}/>
-                            )
-                        })
+                        items.length > 0 ?
+                            items.map((elmt, idx) => {
+                                return (
+                                    <GetConsumeBox items={elmt}/>
+                                )
+                            })
+                        :
+                            <GetAnimaText ctx="No Consume Found" url={'/icons/Consume.png'}/>
                     }
                 </div>
             </div>

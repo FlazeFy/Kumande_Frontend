@@ -1,3 +1,6 @@
 .text-primary {
     color: var(--primaryColor) !important;
 }
+.text-danger {
+    color: var(--dangerBG) !important;
+}
