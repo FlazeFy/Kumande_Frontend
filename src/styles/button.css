@@ -10,3 +10,10 @@
     background: var(--successBG) !important;
     border-color: var(--successBG) !important;
 }
+.btn_close_modal {
+    background: var(--dangerBG) !important;
+    border-radius: var(--roundedLG);
+    border: none;
+    padding: var(--spaceSM) var(--spaceXMD);
+    color: var(--whiteColor) !important;
+}
