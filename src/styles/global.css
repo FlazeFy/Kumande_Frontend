@@ -112,3 +112,16 @@ table th {
 .modal {
     color: var(--blackColor);
 }
+
+label.input{
+    float: left;
+    font-size: var(--textLG);
+    margin-bottom: 2px;
+    font-weight: 500;
+    color: var(--whiteColor);
+}
+label.error{
+    font-size: var(--textXSM);
+    color: #D5534C;
+    margin: 0;
+}
