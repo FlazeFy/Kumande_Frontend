@@ -11,7 +11,7 @@ export default function GetFullfilCalorie({ctx}) {
     const [error, setError] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)
     const [item, setItem] = useState(null)
-    const token = '285|BMsYhez6WDc3YKXCOWxXxIL3dp5cEDuRshUHczUu' // for now
+    const token = getLocal("token_key")
     const date = getTodayDate('yyyy-MM-dd')
 
     useEffect(() => {

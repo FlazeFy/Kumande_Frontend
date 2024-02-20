@@ -14,7 +14,7 @@ export default function GetDailyCalendar({ctx}) {
     const [error, setError] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)
     const [items, setItems] = useState([])
-    const token = '285|BMsYhez6WDc3YKXCOWxXxIL3dp5cEDuRshUHczUu' // for now
+    const token = getLocal("token_key")
     const [month, setCurrentMonth] = useState(getTodayDate('month'))
     const [year, setCurrentYear] = useState(getTodayDate('year'))
     const event = []

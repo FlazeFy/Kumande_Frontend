@@ -24,7 +24,7 @@ export default function PostLogin() {
             placeholder: 'Type email',
             is_required: true,
             is_obsecure: false,
-            maxLength: 36,
+            max: 36,
             handleChange: (event) => {
                 setEmail(event.target.value)
             },
@@ -37,7 +37,7 @@ export default function PostLogin() {
             placeholder: 'Type password',
             is_required: true,
             is_obsecure: true,
-            maxLength: 36,
+            max: 36,
             handleChange: (event) => {
                 setPassword(event.target.value)
             },
@@ -72,9 +72,8 @@ export default function PostLogin() {
                 window.location.reload(false)
                 return response.data.message
             } else {
-                const data = response.data.data
-                storeLocal('token_key', data.token)
-                window.location.href = '/'
+                storeLocal('token_key', response.data.token)
+                window.location.href = '/dashboard'
             }
         } catch (error) {
             setResMsgAll(error)

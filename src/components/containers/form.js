@@ -54,6 +54,7 @@ export default function GetFormTemplate({type, props}) {
                                                 <input placeholder={elmt.placeholder}
                                                     className={elmt.class + " w-100"} 
                                                     onChange={elmt.handleChange}
+                                                    maxLength={elmt.max}
                                                     type={elmt.is_obsecure == true ? 'password' : elmt.type}
                                                     
                                                 />

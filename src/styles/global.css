@@ -125,3 +125,20 @@ label.error{
     color: #D5534C;
     margin: 0;
 }
+
+.box-content-header {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 80% 80% var(--roundedLG) var(--roundedLG);
+    text-align: center;
+}
+.box-content-header img {
+    width: 120px;
+    margin: var(--spaceMD);
+}
+.box-content-header .content {
+    margin: 0;
+    color: var(--whiteColor);
+    padding: var(--spaceXLG) var(--spaceMD);
+    border-radius: 0 0 var(--roundedMD) var(--roundedMD);
+    background-image: linear-gradient(var(--primaryLightBG),var(--primaryColor));
+}

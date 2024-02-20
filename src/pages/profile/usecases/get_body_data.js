@@ -1,30 +1,40 @@
 import React from 'react'
 import { useState, useEffect } from "react"
-import GetLineChart from '../../../components/charts/line_chart'
+import GetContentBox from '../../../components/containers/content_box'
 
 // Component
 import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
-import { getTodayDate } from '../../../modules/helpers/generator'
 
 // Modules
 import { getLocal, storeLocal } from '../../../modules/storages/local'
 
-export default function GetTotalSpending({ctx, filter_name}) {
+export default function GetBodyData({ctx}) {
     //Initial variable
     const [error, setError] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)
-    const [items, setItems] = useState([])
+    const [item, setItem] = useState([])
     const token = getLocal("token_key")
-    const yr =  getTodayDate('year')
+
+    const builder = [
+        {
+            "column_name":"Weight",
+            "object_name":"weight",
+            "extra_desc":"Kg"
+        },
+        {
+            "column_name":"Height",
+            "object_name":"height",
+            "extra_desc":"Cm"
+        },
+        {
+            "column_name":"Calories / Day",
+            "object_name":"result",
+            "extra_desc":"Cal"
+        }
+    ]
 
     useEffect(() => {
-        //Default config
-        const keyLimit = sessionStorage.getItem(`Line_limit_${filter_name}`)
-        if(keyLimit == null){
-            sessionStorage.setItem(`Line_limit_${filter_name}`, 5);
-        }
-
-        fetch(`http://127.0.0.1:8000/api/v1/payment/total/month/`+yr, {
+        fetch(`http://127.0.0.1:8000/api/v1/count/calorie`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -33,14 +43,14 @@ export default function GetTotalSpending({ctx, filter_name}) {
             .then(
             (result) => {
                 setIsLoaded(true)
-                setItems(result.data)
+                setItem(result.data)
                 const item = result.data
                 storeLocal(ctx + "_sess",JSON.stringify(item))             
             },
             (error) => {
                 if(getLocal(ctx + "_sess") !== undefined){
                     setIsLoaded(true)
-                    setItems(JSON.parse(getLocal(ctx + "_sess")))
+                    setItem(JSON.parse(getLocal(ctx + "_sess")))
                 } else {
                     setIsLoaded(true)
                     setError(error)
@@ -59,9 +69,8 @@ export default function GetTotalSpending({ctx, filter_name}) {
         )
     } else {
         return (
-            <div className='container shadow p-3'> 
-                <h2>{getCleanTitleFromCtx(ctx)}</h2>
-                <GetLineChart items={items} filter_name={null}/>
+            <div> 
+                <GetContentBox items={item} builder={builder} urlImg={'/icons/BodyData.png'} title="Body Info"/>
             </div>
         )
     }

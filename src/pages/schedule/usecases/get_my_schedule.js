@@ -14,7 +14,7 @@ export default function GetMySchedule({ctx}) {
     const [error, setError] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)
     const [items, setItems] = useState([])
-    const token = '285|BMsYhez6WDc3YKXCOWxXxIL3dp5cEDuRshUHczUu' // for now
+    const token = getLocal("token_key")
     const days = getAllDay()
 
     useEffect(() => {
