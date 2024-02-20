@@ -11,19 +11,28 @@ export default function GetContentBox({builder, items, urlImg, title}) {
                 <h3 className='text-white mb-3'>{title}</h3>
                 <div className="row">
                     {
-                        items.map((item, i, idx) => {
-                            return (
-                                builder.map((build, j, ins) => {
-                                    
-                                    return (
-                                        <div className="col">
-                                            <h6>{build['column_name']}</h6>
-                                            <h6>{item[build['object_name']]} {build['extra_desc']}</h6>
-                                        </div>
-                                    )
-                                })
-                            )
-                        })
+                        builder != null ?
+                            items.map((item, i, idx) => {
+                                return (
+                                    builder.map((build, j, ins) => {
+                                        return (
+                                            <div className="col">
+                                                <h6>{build['column_name']}</h6>
+                                                <h6>{item[build['object_name']]} {build['extra_desc']}</h6>
+                                            </div>
+                                        )
+                                    })
+                                )
+                            })
+                        :
+                            items.map((item, i, idx) => {
+                                return (
+                                    <div className="col">
+                                        <h6>{item['context']}</h6>
+                                        <h6>{item['total']}</h6>
+                                    </div>
+                                )
+                            })
                     }
                 </div>
             </div>
