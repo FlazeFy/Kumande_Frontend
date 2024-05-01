@@ -83,3 +83,32 @@ export const getUTCHourOffset = (val, type) => {
         throw error
     }
 }
+
+export const convertSignedNumber = (num, ctx) => {
+    if(ctx == "+"){
+        if(num < 0){
+            return num * -1
+        } else {
+            return num
+        }
+    } else if (ctx == "-"){
+        if(num > 0){
+            return num * -1
+        } else {
+            return num
+        }
+    } else {
+        return false
+    }
+}
+
+export const calculateAge = (val) => {
+    const today = new Date()
+    const birthDate = new Date(val)
+    let age = today.getFullYear() - birthDate.getFullYear()
+    const monthDiff = today.getMonth() - birthDate.getMonth()
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--
+    }
+    return age
+}
