@@ -6,6 +6,7 @@ import GetAnimaText from '../../../components/messages/anima_text'
 import { getCleanTitleFromCtx, ucFirstWord } from '../../../modules/helpers/converter'
 
 import { getLocal, storeLocal } from '../../../modules/storages/local'
+import FilterConsumeCal from './filter_consume_cal'
 import FilterConsumeLimit from './filter_consume_limit'
 import FilterConsumeType from './filter_consume_type'
 import FilterIsFavoriteConsume from './filter_is_favorite'
@@ -84,7 +85,10 @@ export default function GetAllConsumePagination({ctx}) {
                         <FilterOrderConsume/>
                         <FilterIsFavoriteConsume/>
                         <FilterConsumeType/>
-                        <FilterConsumeLimit/>
+                        <FilterConsumeLimit ctx="max_min_cal"/>
+                    </div>
+                    <div className="d-flex justify-content-start">
+                        <FilterConsumeCal ctx="max_min_cal"/>
                     </div>
                     {
                         items.length > 0 ?

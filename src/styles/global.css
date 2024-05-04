@@ -142,3 +142,7 @@ label.error{
     border-radius: 0 0 var(--roundedMD) var(--roundedMD);
     background-image: linear-gradient(var(--primaryLightBG),var(--primaryColor));
 }
+
+.bar-inner{
+    background: var(--primaryColor) !important;
+}

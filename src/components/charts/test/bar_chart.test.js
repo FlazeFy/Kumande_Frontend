@@ -1,8 +1,11 @@
 import React from 'react'
 import GetBarChart from '../bar_chart'
 import '../../../modules/templates/apexchart.js'
+import { render } from '@testing-library/react'
 
 describe('Bar Chart Component Testing', () => {
+  window.ResizeObserver = ResizeObserver
+
   it('TCC-C3 Get Bar Chart Without Filter', () => {
     const type = 'bar'
     const items = [
@@ -24,9 +27,7 @@ describe('Bar Chart Component Testing', () => {
       }
     ]
 
-    cy.mount(<GetBarChart items={items} filter_name={null} />)
-
-    // Template Apexchart test
-    cy.templateApexChart(type, items)
+    render(<GetBarChart items={items} filter_name={null} />)
+    templateApexChart(type, items)
   })
 })
