@@ -8,6 +8,7 @@ import { getCleanTitleFromCtx, ucFirstWord } from '../../../modules/helpers/conv
 import { getLocal, storeLocal } from '../../../modules/storages/local'
 import FilterConsumeCal from './filter_consume_cal'
 import FilterConsumeLimit from './filter_consume_limit'
+import FilterConsumeTag from './filter_consume_tag'
 import FilterConsumeType from './filter_consume_type'
 import FilterIsFavoriteConsume from './filter_is_favorite'
 import FilterOrderConsume from './filter_order_consume'
@@ -85,10 +86,11 @@ export default function GetAllConsumePagination({ctx}) {
                         <FilterOrderConsume/>
                         <FilterIsFavoriteConsume/>
                         <FilterConsumeType/>
-                        <FilterConsumeLimit ctx="max_min_cal"/>
+                        <FilterConsumeLimit/>
                     </div>
-                    <div className="d-flex justify-content-start">
+                    <div className="d-flex justify-content-start mb-3">
                         <FilterConsumeCal ctx="max_min_cal"/>
+                        <FilterConsumeTag ctx="consume_tag"/>
                     </div>
                     {
                         items.length > 0 ?

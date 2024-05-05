@@ -146,3 +146,18 @@ label.error{
 .bar-inner{
     background: var(--primaryColor) !important;
 }
+
+.tag-filter-holder {
+    display: flex;
+    flex-wrap: wrap;
+}
+.tag-filter-holder a {
+    display: block;
+    margin-right: var(--spaceXXSM);
+    margin-bottom: var(--spaceXXSM);
+    background: var(--primaryColor);
+    color: var(--whiteColor) !important;
+    font-size: var(--textXMD);
+    padding: var(--spaceXXSM) var(--spaceSM);
+    border-radius: var(--roundedMD);
+}
