@@ -47,3 +47,21 @@
     background: var(--primaryColor);
     color: var(--whiteColor);
 }
+.cell-click {
+    cursor: pointer;
+    color: var(--blackColor);
+    width: 100% !important;
+    -webkit-transition: all 0.3s !important;
+    -o-transition: all 0.3s !important;
+    transition: all 0.3s !important; 
+    border: 0;
+    background: var(--whiteColor);
+    padding: var(--spaceSM);
+}
+.cell-click:hover {
+    background: var(--primaryColor);
+    color: var(--whiteColor);
+}
+.table-click tbody tr td {
+    padding: 0 !important;
+}
