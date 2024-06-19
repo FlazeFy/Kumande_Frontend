@@ -48,3 +48,24 @@ export const getAllDay = () => {
 
     return newDays
 }
+
+export const getAge = (born) => {
+    try {
+        const birthDate = new Date(born)
+        const today = new Date()
+      
+        let years = today.getFullYear() - birthDate.getFullYear()
+        let months = today.getMonth() - birthDate.getMonth()
+      
+        if (months < 0) {
+          years--
+          months += 12
+        }
+
+        const res = `${years} Years ${months} Months`
+      
+        return res
+    } catch (err) {
+        throw err
+    }
+}

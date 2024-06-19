@@ -137,14 +137,14 @@ export default function GetMySchedule({ctx}) {
     };
 
     const removeConsume = (slug) => {
-        setSelectedConsume(selectedConsume.filter(el => el.props.value.slug_name !== slug));
+        setSelectedConsume(selectedConsume.filter(el => el.props.value.consume.slug_name !== slug));
     }
 
     const selectConsume = (elmt) => {
-        const tagExists = selectedConsume.some(el => el.props.value.slug_name === elmt.slug_name);
+        const tagExists = selectedConsume.some(el => el.props.value.consume.slug_name === elmt.slug_name);
         if (!tagExists) {
             const newConsume = (
-                <div className='text-start' value={{ slug_name: elmt.slug_name }} key={elmt.slug_name}>
+                <div className='text-start' value={{ consume: elmt }} key={elmt.slug_name}>
                     <button className='consume-box p-3 border-0 text-start bg-white' style={{ borderLeft: getFavorite(elmt.is_favorite) }} onClick={() => removeConsume(elmt.slug_name)}>
                         <div className='d-flex justify-content-between mb-1'>
                             <div>
@@ -190,18 +190,19 @@ export default function GetMySchedule({ctx}) {
 
         try {
             let data = {
-                schedule_consume: selectedConsume[0].consume_name,
-                consume_type: selectedConsume[0].consume_type,
-                consume_detail: selectedConsume[0].consume_detail,
-                consume_from: selectedConsume[0].consume_from,
-                schedule_desc: selectedConsume[0].consume_desc,
-                schedule_tag: selectedConsume[0].consume_tag,
+                schedule_consume: selectedConsume[0].props.value.consume.consume_name,
+                consume_type: selectedConsume[0].props.value.consume.consume_type,
+                consume_detail: selectedConsume[0].props.value.consume.consume_detail,
+                consume_from: selectedConsume[0].props.value.consume.consume_from,
+                schedule_desc: selectedConsume[0].props.value.consume.consume_comment,
+                schedule_tag: selectedConsume[0].props.value.consume.consume_tag,
                 schedule_time: scheduleTimeFull,
             }
 
             data.firebase_id = await add_firestore(data, 'schedule')     
-            data.consume_detail = JSON.stringify(selectedConsume[0].consume_detail)
-            data.schedule_time = JSON.stringify(scheduleTimeFull)
+            data.consume_detail = JSON.stringify(data.consume_detail)
+            data.schedule_time = JSON.stringify(data.schedule_time)
+            data.schedule_tag = JSON.stringify(data.schedule_tag)
             
             const response = await Axios.post("http://127.0.0.1:8000/api/v1/schedule/create", JSON.stringify(data), {
                 headers: {
@@ -211,22 +212,24 @@ export default function GetMySchedule({ctx}) {
                 }
             })
 
-            if(response.data.status != 200){
+            if(response.status == 200){
                 Swal.fire({
                     title: "Success!",
-                    text: "Consume saved",
+                    text: "Schedule saved",
                     icon: "success"
-                });
-                return response.data.message
+                })
             } else {
-                window.location.reload()
-                return ""
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                })
             }
         } catch (error) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "Something went wrong! "+error,
+                text: "Something went wrong!",
             })
             setResMsgAll(error)
         }

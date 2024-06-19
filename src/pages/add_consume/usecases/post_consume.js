@@ -108,22 +108,24 @@ export default function PostConsume() {
                 }
             })
 
-            if(response.data.status != 200){
+            if(response.status == 200){
                 Swal.fire({
                     title: "Success!",
                     text: "Consume saved",
                     icon: "success"
-                });
-                return response.data.message
+                })
             } else {
-                window.location.reload()
-                return ""
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                })
             }
         } catch (error) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "Something went wrong! "+error,
+                text: "Something went wrong!",
             })
             setResMsgAll(error)
         }
