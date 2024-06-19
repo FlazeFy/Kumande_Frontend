@@ -27,6 +27,7 @@ export default function GetAllConsumePagination({ctx}) {
         const keyFav = getLocal("Table_filter_favorite_"+ctx)
         const keyType = getLocal("Table_filter_type_"+ctx)
         const keyLimit = getLocal("Table_limit_"+ctx)
+        const keyCalorie = getLocal("Table_filter_max_min_cal")
 
         if(keyPage === null){
             sessionStorage.setItem("Table_"+ctx, "1")
@@ -43,8 +44,11 @@ export default function GetAllConsumePagination({ctx}) {
         if(keyLimit === null){
             storeLocal("Table_limit_"+ctx,"10")
         }
+        if(keyCalorie === null){
+            storeLocal("Table_filter_max_min_cal","all")
+        }
 
-        fetch(`http://127.0.0.1:8000/api/v1/consume/limit/${keyLimit}/order/${keyOrder}/favorite/${keyFav}/type/${keyType}/provide/all?page=${keyPage}`, {
+        fetch(`http://127.0.0.1:8000/api/v1/consume/limit/${keyLimit}/order/${keyOrder}/favorite/${keyFav}/type/${keyType}/provide/all/calorie/${keyCalorie}?page=${keyPage}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

@@ -17,3 +17,33 @@
     padding: var(--spaceSM) var(--spaceXMD);
     color: var(--whiteColor) !important;
 }
+.btn-add {
+    background: var(--primaryColor) !important;
+    height: 60px;
+    width: 60px;
+    color: var(--whiteColor) !important;
+    padding: var(--spaceXMD) var(--spaceMD) !important;
+    border-radius: 100% !important;
+    position: fixed;
+    right: var(--spaceJumbo);
+    bottom: var(--spaceJumbo);
+    -webkit-transition: all 0.3s !important;
+    -o-transition: all 0.3s !important;
+    transition: all 0.3s !important; 
+}
+.btn-add:hover {
+    transform: scale(1.2);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.btn.btn-tag {
+    background: var(--whiteColor);
+    border-radius: var(--roundedLG);
+    color: var(--blackColor);
+    margin-right: var(--spaceSM);
+    margin-bottom: var(--spaceSM);
+    border: 1.75px solid var(--primaryColor);
+}
+.btn.btn-tag:hover {
+    background: var(--primaryColor);
+    color: var(--whiteColor);
+}

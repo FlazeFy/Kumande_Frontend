@@ -93,6 +93,14 @@ a {
     padding: var(--spaceLG);
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     margin-bottom: var(--spaceLG);
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s; 
+    cursor: pointer;
+}
+.consume-box:hover {
+    transform: scale(1.02);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 table {
     border: 2px solid var(--darkColor) !important;
@@ -160,4 +168,15 @@ label.error{
     font-size: var(--textXMD);
     padding: var(--spaceXXSM) var(--spaceSM);
     border-radius: var(--roundedMD);
+}
+
+.swal2-popup {
+    border: var(--spaceMini) solid var(--primaryColor) !important;
+    border-radius: var(--roundedLG);
+}
+.swal2-confirm {
+    background: var(--successBG) !important;
+}
+.swal2-confirm:hover {
+    background: var(--successDarkBG) !important;
 }
