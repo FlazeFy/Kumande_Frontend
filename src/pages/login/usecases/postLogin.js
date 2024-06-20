@@ -68,7 +68,7 @@ export default function PostLogin() {
                   'Content-Type': 'multipart/form-data'
                 }
             })
-            if(response.status != 200){
+            if(response.status == 200){
                 window.location.reload(false)
                 return response.data.message
             } else {

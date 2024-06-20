@@ -77,7 +77,7 @@ export default function GetMyProfile({ctx}) {
                     title: "Success!",
                     text: "Profile updated",
                     icon: "success"
-                });
+                })
             } else {
                 Swal.fire({
                     icon: "error",

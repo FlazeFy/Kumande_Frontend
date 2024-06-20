@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import { useState, useEffect } from "react"
-import { ucFirstWord } from '../../../modules/helpers/converter'
+import { numberToPrice, ucFirstWord } from '../../../modules/helpers/converter'
 import { getTodayDate } from '../../../modules/helpers/generator'
 
 import { getLocal } from '../../../modules/storages/local'
@@ -56,7 +56,7 @@ export default function GetAnalyticPaymentMonth({ctx}) {
                         <div className='container bg-white p-2 d-flex justify-content-start'>
                             <div style={{color:"var(--warningBG)"}}>
                                 <h5 className='mb-0'>Total</h5>
-                                <h2 className='mb-0'>{item[0]['total']}</h2>
+                                <h2 className='mb-0'>Rp. {numberToPrice(item[0]['total'])}</h2>
                                 <a className='text-secondary' style={{fontSize:"var(--textMD)", fontWeight:"500"}}>this month</a>
                             </div>
                         </div>
@@ -65,7 +65,7 @@ export default function GetAnalyticPaymentMonth({ctx}) {
                         <div className='container bg-white p-2 d-flex justify-content-start'>
                             <div style={{color:"var(--successBG)"}}>
                                 <h5 className='mb-0'>Average</h5>
-                                <h2 className='mb-0'>{item[0]['average']}</h2>
+                                <h2 className='mb-0'>Rp. {numberToPrice(item[0]['average'])}</h2>
                                 <a className='text-secondary' style={{fontSize:"var(--textMD)", fontWeight:"500"}}>/ day</a>
                             </div>
                         </div>
@@ -74,7 +74,7 @@ export default function GetAnalyticPaymentMonth({ctx}) {
                         <div className='container bg-white p-2 d-flex justify-content-start'>
                             <div style={{color:"var(--dangerBG)"}}>
                                 <h5 className='mb-0'>Max</h5>
-                                <h2 className='mb-0'>{item[0]['max']}</h2>
+                                <h2 className='mb-0'>Rp. {numberToPrice(item[0]['max'])}</h2>
                                 <a className='text-secondary' style={{fontSize:"var(--textMD)", fontWeight:"500"}}>/ day</a>
                             </div>
                         </div>
@@ -83,7 +83,7 @@ export default function GetAnalyticPaymentMonth({ctx}) {
                         <div className='container bg-white p-2 d-flex justify-content-start'>
                             <div style={{color:"var(--infoBG)"}}>
                                 <h5 className='mb-0'>Min</h5>
-                                <h2 className='mb-0'>{item[0]['min']}</h2>
+                                <h2 className='mb-0'>Rp. {numberToPrice(item[0]['min'])}</h2>
                                 <a className='text-secondary' style={{fontSize:"var(--textMD)", fontWeight:"500"}}>/ day</a>
                             </div>
                         </div>

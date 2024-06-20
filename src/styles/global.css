@@ -180,3 +180,16 @@ label.error{
 .swal2-confirm:hover {
     background: var(--successDarkBG) !important;
 }
+.btn-consume-schedule {
+    background: var(--primaryColor) !important;
+    padding: var(--spaceMD);
+    color: var(--whiteColor) !important;
+    border-radius: var(--roundedLG) !important;
+    -webkit-transition: all 0.3s !important;
+    -o-transition: all 0.3s !important;
+    transition: all 0.3s !important; 
+    cursor: pointer !important;
+}
+.btn-consume-schedule:hover {
+    transform: scale(1.05);
+}
