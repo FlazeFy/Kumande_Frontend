@@ -65,3 +65,16 @@
 .table-click tbody tr td {
     padding: 0 !important;
 }
+.btn-tag-removed {
+    background: var(--primaryColor) !important;
+    border-radius: var(--roundedLG) !important;
+    color: var(--whiteColor) !important;
+    -webkit-transition: all 0.3s !important;
+    -o-transition: all 0.3s !important;
+    transition: all 0.3s !important; 
+    margin-right: var(--spaceSM);
+    margin-bottom: var(--spaceSM);
+}
+.btn-tag-removed:hover {
+    background: var(--dangerBG) !important;
+}

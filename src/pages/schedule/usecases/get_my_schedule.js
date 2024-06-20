@@ -16,9 +16,9 @@ import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBowlRice, faCake, faCalendar, faHeart, faMugSaucer, faPlus, faXmark} from "@fortawesome/free-solid-svg-icons"
 import GetAnimaText from '../../../components/messages/anima_text'
-import GetConsumeBox from '../../../components/containers/consume_box'
 import GetBreakLine from '../../../components/others/breakline'
 import { add_firestore } from '../../../modules/firebase/command'
+import GetSchedule from './get_schedule'
 
 export default function GetMySchedule({ctx}) {
     //Initial variable
@@ -32,6 +32,7 @@ export default function GetMySchedule({ctx}) {
     const [totalCalories, setTotalCalories] = useState(0)
     const [totalPrice, setTotalPrice] = useState(0)
     const [resMsgAll, setResMsgAll] = useState([])
+    const [reloadSchedule, setReloadSchedule] = useState(null)
 
     // Form
     const [scheduleDay, setScheduleDay] = useState("")
@@ -126,6 +127,7 @@ export default function GetMySchedule({ctx}) {
     const handleButtonClick = (day, category, consume) => {
         setScheduleDay(day)
         setScheduleCategory(category)
+        setReloadSchedule(!reloadSchedule)
         if(category == "Breakfast"){
             setScheduleTime("07:00")
         } else if(category == "Lunch"){
@@ -245,7 +247,6 @@ export default function GetMySchedule({ctx}) {
         )
     } else {
         let i = 0
-        let total_cal = 0
 
         return (
             <div>
@@ -365,6 +366,11 @@ export default function GetMySchedule({ctx}) {
                                         }
                                     </div>
                                     <div className='col-lg-8 col-md-7'>
+                                        {
+                                            scheduleDay && scheduleCategory ? 
+                                                <GetSchedule key={reloadSchedule} ctx='get_schedule' day={scheduleDay} category={scheduleCategory}/>
+                                            : <></>
+                                        }
                                         <h5 className='text-start'>Available Consume</h5>
                                         {
                                             itemsConsume.length > 0 ?
