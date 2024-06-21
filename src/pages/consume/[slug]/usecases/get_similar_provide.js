@@ -19,9 +19,14 @@ export default function GetSimilarProvide({ctx, provide, slug}) {
 
     useEffect(() => {
         fetch(`http://127.0.0.1:8000/api/v1/consume/by/context/provide/${provide}`, {
+            method: 'POST',
             headers: {
-                Authorization: `Bearer ${token}`
-            }
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                limit: 7
+            })
         })
         .then(res => res.json())
             .then(

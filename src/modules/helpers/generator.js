@@ -37,6 +37,12 @@ export const getTodayDate = (type) => {
     }
 }
 
+export const getMonthName = (val) => {
+    const month_name = ['January','February','March','April','May','June','July','August','September','October','November','December']
+    const res = month_name[val]
+    return res
+}
+
 export const getAllDay = () => {
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     const today = new Date()

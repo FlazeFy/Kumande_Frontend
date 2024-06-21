@@ -8,6 +8,8 @@ import GetConsumeBox from "../../../components/containers/consume_box"
 import GetSimilarProvide from "./usecases/get_similar_provide"
 import GetSimilarMainIng from "./usecases/get_similar_main_ing"
 import GetSimilarConsumeFrom from "./usecases/get_similar_consume_from"
+import GetSimilarYearMonthCreated from "./usecases/get_similar_year_month_created"
+import GetSimilarConsumeType from "./usecases/get_similar_consume_type"
 
 export default function ConsumeDetail({ params }) {
   //Initial variable
@@ -55,6 +57,10 @@ export default function ConsumeDetail({ params }) {
           </div>
       )
   } else {
+    const date = new Date(item.created_at)
+    const month = date.getMonth()+1
+    const year = date.getFullYear()
+  
     return (
       <main>
         <div className="wrapper d-flex align-items-stretch">
@@ -66,6 +72,8 @@ export default function ConsumeDetail({ params }) {
               <GetSimilarProvide ctx="similar_provide" provide={item.consume_detail[0].provide} slug={item.slug_name}/>
               <GetSimilarMainIng ctx="similar_main_ing" main_ing={item.consume_detail[0].main_ing} slug={item.slug_name}/>
               <GetSimilarConsumeFrom ctx="similar_consume_from" consume_from={item.consume_from} slug={item.slug_name}/>
+              <GetSimilarConsumeType ctx="similar_consume_type" consume_type={item.consume_type} slug={item.slug_name}/>
+              <GetSimilarYearMonthCreated ctx={`similar_consume_${month}_${year}`} month={month} year={year} slug={item.slug_name}/>
             </div>
           </div>
         </div>

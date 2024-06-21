@@ -6,19 +6,20 @@ import Swal from 'sweetalert2'
 
 //Font awesome classicon
 import GetConsumeBox from '../../../../components/containers/consume_box'
-import GetBreakLine from '../../../../components/others/breakline'
 import { ucFirstWord } from '../../../../modules/helpers/converter'
+import GetBreakLine from '../../../../components/others/breakline'
+import { getMonthName } from '../../../../modules/helpers/generator'
 
-export default function GetSimilarMainIng({ctx, main_ing, slug}) {
+export default function GetSimilarYearMonthCreated({ctx, month, year, slug}) {
     //Initial variable
-    ctx = `${ctx}_${main_ing}`
+    ctx = `${ctx}_${month}_${year}`
     const [error, setError] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)
     const [items, setItems] = useState([])
     const token = getLocal("token_key")
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:8000/api/v1/consume/by/context/main_ing/${main_ing}`, {
+        fetch(`http://127.0.0.1:8000/api/v1/consume/by/context/month_year/${month}_${year}`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -64,7 +65,7 @@ export default function GetSimilarMainIng({ctx, main_ing, slug}) {
     } else {
         return (
             <div className='container p-3 mt-3'>
-                <h5>Similar Main Ingredient <a className='btn btn-primary rounded-pill py-1 ms-1' style={{fontSize:"var(--textMD)"}}>{ucFirstWord(main_ing)}</a></h5>
+                <h5>Similar Created in <a className='btn btn-primary rounded-pill py-1 ms-1' style={{fontSize:"var(--textMD)"}}>{getMonthName(month)} {year}</a></h5>
                 <GetBreakLine length={1}/>
                 <div className='row'>
                     {
