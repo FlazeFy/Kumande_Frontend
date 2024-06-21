@@ -5,6 +5,9 @@ import GetNavbarToggle from "../../../components/bars/navbartoggle"
 import { getLocal } from "../../../modules/storages/local"
 import Swal from 'sweetalert2'
 import GetConsumeBox from "../../../components/containers/consume_box"
+import GetSimilarProvide from "./usecases/get_similar_provide"
+import GetSimilarMainIng from "./usecases/get_similar_main_ing"
+import GetSimilarConsumeFrom from "./usecases/get_similar_consume_from"
 
 export default function ConsumeDetail({ params }) {
   //Initial variable
@@ -60,6 +63,9 @@ export default function ConsumeDetail({ params }) {
             <GetNavbarToggle/>
             <div id="content-body">
               <GetConsumeBox ctx="consume_detail" items={item} type="detail"/>
+              <GetSimilarProvide ctx="similar_provide" provide={item.consume_detail[0].provide} slug={item.slug_name}/>
+              <GetSimilarMainIng ctx="similar_main_ing" main_ing={item.consume_detail[0].main_ing} slug={item.slug_name}/>
+              <GetSimilarConsumeFrom ctx="similar_consume_from" consume_from={item.consume_from} slug={item.slug_name}/>
             </div>
           </div>
         </div>

@@ -19,6 +19,7 @@ import GetAnimaText from '../../../components/messages/anima_text'
 import GetBreakLine from '../../../components/others/breakline'
 import { add_firestore } from '../../../modules/firebase/command'
 import GetSchedule from './get_schedule'
+import GetConsumeBox from '../../../components/containers/consume_box'
 
 export default function GetMySchedule({ctx}) {
     //Initial variable
@@ -379,44 +380,7 @@ export default function GetMySchedule({ctx}) {
                                                     itemsConsume.map((elmt, idx) => {
                                                         return (
                                                             <div className='col-6 text-start'>
-                                                                <button className='consume-box p-3 border-0 text-start bg-white' style={{borderLeft:getFavorite(elmt.is_favorite)}} onClick={() => selectConsume(elmt)}>
-                                                                    <div className='d-flex justify-content-between mb-1'>
-                                                                        <div>
-                                                                            {
-                                                                                elmt.is_favorite == 1 ?
-                                                                                    <FontAwesomeIcon icon={faHeart} className='me-2 text-danger' size='lg' title='Favorite'/>
-                                                                                : 
-                                                                                    <></>
-                                                                            }
-                                                                            <a style={{color:"var(--primaryColor)", fontWeight:"500", fontSize:"var(--textLG)"}}>
-                                                                            {
-                                                                                elmt.consume_type == 'Food' ?
-                                                                                    <FontAwesomeIcon icon={faBowlRice} className='me-2'/>
-                                                                                : elmt.consume_type == 'Drink' ?
-                                                                                    <FontAwesomeIcon icon={faMugSaucer} className='me-2'/>
-                                                                                : elmt.consume_type == 'Snack' ?
-                                                                                    <FontAwesomeIcon icon={faCake} className='me-2'/>
-                                                                                : 
-                                                                                    <></>
-                                                                            }
-                                                                            {elmt.consume_name}
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <a style={{fontWeight:"500", fontSize:"var(--textXMD)"}}>Detail</a>
-                                                                    <GetBreakLine length={1}/>
-                                                                    <div className='d-inline'>
-                                                                        <a className='btn btn-success rounded-pill px-3 py-1 me-1 mb-1' style={{fontSize:"var(--textMD)"}}>
-                                                                            {elmt.consume_detail[0]['provide']}
-                                                                        </a>
-                                                                        <a className='btn btn-warning rounded-pill px-3 py-1 me-1 mb-1' style={{fontSize:"var(--textMD)"}}>
-                                                                            {elmt.consume_detail[0]['calorie']} Cal
-                                                                        </a>
-                                                                        <a className='btn btn-danger rounded-pill px-3 py-1' style={{fontSize:"var(--textMD)"}}>
-                                                                            {elmt.consume_detail[0]['main_ing']}
-                                                                        </a>
-                                                                    </div>
-                                                                </button>
+                                                                <GetConsumeBox type='mini' items={elmt} func={(e)=>selectConsume(elmt)}/>
                                                             </div>
                                                         )
                                                     })
