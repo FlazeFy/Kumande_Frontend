@@ -100,7 +100,7 @@ export default function GetAllConsumePagination({ctx}) {
                         items.length > 0 ?
                             items.map((elmt, idx) => {
                                 return (
-                                    <GetConsumeBox items={elmt}/>
+                                    <GetConsumeBox items={elmt} type="header"/>
                                 )
                             })
                         :
