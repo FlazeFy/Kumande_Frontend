@@ -78,3 +78,16 @@
 .btn-tag-removed:hover {
     background: var(--dangerBG) !important;
 }
+.btn-page {
+    background: var(--whiteColor) !important;
+    color: var(--primaryColor) !important;
+    margin-right: var(--spaceXXSM);
+    font-size: var(--textMD) !important;
+    border: 1.5px solid var(--primaryColor) !important;
+}
+.btn-page.active {
+    background: var(--primaryColor) !important;
+    color: var(--whiteColor) !important;
+    margin-right: var(--spaceXXSM);
+    font-size: var(--textMD) !important;
+}

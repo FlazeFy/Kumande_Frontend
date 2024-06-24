@@ -55,6 +55,17 @@ export const getAllDay = () => {
     return newDays
 }
 
+export const getStringValJson = (val) => {
+    let msg = ''
+    for (const [key, value] of Object.entries(val)) {
+        value.forEach(message => {
+            msg += message
+        });
+    }
+
+    return msg
+}
+
 export const getAge = (born) => {
     try {
         const birthDate = new Date(born)

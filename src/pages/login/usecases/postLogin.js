@@ -2,10 +2,12 @@
 import React from 'react'
 import Axios from 'axios'
 import { useState } from 'react'
+import Swal from 'sweetalert2'
 
 // Component
 import GetFormTemplate from '../../../components/containers/form'
 import { storeLocal } from '../../../modules/storages/local'
+import { getStringValJson } from '../../../modules/helpers/generator'
 
 export default function PostLogin() {
     //Initial variable
@@ -69,13 +71,37 @@ export default function PostLogin() {
                 }
             })
             if(response.status == 200){
-                window.location.reload(false)
-                return response.data.message
-            } else {
                 storeLocal('token_key', response.data.token)
                 window.location.href = '/dashboard'
             }
         } catch (error) {
+            if (error.response) {
+                const statusCode = error.response.status
+                
+                if(statusCode == 401 || statusCode == 422){
+                    let msg = ''
+                    if(statusCode == 401){
+                        msg = error.response.data.message
+                    } else {
+                        msg = getStringValJson(error.response.data.result)
+                    }
+
+                    Swal.fire({
+                        title: 'Error!',
+                        text: msg,
+                        icon: 'error',
+                    });
+                    setResMsgAll(error.response.message)
+                }
+            } else {
+                Swal.fire({
+                    title: 'Error!',
+                    text: `Error: ${error.message}`,
+                    icon: 'error',
+                });
+                
+                setResMsgAll(`Error: ${error.message}`)
+            }
             setResMsgAll(error)
         }
     }

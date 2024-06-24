@@ -1,6 +1,6 @@
 "use client"
 import Axios from 'axios'
-import React from 'react'
+import React, { useRef } from 'react'
 import { getLocal } from '../../../modules/storages/local'
 import { useState, useEffect } from "react"
 import Swal from 'sweetalert2'
@@ -10,6 +10,7 @@ import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons"
 import { add_firestore } from '../../../modules/firebase/command'
+import GetExistedConsume from './get_existed_consume'
 
 export default function PostConsume() {
     //Initial variable
@@ -31,6 +32,16 @@ export default function PostConsume() {
     const [consumeComment, setConsumeComment] = useState(null)
     const [paymentMethod, setPaymentMethod] = useState("")
     const [paymentPrice, setPaymentPrice] = useState(0)
+
+    const consumeNameRef = useRef(null)
+    const consumeProvideRef = useRef(null)
+    const consumeMainIngRef = useRef(null)
+    const consumeCalRef = useRef(null)
+    const consumeFromRef = useRef(null)
+    const consumeTypeRef = useRef(null)
+    const consumeCommentRef = useRef(null)
+    const paymentMethodRef = useRef(null)
+    const paymentPriceRef = useRef(null)
 
     useEffect(() => {
         fetch(`http://127.0.0.1:8000/api/v1/tag`, {
@@ -156,6 +167,72 @@ export default function PostConsume() {
         }
     };
 
+    const handleConsumeName = (slug) => {
+        fetch(`http://127.0.0.1:8000/api/v1/consume/detail/${slug}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then(res => res.json())
+            .then(
+            (result) => {
+                const data = result.data
+                if (consumeNameRef.current) {
+                    consumeNameRef.current.value = data.consume_name
+                    setConsumeName(data.consume_name)
+                }
+                if (consumeProvideRef.current) {
+                    consumeProvideRef.current.value = data.consume_detail[0].provide
+                    setConsumeProvide(data.consume_detail[0].provide)
+                }
+                if (consumeMainIngRef.current) {
+                    consumeMainIngRef.current.value = data.consume_detail[0].main_ing
+                    setConsumeMainIng(data.consume_detail[0].main_ing)
+                }
+                if (consumeCalRef.current) {
+                    consumeCalRef.current.value = data.consume_detail[0].calorie
+                    setConsumeCal(data.consume_detail[0].calorie)
+                }
+                if (consumeFromRef.current) {
+                    consumeFromRef.current.value = data.consume_from
+                    setConsumeFrom(data.consume_from)
+                }
+                if (consumeTypeRef.current) {
+                    consumeTypeRef.current.value = data.consume_type
+                    setConsumeType(data.consume_type)
+                }
+                if (consumeCommentRef.current) {
+                    consumeCommentRef.current.value = data.consume_comment
+                    setConsumeComment(data.consume_comment)
+                }
+                if (paymentMethodRef.current) {
+                    paymentMethodRef.current.value = data.payment[0].payment_method
+                    setPaymentMethod(data.payment[0].payment_method)
+                }
+                if (paymentPriceRef.current) {
+                    paymentPriceRef.current.value = data.payment[0].payment_price
+                    setPaymentPrice(data.payment[0].payment_price)
+                }
+                const tags = data.consume_tag
+
+                tags.forEach((el,i) => {
+                    setSelectedTag(selectedTag.concat(
+                        <button key={i} className='btn btn-tag' value={{slug_name:el.slug_name, tag_name:el.tag_name}} title="Unselect this tag" onClick={() => removeTag(el.slug_name)}>
+                            {el.tag_name}
+                        </button>
+                    ));
+                });
+            },
+            (error) => { 
+                if(getLocal(ctx + "_sess") !== undefined){
+                    setItem(JSON.parse(getLocal(ctx + "_sess")))
+                } else {
+                    setError(error)
+                }
+            }
+        )
+    } 
+
     if (error) {
         return <div>Error: {error.message}</div>
     } else if (!isLoaded) {
@@ -172,13 +249,14 @@ export default function PostConsume() {
                 <div className='row mb-3'>
                     <div className='col'>
                         <div className="form-floating">
-                            <input type="text" className="form-control" onChange={(e) => setConsumeName(e.target.value)} id="floatingInput"></input>
+                            <input type="text" className="form-control" ref={consumeNameRef} onBlur={(e) => handleConsumeName(e.target.value)} list="consume_name_list"></input>
                             <label htmlFor="floatingInput">Name</label>
                         </div>
+                        <GetExistedConsume ctx="existed_consume"/>
                     </div>
                     <div className='col'>
                         <div className="form-floating">
-                            <input type="text" className="form-control" onChange={(e) => setConsumeProvide(e.target.value)} id="floatingInput"></input>
+                            <input type="text" className="form-control" ref={consumeProvideRef} onChange={(e) => setConsumeProvide(e.target.value)} id="floatingInput"></input>
                             <label htmlFor="floatingInput">Provide</label>
                         </div>
                     </div>
@@ -186,13 +264,13 @@ export default function PostConsume() {
                 <div className='row mb-3'>
                     <div className='col'>
                         <div className="form-floating">
-                            <input type="text" className="form-control" onChange={(e) => setConsumeMainIng(e.target.value)} id="floatingInput"></input>
+                            <input type="text" className="form-control" ref={consumeMainIngRef} onChange={(e) => setConsumeMainIng(e.target.value)} id="floatingInput"></input>
                             <label htmlFor="floatingInput">Main Ingredient</label>
                         </div>
                     </div>
                     <div className='col'>
                         <div className="form-floating">
-                            <input type="number" className="form-control" onChange={(e) => setConsumeCal(e.target.value)} id="floatingInput"></input>
+                            <input type="number" className="form-control" ref={consumeCalRef} onChange={(e) => setConsumeCal(e.target.value)} id="floatingInput"></input>
                             <label htmlFor="floatingInput">Calorie</label>
                         </div>
                     </div>
@@ -200,7 +278,7 @@ export default function PostConsume() {
                 <div className='row mb-3'>
                     <div className='col'>
                         <div className="form-floating mb-3">
-                            <select className="form-select" id="floatingSelect" onChange={(e) => setConsumeFrom(e.target.value)} aria-label="Floating label select example">
+                            <select className="form-select" id="floatingSelect" ref={consumeFromRef} onChange={(e) => setConsumeFrom(e.target.value)} aria-label="Floating label select example">
                                 <option value="GoFood">GoFood</option>
                                 <option value="GrabFood">GrabFood</option>
                                 <option value="ShopeeFood">ShopeeFood</option>
@@ -212,7 +290,7 @@ export default function PostConsume() {
                     </div>
                     <div className='col'>
                         <div className="form-floating mb-3">
-                            <select className="form-select" id="floatingSelect" onChange={(e) => setConsumeType(e.target.value)} aria-label="Floating label select example">
+                            <select className="form-select" id="floatingSelect" ref={consumeTypeRef} onChange={(e) => setConsumeType(e.target.value)} aria-label="Floating label select example">
                                 <option value="Food">Food</option>
                                 <option value="Drink">Drink</option>
                                 <option value="Snack">Snack</option>
@@ -222,7 +300,7 @@ export default function PostConsume() {
                     </div>
                 </div>
                 <div className="form-floating mb-3">
-                    <textarea className="form-control" style={{minHeight:"100px"}} onChange={(e) => setConsumeComment(e.target.value)} placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                    <textarea className="form-control" style={{minHeight:"100px"}} ref={consumeCommentRef} onChange={(e) => setConsumeComment(e.target.value)} placeholder="Leave a comment here" id="floatingTextarea"></textarea>
                     <label htmlFor="floatingTextarea">Comments</label>
                 </div>
 
@@ -257,7 +335,7 @@ export default function PostConsume() {
                 }
                 {
                     selectedTag.length > 0 ?
-                    <div>
+                    <div ref={selectedTag}>
                         <h5>Selected Tag</h5>
                         {selectedTag}
                     </div> 
@@ -268,7 +346,7 @@ export default function PostConsume() {
                 <div className='row mb-3'>
                     <div className='col'>
                         <div className="form-floating mb-3">
-                            <select className="form-select" id="floatingSelect" onChange={(e) => setPaymentMethod(e.target.value)} aria-label="Floating label select example">
+                            <select className="form-select" id="floatingSelect" ref={paymentMethodRef} onChange={(e) => setPaymentMethod(e.target.value)} aria-label="Floating label select example">
                                 <option value="GoPay">GoPay</option>
                                 <option value="Ovo">Ovo</option>
                                 <option value="Dana">Dana</option>
@@ -283,7 +361,7 @@ export default function PostConsume() {
                     </div>
                     <div className='col'>
                         <div className="form-floating">
-                            <input type="number" className="form-control" onChange={(e) => setPaymentPrice(e.target.value)} id="floatingInput"></input>
+                            <input type="number" className="form-control" ref={paymentPriceRef} onChange={(e) => setPaymentPrice(e.target.value)} id="floatingInput"></input>
                             <label htmlFor="floatingInput">Price</label>
                         </div>
                     </div>

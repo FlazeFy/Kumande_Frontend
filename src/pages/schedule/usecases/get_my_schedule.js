@@ -35,6 +35,9 @@ export default function GetMySchedule({ctx}) {
     const [resMsgAll, setResMsgAll] = useState([])
     const [reloadSchedule, setReloadSchedule] = useState(null)
 
+    const [availableConsumeMaxPage,setAvailableConsumeMaxPage] = useState(1)
+    const [availableConsumeCurrPage,setAvailableConsumeCurrPage] = useState(1)
+
     // Form
     const [scheduleDay, setScheduleDay] = useState("")
     const [scheduleCategory, setScheduleCategory] = useState("")
@@ -72,18 +75,17 @@ export default function GetMySchedule({ctx}) {
         }
     }
 
-    function getAvailableConsume(){
+    function getAvailableConsume(keyPage){
         //Default config
-        const keyPage = sessionStorage.getItem("Table_"+ctx)
+        if(keyPage == null){
+            keyPage = 1
+        }
         const keyOrder = getLocal("Table_order_"+ctx)
         const keyFav = getLocal("Table_filter_favorite_"+ctx)
         const keyType = getLocal("Table_filter_type_"+ctx)
         const keyLimit = getLocal("Table_limit_"+ctx)
         const keyCalorie = getLocal("Table_filter_max_min_cal")
 
-        if(keyPage === null){
-            sessionStorage.setItem("Table_"+ctx, "1")
-        }
         if(keyOrder === null){
             storeLocal("Table_order_"+ctx,"ASC")
         }
@@ -111,6 +113,8 @@ export default function GetMySchedule({ctx}) {
                 setIsLoaded(true)
                 if(result.data != null){
                     setItemsConsume(result.data.data)
+                    setAvailableConsumeCurrPage(result.data.current_page)
+                    setAvailableConsumeMaxPage(result.data.last_page)
                 }        
             },
             (error) => {
@@ -192,21 +196,47 @@ export default function GetMySchedule({ctx}) {
         }]
 
         try {
-            let data = {
-                schedule_consume: selectedConsume[0].props.value.consume.consume_name,
-                consume_type: selectedConsume[0].props.value.consume.consume_type,
-                consume_detail: selectedConsume[0].props.value.consume.consume_detail,
-                consume_from: selectedConsume[0].props.value.consume.consume_from,
-                schedule_desc: selectedConsume[0].props.value.consume.consume_comment,
-                schedule_tag: selectedConsume[0].props.value.consume.consume_tag,
-                schedule_time: scheduleTimeFull,
+            let data;
+            if (selectedConsume.length == 1) {
+                data = {
+                    consume_id: selectedConsume[0].props.value.consume.id,
+                    schedule_consume: selectedConsume[0].props.value.consume.consume_name,
+                    consume_type: selectedConsume[0].props.value.consume.consume_type,
+                    consume_detail: selectedConsume[0].props.value.consume.consume_detail,
+                    consume_from: selectedConsume[0].props.value.consume.consume_from,
+                    schedule_desc: selectedConsume[0].props.value.consume.consume_comment,
+                    schedule_tag: selectedConsume[0].props.value.consume.consume_tag,
+                    schedule_time: scheduleTimeFull,
+                }
+    
+                data.firebase_id = await add_firestore(data, 'schedule')
+                data.consume_detail = JSON.stringify(data.consume_detail)
+                data.schedule_time = JSON.stringify(data.schedule_time)
+                data.schedule_tag = JSON.stringify(data.schedule_tag)
+            } else {
+                data = [];
+    
+                await Promise.all(selectedConsume.map(async (el) => {
+                    let item = {
+                        consume_id: el.props.value.consume.id,
+                        schedule_consume: el.props.value.consume.consume_name,
+                        consume_type: el.props.value.consume.consume_type,
+                        consume_detail: el.props.value.consume.consume_detail,
+                        consume_from: el.props.value.consume.consume_from,
+                        schedule_desc: el.props.value.consume.consume_comment,
+                        schedule_tag: el.props.value.consume.consume_tag,
+                        schedule_time: scheduleTimeFull,
+                    }
+    
+                    item.firebase_id = await add_firestore(item, 'schedule')
+                    item.consume_detail = JSON.stringify(item.consume_detail)
+                    item.schedule_time = JSON.stringify(item.schedule_time)
+                    item.schedule_tag = JSON.stringify(item.schedule_tag)
+                    
+                    data.push(item)
+                }));
             }
-
-            data.firebase_id = await add_firestore(data, 'schedule')     
-            data.consume_detail = JSON.stringify(data.consume_detail)
-            data.schedule_time = JSON.stringify(data.schedule_time)
-            data.schedule_tag = JSON.stringify(data.schedule_tag)
-            
+                
             const response = await Axios.post("http://127.0.0.1:8000/api/v1/schedule/create", JSON.stringify(data), {
                 headers: {
                     'Accept': 'application/json',
@@ -271,45 +301,52 @@ export default function GetMySchedule({ctx}) {
                                     <tr key={idx}>
                                         <td className={ i == 1 ? 'bg-success-light':''}>{dy}</td>
                                         {
-                                            items.map((item, index) => {
-                                                if (!found) {
-                                                    if (item['day'] === dy.slice(0, 3)) {
-                                                        found = true
-                                                        return (
-                                                            <>
-                                                                <td className={ i == 1 ? 'bg-success-light p-0':''}>
-                                                                    {
-                                                                        item['time'] === 'Breakfast' ? 
-                                                                            <button className='cell-click' data-bs-toggle="modal" data-bs-target={"#scheduleTableEdit"} onClick={() => handleButtonClick(item['day'], item['time'], item['schedule_consume']) }>{item['schedule_consume']}</button> 
-                                                                        : 
-                                                                            <button className='cell-click' data-bs-toggle="modal" data-bs-target={"#scheduleTableEdit"} onClick={() => handleButtonClick(item['day'], 'Breakfast', item['schedule_consume']) }>-</button>
-                                                                    }
-                                                                </td>
-                                                                <td className={ i == 1 ? 'bg-success-light':''}>
-                                                                    {
-                                                                        item['time'] === 'Lunch' ? 
-                                                                            <button className='cell-click' data-bs-toggle="modal" data-bs-target={"#scheduleTableEdit"} onClick={() => handleButtonClick(item['day'], item['time'], item['schedule_consume']) }>{item['schedule_consume']}</button> 
-                                                                        : 
-                                                                            <button className='cell-click' data-bs-toggle="modal" data-bs-target={"#scheduleTableEdit"} onClick={() => handleButtonClick(item['day'], 'Lunch', item['schedule_consume']) }>-</button>
-                                                                    }
-                                                                </td>
-                                                                <td className={ i == 1 ? 'bg-success-light':''}>
-                                                                    {
-                                                                        item['time'] === 'Dinner' ? 
-                                                                            <button className='cell-click' data-bs-toggle="modal" data-bs-target={"#scheduleTableEdit"} onClick={() => handleButtonClick(item['day'], item['time'], item['schedule_consume']) }>{item['schedule_consume']}</button> 
-                                                                        : 
-                                                                            <button className='cell-click' data-bs-toggle="modal" data-bs-target={"#scheduleTableEdit"} onClick={() => handleButtonClick(item['day'], 'Dinner', item['schedule_consume']) }>-</button>
-                                                                    }
-                                                                </td>
-                                                            </>
-                                                        );
+                                            items != null ?
+                                                items.map((item, index) => {
+                                                    if (!found) {
+                                                        if (item['day'] === dy.slice(0, 3)) {
+                                                            found = true
+                                                            return (
+                                                                <>
+                                                                    <td className={ i == 1 ? 'bg-success-light p-0':''}>
+                                                                        {
+                                                                            item['time'] === 'Breakfast' ? 
+                                                                                <button className='cell-click' data-bs-toggle="modal" data-bs-target={"#scheduleTableEdit"} onClick={() => handleButtonClick(item['day'], item['time'], item['schedule_consume']) }>{item['schedule_consume']}</button> 
+                                                                            : 
+                                                                                <button className='cell-click' data-bs-toggle="modal" data-bs-target={"#scheduleTableEdit"} onClick={() => handleButtonClick(item['day'], 'Breakfast', item['schedule_consume']) }>-</button>
+                                                                        }
+                                                                    </td>
+                                                                    <td className={ i == 1 ? 'bg-success-light':''}>
+                                                                        {
+                                                                            item['time'] === 'Lunch' ? 
+                                                                                <button className='cell-click' data-bs-toggle="modal" data-bs-target={"#scheduleTableEdit"} onClick={() => handleButtonClick(item['day'], item['time'], item['schedule_consume']) }>{item['schedule_consume']}</button> 
+                                                                            : 
+                                                                                <button className='cell-click' data-bs-toggle="modal" data-bs-target={"#scheduleTableEdit"} onClick={() => handleButtonClick(item['day'], 'Lunch', item['schedule_consume']) }>-</button>
+                                                                        }
+                                                                    </td>
+                                                                    <td className={ i == 1 ? 'bg-success-light':''}>
+                                                                        {
+                                                                            item['time'] === 'Dinner' ? 
+                                                                                <button className='cell-click' data-bs-toggle="modal" data-bs-target={"#scheduleTableEdit"} onClick={() => handleButtonClick(item['day'], item['time'], item['schedule_consume']) }>{item['schedule_consume']}</button> 
+                                                                            : 
+                                                                                <button className='cell-click' data-bs-toggle="modal" data-bs-target={"#scheduleTableEdit"} onClick={() => handleButtonClick(item['day'], 'Dinner', item['schedule_consume']) }>-</button>
+                                                                        }
+                                                                    </td>
+                                                                </>
+                                                            );
+                                                        }
                                                     }
-                                                }
-                                                return null
-                                            })
+                                                    return null
+                                                })
+                                            : 
+                                            <>
+                                                <td className={ i == 1 ? 'bg-success-light':''}><button className='cell-click' data-bs-toggle="modal" data-bs-target={"#scheduleTableEdit"} onClick={() => handleButtonClick(dy.slice(0, 3), 'Breakfast', null) }>-</button></td>
+                                                <td className={ i == 1 ? 'bg-success-light':''}><button className='cell-click' data-bs-toggle="modal" data-bs-target={"#scheduleTableEdit"} onClick={() => handleButtonClick(dy.slice(0, 3), 'Lunch', null) }>-</button></td>
+                                                <td className={ i == 1 ? 'bg-success-light':''}><button className='cell-click' data-bs-toggle="modal" data-bs-target={"#scheduleTableEdit"} onClick={() => handleButtonClick(dy.slice(0, 3), 'Dinner', null) }>-</button></td>
+                                            </>
                                         }
                                         {
-                                            !found ?
+                                            !found && items != null ?
                                                 <>
                                                     <td className={ i == 1 ? 'bg-success-light':''}><button className='cell-click' data-bs-toggle="modal" data-bs-target={"#scheduleTableEdit"} onClick={() => handleButtonClick(dy.slice(0, 3), 'Breakfast', null) }>-</button></td>
                                                     <td className={ i == 1 ? 'bg-success-light':''}><button className='cell-click' data-bs-toggle="modal" data-bs-target={"#scheduleTableEdit"} onClick={() => handleButtonClick(dy.slice(0, 3), 'Lunch', null) }>-</button></td>
@@ -375,17 +412,31 @@ export default function GetMySchedule({ctx}) {
                                         <h5 className='text-start'>Available Consume</h5>
                                         {
                                             itemsConsume.length > 0 ?
-                                                <div className='row'>
-                                                {
-                                                    itemsConsume.map((elmt, idx) => {
-                                                        return (
-                                                            <div className='col-6 text-start'>
-                                                                <GetConsumeBox type='mini' items={elmt} func={(e)=>selectConsume(elmt)}/>
+                                                <>
+                                                    <div className='row'>
+                                                    {
+                                                        itemsConsume.map((elmt, idx) => {
+                                                            return (
+                                                                <div className='col-6 text-start'>
+                                                                    <GetConsumeBox type='mini' items={elmt} func={(e)=>selectConsume(elmt)}/>
+                                                                </div>
+                                                            )
+                                                        })
+                                                    }
+                                                    </div>
+                                                    {
+                                                        availableConsumeMaxPage > 0 ?
+                                                            <div className='d-flex justify-content-start'>
+                                                                {
+                                                                    Array.from({ length: availableConsumeMaxPage }, (v, i) => (
+                                                                        <button key={'page_'+i} onClick={() => getAvailableConsume(i+1)} className={availableConsumeCurrPage == i+1 ? 'btn btn-page active':'btn btn-page'}>{i+1}</button>
+                                                                    ))
+                                                                }
                                                             </div>
-                                                        )
-                                                    })
-                                                }
-                                                </div>
+                                                        :
+                                                            <></>
+                                                    }
+                                                </>
                                             :
                                                 <GetAnimaText ctx="No Consume Found" url={'/icons/Consume.png'}/>
                                         }
