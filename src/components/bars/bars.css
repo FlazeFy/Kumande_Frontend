@@ -20,7 +20,7 @@
 #sidebar {
     min-width: 300px;
     max-width: 300px;
-    background: var(--primaryColor);
+    background: linear-gradient(var(--primaryColor), var(--primaryLightBG));
     color: var(--whiteColor);
     -webkit-transition: all 0.3s;
     -o-transition: all 0.3s;
@@ -41,6 +41,9 @@
     padding: var(--spaceMini);
     border-radius: var(--roundedSM);
     margin-bottom: var(--spaceSM);
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s; 
 }
 #sidebar ul li > ul {
     margin-left: var(--spaceSM); 
@@ -57,7 +60,7 @@
     color:var(--blackColor);
 }
 #sidebar ul li:hover {
-    background: var(--infoBG);
+    border: var(--spaceMini) solid var(--whiteColor);
     border-radius: var(--roundedMini);
     color: var(--whiteColor);
 }
@@ -71,7 +74,8 @@
 }
 #sidebar ul li.active {
     background: var(--infoBG);
-    border-left: var(--spaceMini) solid var(--whiteColor);
+    border-radius: 6px;
+    border: var(--spaceMini) solid var(--whiteColor);
 }
 #contact:hover{
     background-color:rgba(255, 255, 255, 0.3) !important;

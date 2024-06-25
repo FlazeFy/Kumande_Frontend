@@ -24,7 +24,7 @@ export default function GetTotalBudget({ctx, filter_name}) {
             sessionStorage.setItem(`Line_limit_${filter_name}`, 5);
         }
 
-        fetch(`http://127.0.0.1:8000/api/v1/budget/`+yr, {
+        fetch(`http://127.0.0.1:8000/api/v1/budget/by/`+yr, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
