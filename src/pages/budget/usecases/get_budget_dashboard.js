@@ -4,11 +4,12 @@ import React, { useRef } from 'react'
 import { getLocal } from '../../../modules/storages/local'
 import { useState, useEffect } from "react"
 import GetRadialChart from '../../../components/charts/radial_chart'
-import { numberToPrice } from '../../../modules/helpers/converter'
-import { faAngleDown, faAngleUp, faRotateBackward, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { convertDatetime, numberToPrice } from '../../../modules/helpers/converter'
+import { faAngleDown, faAngleUp, faEdit, faRotateBackward, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Swal from 'sweetalert2'
 import { add_firestore } from '../../../modules/firebase/command'
+import { async } from '@firebase/util'
 
 export default function GetBudgetDashboard({ctx}) {
     //Initial variable
@@ -23,6 +24,12 @@ export default function GetBudgetDashboard({ctx}) {
     const [budgetTotal, setBudgetTotal] = useState("")
     const [month, setMonth] = useState("")
     const [year, setYear] = useState("")
+
+    const [monthlyItem, setMonthlyItem] = useState(null)
+    const [monthlyItemMonth, setMonthlyItemMonth] = useState(null)
+    const [monthlyItemYear, setMonthlyItemYear] = useState(null)
+    const [monthlyItemCurrentPage, setMonthlyItemCurrentPage] = useState(1) 
+    const [monthlyItemMaxPage, setMonthlyItemMaxPage] = useState(1) 
 
     const budgetAmmount = useRef(null)
 
@@ -99,6 +106,42 @@ export default function GetBudgetDashboard({ctx}) {
         }
     }
 
+    const fetchMontlyPayment = async (month, year, page) => {
+        try {
+            setMonthlyItemMonth(month)
+            setMonthlyItemYear(year)
+
+            const response = await fetch(`http://127.0.0.1:8000/api/v1/payment/detail/month/${month}/year/${year}?page=`+page, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            const result = await response.json()
+            setIsLoaded(true)
+
+            if (response.status === 200) {
+                setMonthlyItem(result.data.data)
+                setMonthlyItemCurrentPage(result.data.current_page)
+                setMonthlyItemMaxPage(result.data.last_page)
+            } else {
+                setMonthlyItem(null)
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "No payment for this month!",
+                })
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+            })
+            setResMsgAll(error)
+        }
+    }
+
     if (error) {
         return <div>Error: {error.message}</div>
     } else if (!isLoaded) {
@@ -123,46 +166,107 @@ export default function GetBudgetDashboard({ctx}) {
             <div className='row pt-2'>
                 {
                     items != null ?
-                        items.map((dt, idx) => {
-                            const percentage = (dt.payment_history.total_price / dt.budget_total * 100).toFixed(0)
-                            const remain = dt.budget_total - dt.payment_history.total_price 
-                            totalCoveredPayment = totalCoveredPayment + dt.payment_history.total_price
-                            if(dt.budget_total > largetBudget){
-                                largetBudget = dt.budget_total
-                            }
-                            if(smallesBudget == 0 || dt.budget_total < smallesBudget){
-                                smallesBudget = dt.budget_total
-                            }
+                        <>
+                            {
+                                items.map((dt, idx) => {
+                                    const percentage = (dt.payment_history.total_price / dt.budget_total * 100).toFixed(0)
+                                    const remain = dt.budget_total - dt.payment_history.total_price 
+                                    totalCoveredPayment = totalCoveredPayment + dt.payment_history.total_price
+                                    if(dt.budget_total > largetBudget){
+                                        largetBudget = dt.budget_total
+                                    }
+                                    if(smallesBudget == 0 || dt.budget_total < smallesBudget){
+                                        smallesBudget = dt.budget_total
+                                    }
 
-                            return(
-                                <div className='col-lg-3 col-md-4 col-sm-12 p-2'>
-                                    <button className='btn container p-3 text-center shadow' title={'See history payment in '+dt.month+' '+dt.year}>
-                                        <h4 className='mb-0'>Budget in {dt.month} {dt.year}</h4>
-                                        <p className='mb-0 text-secondary' style={{fontSize:"var(--textMD)"}}>
-                                            {dt.payment_history.total_item === 0 ? (
-                                                <span className='fst-italic'>- No Payment Found -</span>
-                                            ) : (
-                                                <>
-                                                    <b>{dt.payment_history.total_item}</b> payments with an average of <b>{'Rp. '+numberToPrice(dt.payment_history.average_payment)}</b>
-                                                </>
-                                            )}
-                                        </p>                                    
-                                        <GetRadialChart val={percentage > 100 ? 100 : percentage} label={percentage > 100 ? 'Overload!' : 'Rp. '+numberToPrice(remain)}/>
-                                        <hr></hr>
-                                        <div className='row'>
-                                            <div className='col'>
-                                                <h6 className='mb-0'>Budget</h6>
-                                                <p className='mb-0'>Rp. {numberToPrice(dt.budget_total)}</p>
-                                            </div>
-                                            <div className='col'>
-                                                <h6 className='mb-0'>Spending</h6>
-                                                <p className='mb-0'>Rp. {numberToPrice(dt.payment_history.total_price)}</p>
-                                            </div>
+                                    return(
+                                        <div className='col-lg-3 col-md-4 col-sm-12 p-2'>
+                                            <button className='btn container p-3 text-center shadow' data-bs-toggle="modal" data-bs-target={"#paymentMonthlyModal"} onClick={(e)=>fetchMontlyPayment(dt.month, dt.year, 1)} title={'See history payment in '+dt.month+' '+dt.year}>
+                                                <h4 className='mb-0'>Budget in {dt.month} {dt.year}</h4>
+                                                <p className='mb-0 text-secondary' style={{fontSize:"var(--textMD)"}}>
+                                                    {dt.payment_history.total_item === 0 ? (
+                                                        <span className='fst-italic'>- No Payment Found -</span>
+                                                    ) : (
+                                                        <>
+                                                            <b>{dt.payment_history.total_item}</b> payments with an average of <b>{'Rp. '+numberToPrice(dt.payment_history.average_payment)}</b>
+                                                        </>
+                                                    )}
+                                                </p>                                    
+                                                <GetRadialChart val={percentage > 100 ? 100 : percentage} label={percentage > 100 ? 'Overload!' : 'Rp. '+numberToPrice(remain)}/>
+                                                <hr></hr>
+                                                <div className='row'>
+                                                    <div className='col'>
+                                                        <h6 className='mb-0'>Budget</h6>
+                                                        <p className='mb-0'>Rp. {numberToPrice(dt.budget_total)}</p>
+                                                    </div>
+                                                    <div className='col'>
+                                                        <h6 className='mb-0'>Spending</h6>
+                                                        <p className='mb-0'>Rp. {numberToPrice(dt.payment_history.total_price)}</p>
+                                                    </div>
+                                                </div>
+                                            </button>
                                         </div>
-                                    </button>
+                                    )
+                                })
+                            }
+                            <div className="modal fade" id={"paymentMonthlyModal"} aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div className="modal-dialog modal-xl">
+                                    <div className="modal-content">
+                                        <div className="modal-header">
+                                            <h5 className="modal-title" id="exampleModalLabel">Payment in {monthlyItemMonth} {monthlyItemYear}</h5>
+                                            <button type="button" className="btn_close_modal" data-bs-dismiss="modal" aria-label="Close"><FontAwesomeIcon icon={faXmark}/></button>
+                                        </div>
+                                        <div className="modal-body text-center p-4">
+                                            <table className='table table-bordered'>
+                                                <thead>
+                                                    <tr>
+                                                        <td>Consume Name</td>
+                                                        <td>Consume Type</td>
+                                                        <td>Payment Method</td>
+                                                        <td>Payment Price</td>
+                                                        <td>Props</td>
+                                                        <td>Action</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody className='text-start'>
+                                                    {
+                                                        monthlyItem && monthlyItem.map((dt, idx) => {
+                                                            return (
+                                                                <tr key={idx}>
+                                                                    <td>{dt.consume_name}</td>
+                                                                    <td>{dt.consume_type}</td>
+                                                                    <td>{dt.payment_method}</td>
+                                                                    <td>Rp. {numberToPrice(dt.payment_price)}</td>
+                                                                    <td>
+                                                                        <h6 className='mb-0'>Created At</h6>
+                                                                        <p className='mb-0'>{convertDatetime(dt.created_at,'calendar')}</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <button className='btn btn-warning w-100'><FontAwesomeIcon icon={faEdit}/> Edit</button>
+                                                                    </td>
+                                                                </tr>
+                                                            )
+                                                        })
+                                                    }
+                                                </tbody>
+                                            </table>
+                                            {
+                                                monthlyItemMaxPage > 0 ?
+                                                    <div className='d-flex justify-content-start'>
+                                                        {
+                                                            Array.from({ length: monthlyItemMaxPage }, (v, i) => (
+                                                                <button key={'page_'+i} onClick={() => fetchMontlyPayment(monthlyItemMonth, monthlyItemYear, i+1)} className={monthlyItemCurrentPage == i+1 ? 'btn btn-page active':'btn btn-page'}>{i+1}</button>
+                                                            ))
+                                                        }
+                                                    </div>
+                                                :
+                                                    <></>
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
-                            )
-                        })
+                            </div>
+                        </>
                     : 
                         <></>
                 }
