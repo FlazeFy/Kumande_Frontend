@@ -30,6 +30,7 @@ export default function GetBudgetDashboard({ctx}) {
     
     useEffect(() => {
         fetch(`http://127.0.0.1:8000/api/v1/budget/dashboard`, {
+            method: 'POST',
             headers: {
                 Authorization: `Bearer ${token}`
             }

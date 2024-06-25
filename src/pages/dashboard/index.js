@@ -2,6 +2,7 @@ import * as React from "react"
 import GetNavbar from "../../components/bars/navbar"
 import GetNavbarToggle from "../../components/bars/navbartoggle"
 import GetAnalyticPaymentMonth from "./usecases/get_analytic_payment_month"
+import GetCurrentMonthBudget from "./usecases/get_current_month_budget"
 import GetFullfilCalorie from "./usecases/get_fullfil_calorie"
 import GetTodaySchedule from "./usecases/get_today_schedule"
 
@@ -19,7 +20,7 @@ const DashboardPage = () => {
             <div style={{marginBottom:"var(--spaceMD)"}}/>
             <div className="row">
               <div className="col-lg-3 col-md-4 col-sm-6">
-                <a className='container p-2 d-flex justify-content-start text-white' href="/stats" style={{backgroundImage: "linear-gradient(to right, var(--primaryColor) , var(--primaryLightBG))", cursor:"pointer"}}>
+                <a className='container p-2 mb-3 d-flex justify-content-start text-white' href="/stats" style={{backgroundImage: "linear-gradient(to right, var(--primaryColor) , var(--primaryLightBG))", cursor:"pointer"}}>
                   <div>
                       <img className='img-icon-lg' src={'/icons/Statistics.png'}/>
                   </div>
@@ -28,9 +29,10 @@ const DashboardPage = () => {
                     <p className="my-0" style={{fontSize:"var(--textMD)"}}>Consume, Spending, Health, Budget</p>
                   </div>
                 </a>
+                <GetFullfilCalorie ctx="Today Calories"/>
               </div>
               <div className="col-lg-3 col-md-4 col-sm-6">
-                <GetFullfilCalorie ctx="Today Calories"/>
+                <GetCurrentMonthBudget ctx="current_month_budget"/>
               </div>
             </div>
           </div>
