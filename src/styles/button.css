@@ -91,11 +91,20 @@
     margin-right: var(--spaceXXSM);
     font-size: var(--textMD) !important;
 }
-.btn.container {
+
+.btn.container, .btn.add.container {
     -webkit-transition: all 0.3s;
     -o-transition: all 0.3s;
     transition: all 0.3s; 
 }
 .btn.container:hover {
     transform: scale(1.05);
+}
+.btn.add.container {
+    border: calc(var(--spaceMini)*0.75) dashed var(--primaryColor) !important;
+    box-shadow: none !important;
+}
+.btn.add.container:hover {
+    border: calc(var(--spaceMini)*0.75) solid var(--primaryColor) !important;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
 }
