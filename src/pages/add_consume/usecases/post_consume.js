@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons"
 import { add_firestore } from '../../../modules/firebase/command'
 import GetExistedConsume from './get_existed_consume'
+import { convertDatetime, numberToPrice } from '../../../modules/helpers/converter'
 
 export default function PostConsume() {
     //Initial variable
@@ -21,6 +22,7 @@ export default function PostConsume() {
     const ctx = 'tag_opt'
     const [selectedTag, setSelectedTag] = useState([])
     const [resMsgAll, setResMsgAll] = useState([])
+    const [existingHistory, setExistingHistory] = useState(null)
 
     // Form
     const [consumeName, setConsumeName] = useState("")
@@ -222,6 +224,44 @@ export default function PostConsume() {
                         </button>
                     ));
                 });
+
+                setExistingHistory(
+                    data.payment != null ?
+                        <div className='row mt-2 ps-1 mx-1 p-1 rounded mb-3' style={{border:"1.25px solid #DFE2E6"}}>
+                            <div className='col'>
+                                <label className='text-secondary' style={{fontSize:"var(--textMD)"}}>Consume History</label>
+                                {
+                                    data.payment.length > 0 ? 
+                                        <ol>
+                                            {
+                                                data.payment.map((dt, idxHs) => (
+                                                    <li>At {convertDatetime(dt.created_at, 'calendar')} using {dt.payment_method} with ammount Rp. {numberToPrice(dt.payment_price)}</li>
+                                                ))
+                                            }
+                                        </ol>
+                                    : 
+                                        <p className='text-secondary fst-italic'>- No History Found -</p>
+                                }
+                            </div>
+                            <div className='col'>
+                                <label className='text-secondary' style={{fontSize:"var(--textMD)"}}>Schedule</label>
+                                {
+                                    data.schedule.length > 0 ? 
+                                        <ol>
+                                            {
+                                                data.schedule.map((dt, idxHs) => (
+                                                    <li>For {dt.schedule_time[0].day} {dt.schedule_time[0].category} at {dt.schedule_time[0].time}</li>
+                                                ))
+                                            }
+                                        </ol>
+                                    : 
+                                        <p className='text-secondary fst-italic'>- No Schedule Found -</p>
+                                }
+                            </div>
+                        </div>
+                    : 
+                        <></>
+                )
             },
             (error) => { 
                 if(getLocal(ctx + "_sess") !== undefined){
@@ -261,6 +301,7 @@ export default function PostConsume() {
                         </div>
                     </div>
                 </div>
+                {existingHistory}
                 <div className='row mb-3'>
                     <div className='col'>
                         <div className="form-floating">
