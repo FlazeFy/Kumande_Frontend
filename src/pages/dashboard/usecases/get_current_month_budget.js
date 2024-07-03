@@ -89,7 +89,7 @@ export default function GetCurrentMonthBudget({ctx}) {
 
                             return(
                                 <div className=''>
-                                    <button className='btn container p-3 text-center shadow' title={'See history payment in '+dt.month+' '+dt.year}>
+                                    <button className='container p-3 text-center bg-white'>
                                         <h4 className='mb-0'>Budget in {dt.month} {dt.year}</h4>
                                         <p className='mb-0 text-secondary' style={{fontSize:"var(--textMD)"}}>
                                             {dt.payment_history.total_item === 0 ? (

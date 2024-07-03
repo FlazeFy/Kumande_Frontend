@@ -3,7 +3,7 @@ import React, { useEffect } from "react"
 //Font awesome classicon
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft, faCalendar, faClockRotateLeft, faEnvelope, faKitchenSet, faList, faMap, faMoneyBill, faPhotoFilm, faTableColumns, faUser, faUtensils, faXmark } from "@fortawesome/free-solid-svg-icons"
+import { faArrowLeft, faBriefcaseMedical, faCalendar, faClockRotateLeft, faEnvelope, faKitchenSet, faList, faMap, faMoneyBill, faPhotoFilm, faTableColumns, faUser, faUtensils, faXmark } from "@fortawesome/free-solid-svg-icons"
 import GetSignOut from "./usecases/get_sign_out";
 
 export default function GetNavbar({active, subactive}) {
@@ -55,6 +55,9 @@ export default function GetNavbar({active, subactive}) {
                 </li>
                 <li className={getActive(active, "schedule")}>
                     <a href="/schedule"><FontAwesomeIcon icon={faCalendar} size="lg" className='me-3'/> Schedule</a>
+                </li>
+                <li className={getActive(active, "profile")}>
+                    <a href="/medstory"><FontAwesomeIcon icon={faBriefcaseMedical} size="lg" className='me-3'/> MedStory</a>
                 </li>
                 <li className={getActive(active, "profile")}>
                     <a href="/profile"><FontAwesomeIcon icon={faUser} size="lg" className='me-3'/> Profile</a>
