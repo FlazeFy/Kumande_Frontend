@@ -65,11 +65,11 @@ export default function GetListStarted({ ctx }) {
                     <div className="tag-list">
                         {
                             chunkedItems.map((chunk, chunkIndex) => (
-                                <div className="loop-slider mx-auto" key={chunkIndex} style={{ '--duration': '15951ms', '--direction': 'normal' }}>
+                                <div className="loop-slider mx-auto mb-3" key={chunkIndex} style={{ '--duration': '15951ms', '--direction': 'normal' }}>
                                     <div className="inner">
                                         {
                                             chunk.map((elmt, index) => (
-                                                <div className="btn btn-tag" style={{whiteSpace:"nowrap"}} key={index}>
+                                                <div className="btn btn-primary rounded-pill px-3 py-1 me-1" style={{whiteSpace:"nowrap"}} key={index}>
                                                     {
                                                         elmt.consume_type == 'Food' ?
                                                             <FontAwesomeIcon icon={faBowlRice} className='me-2'/>
