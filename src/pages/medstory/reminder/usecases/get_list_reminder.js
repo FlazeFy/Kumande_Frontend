@@ -1,9 +1,11 @@
 "use client"
-import { faBell, faClock } from '@fortawesome/free-solid-svg-icons'
+import { faBell, faClock, faLocationDot } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useRef } from 'react'
 import { useState, useEffect } from "react"
 import { getLocal } from '../../../../modules/storages/local'
+import Swal from 'sweetalert2'
+import Axios from 'axios'
 
 export default function GetListReminder({ctx}) {
     //Initial variable
@@ -13,7 +15,7 @@ export default function GetListReminder({ctx}) {
     const [items, setItems] = useState(null)
     const [resMsgAll, setResMsgAll] = useState([])
     
-    useEffect(() => {
+    const fetchReminders = () => {
         fetch(`http://127.0.0.1:8000/api/v1/reminder`, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -35,7 +37,62 @@ export default function GetListReminder({ctx}) {
                 }
             }
         )
-    },[])
+    }
+
+    useEffect(() => {
+        fetchReminders();
+    }, []);
+
+    // Services
+    const handleClick = async (method, id) => {
+        try {
+            let response
+
+            if(method == 'delete'){            
+                response = await Axios.delete(`http://127.0.0.1:8000/api/v1/reminder/rel/${id}`, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    }
+                })
+            } else if(method == 'post'){
+                let data = {
+                    reminder_id : id
+                }
+            
+                response = await Axios.post("http://127.0.0.1:8000/api/v1/reminder/rel", JSON.stringify(data), {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    }
+                })
+            }
+            
+            if(response.status == 200){
+                fetchReminders()
+                Swal.fire({
+                    title: "Success!",
+                    text: response.data.message,
+                    icon: "success"
+                })
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                })
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!"+error,
+            })
+            setResMsgAll(error)
+        }
+    }
 
     if (error) {
         return <div>Error: {error.message}</div>
@@ -55,7 +112,7 @@ export default function GetListReminder({ctx}) {
                         items.map((dt, idx)=> {
                             return (
                                 <div className='col-lg-6 col-md-6 col-sm-12'>
-                                    <button className={dt.id_rel_reminder != null ? 'box-reminder active':'box-reminder'} 
+                                    <button className={dt.id_rel_reminder != null ? 'box-reminder active':'box-reminder'} onClick={dt.id_rel_reminder != null ? (e)=>handleClick('delete',dt.id_rel_reminder):(e)=>handleClick('post',dt.reminder_id)}
                                         title={dt.id_rel_reminder != null ? 'Turn off the reminder':'Turn on the reminder'}>
                                         <div style={{width:"40px"}} className="pt-2">
                                             <FontAwesomeIcon icon={faClock} style={{fontSize:"calc(var(--textJumbo)*1.5)"}}/>
@@ -83,7 +140,7 @@ export default function GetListReminder({ctx}) {
                                                         dt.reminder_attachment.map((ctx, cidx)=> {
                                                             return (
                                                                 <button className='btn btn-success rounded-pill ms-1 mb-2'>
-                                                                    <FontAwesomeIcon icon={faBell}/> {ctx.attachment_name}
+                                                                    <FontAwesomeIcon icon={ctx.attachment_type == 'location'?faLocationDot:""}/> {ctx.attachment_name}
                                                                 </button>
                                                             )
                                                         })
