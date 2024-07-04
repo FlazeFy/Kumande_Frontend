@@ -94,3 +94,25 @@
         display: none; 
     } 
 }
+
+.nav-sub .nav-link {
+    background: var(--whiteColor);
+    color: var(--primaryColor);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: var(--roundedMD) var(--roundedLG) 0 0;
+    margin-right: var(--spaceXSM);
+    padding-inline: var(--spaceLG);
+    height: 40px;
+}
+
+.nav-sub .nav-link.active {
+    background: var(--primaryColor);
+    color: var(--whiteColor);
+}
+.nav-sub.content {
+    min-height: 80vh;
+    border-radius: 0 var(--roundedLG) var(--roundedLG) var(--roundedLG);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border: 2.5px solid var(--primaryColor);
+    padding: var(--spaceXMD);
+}

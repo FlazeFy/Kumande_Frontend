@@ -228,3 +228,37 @@ label.error{
         transform: translateX(-50%);
     }
 }
+
+.box-reminder {
+    width: 100%;
+    text-align: start;
+    border-radius: var(--roundedLG);
+    margin-bottom: var(--spaceLG);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: var(--spaceXMD);
+    border: var(--spaceMini) solid var(--dangerBG);
+    border-left: var(--spaceMD) solid var(--dangerBG);
+    cursor: pointer;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s; 
+    background: var(--whiteColor);
+    display: flex;
+    justify-content: space-between;
+}
+.box-reminder div:first-child path {
+    color: var(--dangerBG);
+}
+.box-reminder.active div:first-child path {
+    color: var(--successBG);
+}
+.box-reminder .context, .box-reminder button{
+    font-size: var(--textMD) !important;
+}
+.box-reminder:hover {
+    transform: scale(1.025);
+}
+.box-reminder.active {
+    border: var(--spaceMini) solid var(--successBG);
+    border-left: var(--spaceMD) solid var(--successBG);
+}

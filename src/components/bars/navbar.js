@@ -56,8 +56,8 @@ export default function GetNavbar({active, subactive}) {
                 <li className={getActive(active, "schedule")}>
                     <a href="/schedule"><FontAwesomeIcon icon={faCalendar} size="lg" className='me-3'/> Schedule</a>
                 </li>
-                <li className={getActive(active, "profile")}>
-                    <a href="/medstory"><FontAwesomeIcon icon={faBriefcaseMedical} size="lg" className='me-3'/> MedStory</a>
+                <li className={getActive(active, "medstory")}>
+                    <a href="/medstory/mybody"><FontAwesomeIcon icon={faBriefcaseMedical} size="lg" className='me-3'/> MedStory</a>
                 </li>
                 <li className={getActive(active, "profile")}>
                     <a href="/profile"><FontAwesomeIcon icon={faUser} size="lg" className='me-3'/> Profile</a>
