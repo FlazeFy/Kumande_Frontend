@@ -2,12 +2,37 @@ import React from 'react';
 import Chart from 'react-apexcharts';
 import GetLimit from '../controls/limit'
 
-export default function GetRadialChart({val, label}) {
+export default function GetRadialChart({val, label, custom}) {
     //Initial variable
-    var chart = [];
+    var chart = []
+    let series = [val]
+    let labels = [custom == null ?label:label+' '+custom.extra_desc]
+    let sizeHollow = '65%'
 
+    if(Array.isArray(val)){
+        series = val
+        labels = label
+        if(val.length <= 3){
+            sizeHollow = '45%'
+        } else {
+            sizeHollow = '55%'
+        }
+    }
+
+    const generateColors = (series) => {
+        return series.map(value => {
+            if (value < 50) {
+                return 'var(--primaryColor)'
+            } else if (value < 75) {
+                return 'var(--warningBG)'
+            } else {
+                return 'var(--dangerBG)'
+            }
+        });
+    };
+    
     chart = {
-        series: [val],
+        series: series,
         options: {
             chart: {
                 type: 'radialBar',
@@ -15,18 +40,52 @@ export default function GetRadialChart({val, label}) {
             plotOptions: {
                 radialBar: {
                     hollow: {
-                        size: `65%`,
-                    }
+                        size: sizeHollow,
+                    },
+                    dataLabels: {
+                        name: {
+                            show: true,
+                        },
+                        value: {
+                            show: custom != null ? true:false,
+                            offsetY: 3.5,
+                            formatter: function (seriesName, opts) {
+                                if (custom == null) {
+                                    return ''
+                                } else if (Array.isArray(val)) {
+                                    return custom.value[opts.seriesIndex] // still undefined
+                                } else {
+                                    return custom.value
+                                }
+                            }
+                        }
+                    },
                 },
             },
-            colors: [
-                val < 50 ? 'var(--primaryColor)' : 
-                val < 75 ? 'var(--warningBG)' :
-                'var(--dangerBG)'
-            ],
-            labels: [label],
+            colors: generateColors(series),            
+            labels: labels,
         },
     };
+
+    if(custom){
+        if(custom.type == 'half'){
+            chart.options.plotOptions.radialBar.startAngle = -90
+            chart.options.plotOptions.radialBar.endAngle = 90
+        }
+    }
+    if(Array.isArray(val)){
+        chart.options.plotOptions.radialBar.startAngle = 0
+        chart.options.plotOptions.radialBar.endAngle = 270
+        chart.options.plotOptions.radialBar.barLabels = {
+            enabled: true,
+            useSeriesColors: true,
+            fontSize: val.length > 3 ? '11px':'12px',
+            formatter: function(seriesName, opts) {
+                return custom == null ? seriesName + " : " + opts.w.globals.series[opts.seriesIndex] 
+                    : seriesName + " : " + custom.value[opts.seriesIndex]
+            },
+        }
+    }
 
     return (
         <div className='my-2'>

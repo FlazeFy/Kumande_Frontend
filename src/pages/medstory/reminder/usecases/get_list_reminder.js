@@ -106,7 +106,7 @@ export default function GetListReminder({ctx}) {
 
         return (
             <div className='row pt-2'>
-                <h5>Reminder List</h5>
+                <h4>Reminder List</h4>
                 <div className='row'>
                     {
                         items.map((dt, idx)=> {

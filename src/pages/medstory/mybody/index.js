@@ -2,6 +2,7 @@ import * as React from "react"
 import GetMedstorySubNav from "../../../components/bars/medstory_subnav"
 import GetNavbar from "../../../components/bars/navbar"
 import GetNavbarToggle from "../../../components/bars/navbartoggle"
+import GetMyBodyInfo from "./usecases/get_my_body_info"
 
 const MedstoryPage = () => {
   return (
@@ -13,7 +14,7 @@ const MedstoryPage = () => {
           <div id="content-body">
             <GetMedstorySubNav active={"mybody"}/>
             <div className="nav-sub content">
-              
+              <GetMyBodyInfo ctx={"my_body_info"}/>
             </div>
           </div>
         </div>
