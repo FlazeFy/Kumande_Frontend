@@ -21,6 +21,7 @@ export default function PostLogin() {
     const builder = [
         {
             type: 'text',
+            id:'email-input',
             class: 'form-control',
             label: 'Email',
             placeholder: 'Type email',
@@ -34,6 +35,7 @@ export default function PostLogin() {
         },
         {
             type: 'text',
+            id:'pass-input',
             class: 'form-control',
             label: 'Password',
             placeholder: 'Type password',
@@ -48,6 +50,7 @@ export default function PostLogin() {
         {
             type: 'submit',
             class: 'btn btn-success rounded-pill',
+            id:'submit-btn',
             label: 'Submit',
             placeholder: null,
             toogle_disabled: false,

@@ -47,6 +47,7 @@ export default function GetFormTemplate({type, props}) {
                                                         type={elmt.type}
                                                         max={elmt.max}
                                                         min={elmt.min}
+                                                        id={elmt.id}
                                                         defaultValue={countHalf(elmt.max)}
                                                     />
                                                 </>
@@ -55,6 +56,7 @@ export default function GetFormTemplate({type, props}) {
                                                     className={elmt.class + " w-100"} 
                                                     onChange={elmt.handleChange}
                                                     maxLength={elmt.max}
+                                                    id={elmt.id}
                                                     type={elmt.is_obsecure == true ? 'password' : elmt.type}
                                                     
                                                 />
@@ -108,6 +110,7 @@ export default function GetFormTemplate({type, props}) {
                                 return (
                                     <div className='col-lg-4 col-md-6 col-sm-12 mx-auto mt-3' key={idx}>
                                         <button className={elmt.class + " w-100 h-75 mt-2 pb-3 pt-2"} 
+                                            id={elmt.id}
                                             onClick={elmt.handleClick}>
                                             <FontAwesomeIcon icon={faPaperPlane} color="var(--secondaryBG)"/> {elmt.label}
                                         </button>

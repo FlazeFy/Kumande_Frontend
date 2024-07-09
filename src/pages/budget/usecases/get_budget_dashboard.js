@@ -170,7 +170,6 @@ export default function GetBudgetDashboard({ctx}) {
                             {
                                 items.map((dt, idx) => {
                                     const percentage = (dt.payment_history.total_price / dt.budget_total * 100).toFixed(0)
-                                    const remain = dt.budget_total - dt.payment_history.total_price 
                                     totalCoveredPayment = totalCoveredPayment + dt.payment_history.total_price
                                     if(dt.budget_total > largetBudget){
                                         largetBudget = dt.budget_total
@@ -181,8 +180,8 @@ export default function GetBudgetDashboard({ctx}) {
 
                                     return(
                                         <div className='col-lg-3 col-md-4 col-sm-12 p-2'>
-                                            <button className='btn container p-3 text-center shadow' data-bs-toggle="modal" data-bs-target={"#paymentMonthlyModal"} onClick={(e)=>fetchMontlyPayment(dt.month, dt.year, 1)} title={'See history payment in '+dt.month+' '+dt.year}>
-                                                <h4 className='mb-0'>Budget in {dt.month} {dt.year}</h4>
+                                            <button className='btn container p-3 text-center shadow budget-plan-section' data-bs-toggle="modal" data-bs-target={"#paymentMonthlyModal"} onClick={(e)=>fetchMontlyPayment(dt.month, dt.year, 1)} title={'See history payment in '+dt.month+' '+dt.year}>
+                                                <h4 className='mb-0 budget-plan-title'>Budget in {dt.month} {dt.year}</h4>
                                                 <p className='mb-0 text-secondary' style={{fontSize:"var(--textMD)"}}>
                                                     {dt.payment_history.total_item === 0 ? (
                                                         <span className='fst-italic'>- No Payment Found -</span>
@@ -192,16 +191,16 @@ export default function GetBudgetDashboard({ctx}) {
                                                         </>
                                                     )}
                                                 </p>                                    
-                                                <GetRadialChart val={percentage > 100 ? 100 : percentage} label={percentage > 100 ? 'Overload!' : 'Rp. '+numberToPrice(remain)}/>
+                                                <GetRadialChart val={percentage > 100 ? 100 : percentage} label={percentage > 100 ? 'Overload!' : 'Rp. '+numberToPrice(dt.remain_budget)}/>
                                                 <hr></hr>
                                                 <div className='row'>
                                                     <div className='col'>
                                                         <h6 className='mb-0'>Budget</h6>
-                                                        <p className='mb-0'>Rp. {numberToPrice(dt.budget_total)}</p>
+                                                        <p className='mb-0 budget-text'>Rp. {numberToPrice(dt.budget_total)}</p>
                                                     </div>
                                                     <div className='col'>
                                                         <h6 className='mb-0'>Spending</h6>
-                                                        <p className='mb-0'>Rp. {numberToPrice(dt.payment_history.total_price)}</p>
+                                                        <p className='mb-0 spending-text'>Rp. {numberToPrice(dt.payment_history.total_price)}</p>
                                                     </div>
                                                 </div>
                                             </button>
@@ -214,7 +213,7 @@ export default function GetBudgetDashboard({ctx}) {
                                     <div className="modal-content">
                                         <div className="modal-header">
                                             <h5 className="modal-title" id="exampleModalLabel">Payment in {monthlyItemMonth} {monthlyItemYear}</h5>
-                                            <button type="button" className="btn_close_modal" data-bs-dismiss="modal" aria-label="Close"><FontAwesomeIcon icon={faXmark}/></button>
+                                            <button type="button" className="btn_close_modal" id="btn_close_modal" data-bs-dismiss="modal" aria-label="Close"><FontAwesomeIcon icon={faXmark}/></button>
                                         </div>
                                         <div className="modal-body text-center p-4">
                                             <table className='table table-bordered'>
@@ -232,11 +231,11 @@ export default function GetBudgetDashboard({ctx}) {
                                                     {
                                                         monthlyItem && monthlyItem.map((dt, idx) => {
                                                             return (
-                                                                <tr key={idx}>
+                                                                <tr key={idx} className="payment-detail">
                                                                     <td>{dt.consume_name}</td>
                                                                     <td>{dt.consume_type}</td>
                                                                     <td>{dt.payment_method}</td>
-                                                                    <td>Rp. {numberToPrice(dt.payment_price)}</td>
+                                                                    <td className='payment-price'>Rp. {numberToPrice(dt.payment_price)}</td>
                                                                     <td>
                                                                         <h6 className='mb-0'>Created At</h6>
                                                                         <p className='mb-0'>{convertDatetime(dt.created_at,'calendar')}</p>

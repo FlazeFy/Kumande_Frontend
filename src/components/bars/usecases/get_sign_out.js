@@ -38,7 +38,7 @@ export default function GetSignOut() {
 
     return (
         <li>
-            <a className="border-0 bg-danger rounded" data-bs-toggle="modal" data-bs-target={"#signoutModal"}>
+            <a className="border-0 bg-danger rounded" data-bs-toggle="modal" id="sign-out-btn" data-bs-target={"#signoutModal"}>
                 <FontAwesomeIcon icon={faXmark} size="2xl" className='me-2'/> Sign Out
             </a>
             <div className="modal fade" id={"signoutModal"} aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -50,7 +50,7 @@ export default function GetSignOut() {
                         </div>
                         <div className="modal-body text-center p-4">
                             <p className="mt-4">Are you sure want to sign out from this account?</p>
-                            <button className="btn btn-danger w-100 mb-4" onClick={handleSubmit}>Yes</button>
+                            <button className="btn btn-danger w-100 mb-4" id="sign-out-confirm-btn" onClick={handleSubmit}>Yes</button>
                         </div>
                     </div>
                 </div>

@@ -51,7 +51,7 @@ export default function GetNavbar({active, subactive}) {
                     <a href="/list"><FontAwesomeIcon icon={faList} size="lg" className='me-3'/> Consume List</a>
                 </li>
                 <li className={getActive(active, "budget")}>
-                    <a href="/budget"><FontAwesomeIcon icon={faMoneyBill} size="lg" className='me-3'/> Budget</a>
+                    <a href="/budget"><FontAwesomeIcon icon={faMoneyBill} size="lg" id="budget_menu_nav_btn" className='me-3'/> Budget</a>
                 </li>
                 <li className={getActive(active, "schedule")}>
                     <a href="/schedule"><FontAwesomeIcon icon={faCalendar} size="lg" className='me-3'/> Schedule</a>

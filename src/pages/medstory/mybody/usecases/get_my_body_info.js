@@ -8,6 +8,7 @@ import Swal from 'sweetalert2'
 import Axios from 'axios'
 import GetRadialChart from '../../../../components/charts/radial_chart'
 import { convertDatetime } from '../../../../modules/helpers/converter'
+import GetManageBody from './get_manage_body'
 
 export default function GetMyBodyInfo({ctx}) {
     //Initial variable
@@ -73,11 +74,12 @@ export default function GetMyBodyInfo({ctx}) {
                 items.gout >= 2.5 ? 'Normal' :
                 'Low'
         : items.gender == 'female' ?
-            items.gout > 6.0 ? 'Diabetes' :
+            items.gout > 6.0 ? 'High' :
             items.gout >= 1.5 ? 'Normal' :
             'Low' : ''
 
         // Total Cholesterol Status (Source : https://www.healthline.com/health/high-cholesterol/levels-by-age#adults)
+        // by gender
         const cholesterol_status = items.cholesterol >= 240 ? 'High' :
             items.cholesterol >= 200 ? 'Pre-High' :
             items.cholesterol >= 120 ? 'Normal' :
@@ -101,7 +103,10 @@ export default function GetMyBodyInfo({ctx}) {
 
         return (
             <div className='row pt-2'>
-                <h4>My Body Info</h4>
+                <div className='d-flex justify-content-between mb-2'>
+                    <h4>My Body Info</h4>
+                    <GetManageBody ctx={"manage_body"}/>
+                </div>
                 <div className='row text-center'>
                     <div className='col-lg-3 col-md-4 col-sm-6'>
                         <h5 className='mb-0'>Blood Preasure</h5>
