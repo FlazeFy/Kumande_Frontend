@@ -1,5 +1,5 @@
 "use client"
-import { faCalculator, faClockRotateLeft, faDroplet, faPaperPlane, faPlus, faWater, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faCalculator, faClockRotateLeft, faDroplet, faPaperPlane, faPlus, faTrash, faWater, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useRef } from 'react'
 import { useState, useEffect } from "react"
@@ -9,6 +9,7 @@ import { convertDatetime } from '../../../../modules/helpers/converter'
 import GetBodyBoxDashboard from '../../../../components/containers/body_box_dashboard'
 import { add_firestore } from '../../../../modules/firebase/command'
 import Axios from 'axios'
+import $ from 'jquery'
 
 export default function GetManageBody({ctx}) {
     //Initial variable
@@ -19,8 +20,12 @@ export default function GetManageBody({ctx}) {
     const [itemsCalorie, setItemsCalorie] = useState(null)
     const [itemsDashboard, setItemsDashboard] = useState(null)
     const [resMsgAll, setResMsgAll] = useState([])
+    
+    // Toogle
     const [showInputRow, setShowInputRow] = useState(false)
     const [showInputCalRow, setShowInputCalRow] = useState(false)
+    const [showChecboxBodyInfo, setShowChecboxBodyInfo] = useState(false)
+    const [showChecboxCal, setShowChecboxCal] = useState(false)
 
     // Calorie form
     const [weight, setWeight] = useState(null)
@@ -79,6 +84,12 @@ export default function GetManageBody({ctx}) {
     }
     const cancelAddCal = () => {
         setShowInputCalRow(false)
+    }
+    const cancelDeleteBodyInfo = () => {
+        setShowChecboxBodyInfo(false)
+    }
+    const cancelDeleteCal = () => {
+        setShowChecboxCal(false)
     }
 
     // Services
@@ -157,6 +168,90 @@ export default function GetManageBody({ctx}) {
         }
     }
 
+    const handleToogleDelete = async (type) => {
+        if(type == 'calorie'){
+            try {
+                if(!showChecboxCal){
+                    setShowChecboxCal(true)
+                } else {
+                    let id = ''
+                    $('.check-delete-calorie').each(function(idx, el){
+                        if(el.checked){
+                            id += `${el.value},`
+                        }
+                    })
+
+                    const response = await Axios.delete(`http://127.0.0.1:8000/api/v1/count/calorie/${id}`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    })
+                    if(response.status != 200){
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Something wrong happen. Call the Admin!',
+                            icon: 'error',
+                        })  
+                    } else {
+                        setShowChecboxCal(false)
+                        Swal.fire({
+                            title: 'Success!',
+                            text: response.data.message,
+                            icon: 'success',
+                        })  
+                        fetchManageBody()
+                    }
+                }
+            } catch (error) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Something wrong happen. Call the Admin!',
+                    icon: 'error',
+                })  
+            }
+        } else if(type == 'body_info'){
+            try {
+                if(!showChecboxBodyInfo){
+                    setShowChecboxBodyInfo(true)
+                } else {
+                    let id = ''
+                    $('.check-delete-body_info').each(function(idx, el){
+                        if(el.checked){
+                            id += `${el.value},`
+                        }
+                    })
+
+                    const response = await Axios.delete(`http://127.0.0.1:8000/api/v1/user/body_info/delete/${id}`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    })
+                    if(response.status != 200){
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Something wrong happen. Call the Admin!',
+                            icon: 'error',
+                        })  
+                    } else {
+                        setShowChecboxBodyInfo(false)
+                        Swal.fire({
+                            title: 'Success!',
+                            text: response.data.message,
+                            icon: 'success',
+                        })  
+                        fetchManageBody()
+                    }
+                }
+            } catch (error) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Something wrong happen. Call the Admin!',
+                    icon: 'error',
+                })  
+            }
+        }
+    }
+
     if (error) {
         return <div>Error: {error.message}</div>
     } else if (!isLoaded) {
@@ -200,10 +295,17 @@ export default function GetManageBody({ctx}) {
                                 <hr></hr>
                                 <div className='row'>
                                     <div className='col-lg-7 col-md-6 col-sm-12'>
-                                        <table class="table table-bordered table-click">
+                                        <table className="table table-bordered table-click">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Tested On</th>
+                                                    <th scope="col">
+                                                        {
+                                                            !showChecboxBodyInfo ?
+                                                                'Tested On'
+                                                            :
+                                                                'To Deleted'
+                                                        }
+                                                    </th>
                                                     <th scope="col">Blood Preasure</th>
                                                     <th scope="col">Glucose</th>
                                                     <th scope="col">Gout</th>
@@ -215,7 +317,14 @@ export default function GetManageBody({ctx}) {
                                                     itemsBodyInfo.map((dt, idx)=>{
                                                         return (
                                                             <tr>
-                                                                <td>{convertDatetime(dt.created_at,'datetime')}</td>
+                                                                <td>
+                                                                    {
+                                                                        !showChecboxBodyInfo ?
+                                                                            convertDatetime(dt.created_at,'datetime')
+                                                                        : 
+                                                                            <input className="form-check-input check-delete-body_info" type="checkbox" value={dt.id}></input>
+                                                                    }
+                                                                </td>
                                                                 <td>{dt.blood_pressure}</td>
                                                                 <td>{dt.blood_glucose} mg/dL</td>
                                                                 <td>{dt.gout} mg/dL</td>
@@ -236,30 +345,51 @@ export default function GetManageBody({ctx}) {
                                                     )
                                                 }
                                                 {
-                                                    !showInputRow ? 
-                                                        <tr>
-                                                            <td colSpan={5}>
-                                                                <button className='btn btn-success w-100' style={{borderRadius:"0"}} onClick={handleAddNewTestClick}><FontAwesomeIcon icon={faPlus}/> Add New Test</button>
-                                                            </td>
-                                                        </tr>
+                                                    !showChecboxBodyInfo ?
+                                                        !showInputRow ? 
+                                                            <tr>
+                                                                <td colSpan={1}>
+                                                                    <button className='btn btn-danger w-100' style={{borderRadius:"0"}} onClick={(e) => handleToogleDelete('body_info')}><FontAwesomeIcon icon={faTrash}/> Delete</button>
+                                                                </td>
+                                                                <td colSpan={4}>
+                                                                    <button className='btn btn-success w-100' style={{borderRadius:"0"}} onClick={handleAddNewTestClick}><FontAwesomeIcon icon={faPlus}/> Add New Test</button>
+                                                                </td>
+                                                            </tr>
+                                                        :
+                                                            <tr>
+                                                                <td colSpan={1}>
+                                                                    <button className='btn btn-danger w-100' style={{borderRadius:"0"}} onClick={cancelAddTest}><FontAwesomeIcon icon={faXmark}/> Cancel</button>
+                                                                </td>
+                                                                <td colSpan={4}>
+                                                                    <button className='btn btn-success w-100' style={{borderRadius:"0"}} onClick={handleSubmitBodyInfo}><FontAwesomeIcon icon={faPaperPlane}/> Submit</button>
+                                                                </td>
+                                                            </tr>
                                                     :
                                                         <tr>
-                                                            <td colSpan={3}>
-                                                                <button className='btn btn-danger w-100' style={{borderRadius:"0"}} onClick={cancelAddTest}><FontAwesomeIcon icon={faXmark}/> Cancel Add</button>
+                                                            <td colSpan={1}>
+                                                                <button className='btn btn-danger w-100' style={{borderRadius:"0"}} onClick={cancelDeleteBodyInfo}><FontAwesomeIcon icon={faXmark}/> Cancel</button>
                                                             </td>
-                                                            <td colSpan={2}>
-                                                                <button className='btn btn-success w-100' style={{borderRadius:"0"}} onClick={handleSubmitBodyInfo}><FontAwesomeIcon icon={faPaperPlane}/> Submit</button>
+                                                            <td colSpan={4}>
+                                                                <button className='btn btn-danger w-100' style={{borderRadius:"0"}} onClick={(e) => handleToogleDelete('body_info')}><FontAwesomeIcon icon={faTrash}/> Delete</button>
                                                             </td>
                                                         </tr>
+                                                    
                                                 }
                                             </tbody>
                                         </table>
                                     </div>
                                     <div className='col-lg-5 col-md-6 col-sm-12'>
-                                        <table class="table table-bordered table-click">
+                                        <table className="table table-bordered table-click">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Tested On</th>
+                                                    <th scope="col">
+                                                        {
+                                                            !showChecboxCal ?
+                                                                'Tested On'
+                                                            :
+                                                                'To Deleted'
+                                                        }
+                                                    </th>
                                                     <th scope="col">Weight</th>
                                                     <th scope="col">Height</th>
                                                     <th scope="col">Calorie</th>
@@ -270,7 +400,14 @@ export default function GetManageBody({ctx}) {
                                                     itemsCalorie.map((dt, idx)=>{
                                                         return (
                                                             <tr>
-                                                                <td>{convertDatetime(dt.created_at,'datetime')}</td>
+                                                                <td>
+                                                                    {
+                                                                        !showChecboxCal ?
+                                                                            convertDatetime(dt.created_at,'datetime')
+                                                                        : 
+                                                                            <input className="form-check-input check-delete-calorie" type="checkbox" value={dt.id}></input>
+                                                                    }
+                                                                </td>
                                                                 <td>{dt.weight} Kg</td>
                                                                 <td>{dt.height} Cm</td>
                                                                 <td>{dt.result} Cal</td>
@@ -289,19 +426,32 @@ export default function GetManageBody({ctx}) {
                                                     )
                                                 }
                                                 {
-                                                    !showInputCalRow ? 
-                                                        <tr>
-                                                            <td colSpan={4}>
-                                                                <button className='btn btn-success w-100' style={{borderRadius:"0"}} onClick={handleAddNewCalClick}><FontAwesomeIcon icon={faPlus}/> Add New Data</button>
-                                                            </td>
-                                                        </tr>
+                                                    !showChecboxCal ?
+                                                        !showInputCalRow ? 
+                                                            <tr>
+                                                                <td colSpan={1}>
+                                                                    <button className='btn btn-danger w-100' style={{borderRadius:"0"}} onClick={(e) => handleToogleDelete('calorie')}><FontAwesomeIcon icon={faTrash}/> Delete</button>
+                                                                </td>
+                                                                <td colSpan={3}>
+                                                                    <button className='btn btn-success w-100' style={{borderRadius:"0"}} onClick={handleAddNewCalClick}><FontAwesomeIcon icon={faPlus}/> Add New Data</button>
+                                                                </td>
+                                                            </tr>
+                                                        :
+                                                            <tr>
+                                                                <td colSpan={1}>
+                                                                    <button className='btn btn-danger w-100' style={{borderRadius:"0"}} onClick={cancelAddCal}><FontAwesomeIcon icon={faXmark}/> Cancel</button>
+                                                                </td>
+                                                                <td colSpan={3}>
+                                                                    <button className='btn btn-success w-100' style={{borderRadius:"0"}} onClick={handleSubmitCal}><FontAwesomeIcon icon={faPaperPlane}/> Submit</button>
+                                                                </td>
+                                                            </tr>
                                                     :
                                                         <tr>
-                                                            <td colSpan={2}>
-                                                                <button className='btn btn-danger w-100' style={{borderRadius:"0"}} onClick={cancelAddCal}><FontAwesomeIcon icon={faXmark}/> Cancel Add</button>
+                                                            <td colSpan={1}>
+                                                                <button className='btn btn-danger w-100' style={{borderRadius:"0"}} onClick={cancelDeleteCal}><FontAwesomeIcon icon={faXmark}/> Cancel</button>
                                                             </td>
-                                                            <td colSpan={2}>
-                                                                <button className='btn btn-success w-100' style={{borderRadius:"0"}} onClick={handleSubmitCal}><FontAwesomeIcon icon={faPaperPlane}/> Submit</button>
+                                                            <td colSpan={4}>
+                                                                <button className='btn btn-danger w-100' style={{borderRadius:"0"}} onClick={(e) => handleToogleDelete('calorie')}><FontAwesomeIcon icon={faTrash}/> Delete</button>
                                                             </td>
                                                         </tr>
                                                 }
