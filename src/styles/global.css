@@ -262,3 +262,15 @@ label.error{
     border: var(--spaceMini) solid var(--successBG);
     border-left: var(--spaceMD) solid var(--successBG);
 }
+
+.bgd-success {
+    background: var(--successBG);
+}
+.bgd-danger {
+    background: var(--dangerBG);
+}
+
+.tr-form input, .tr-form select{
+    border-radius: 0;
+    padding: 0;
+}
