@@ -7,7 +7,7 @@ const AddConsume = () => {
   return (
     <main>
       <div className="wrapper d-flex align-items-stretch">
-        <GetNavbar active="dashboard"/>
+        <GetNavbar active="history"/>
         <div id="content" className="p-4 p-md-5">
           <GetNavbarToggle/>
           <div id="content-body">

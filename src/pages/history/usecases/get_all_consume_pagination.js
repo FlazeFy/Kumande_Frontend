@@ -12,6 +12,7 @@ import FilterConsumeTag from './filter_consume_tag'
 import FilterConsumeType from './filter_consume_type'
 import FilterIsFavoriteConsume from './filter_is_favorite'
 import FilterOrderConsume from './filter_order_consume'
+import { convertDatetime } from '../../../modules/helpers/converter'
 
 export default function GetAllConsumePagination({ctx}) {
     //Initial variable
@@ -20,20 +21,18 @@ export default function GetAllConsumePagination({ctx}) {
     const [items, setItems] = useState([])
     const token = getLocal("token_key")
 
-    useEffect(() => {
-        //Default config
-        const keyPage = sessionStorage.getItem("Table_"+ctx)
-        const keyOrder = getLocal("Table_order_"+ctx)
-        const keyFav = getLocal("Table_filter_favorite_"+ctx)
-        const keyType = getLocal("Table_filter_type_"+ctx)
-        const keyLimit = getLocal("Table_limit_"+ctx)
-        const keyCalorie = getLocal("Table_filter_max_min_cal")
+    //Default config
+    const keyOrder = getLocal("Table_order_"+ctx)
+    const keyFav = getLocal("Table_filter_favorite_"+ctx)
+    const keyType = getLocal("Table_filter_type_"+ctx)
+    const keyLimit = getLocal("Table_limit_"+ctx)
+    const keyCalorie = getLocal("Table_filter_max_min_cal")
+    const [consumeMaxPage,setConsumeMaxPage] = useState(1)
+    const [consumeCurrPage,setConsumeCurrPage] = useState(1)
 
-        if(keyPage === null){
-            sessionStorage.setItem("Table_"+ctx, "1")
-        }
+    const fetchConsume = (page) => {
         if(keyOrder === null){
-            storeLocal("Table_order_"+ctx,"ASC")
+            storeLocal("Table_order_"+ctx,"DESC")
         }
         if(keyFav === null){
             storeLocal("Table_filter_favorite_"+ctx,"all")
@@ -48,7 +47,7 @@ export default function GetAllConsumePagination({ctx}) {
             storeLocal("Table_filter_max_min_cal","all")
         }
 
-        fetch(`http://127.0.0.1:8000/api/v1/consume/limit/${keyLimit}/order/${keyOrder}/favorite/${keyFav}/type/${keyType}/provide/all/calorie/${keyCalorie}?page=${keyPage}`, {
+        fetch(`http://127.0.0.1:8000/api/v1/consume/limit/${keyLimit}/order/${keyOrder}/favorite/${keyFav}/type/${keyType}/provide/all/calorie/${keyCalorie}?page=${page}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -59,6 +58,8 @@ export default function GetAllConsumePagination({ctx}) {
                 setIsLoaded(true)
                 if(result.data != null){
                     setItems(result.data.data)
+                    setConsumeCurrPage(result.data.current_page)
+                    setConsumeMaxPage(result.data.last_page)
                 }        
             },
             (error) => {
@@ -71,7 +72,12 @@ export default function GetAllConsumePagination({ctx}) {
                 }
             }
         )
-    },[])
+    }
+
+
+    useEffect(() => {
+        fetchConsume();
+    }, []);
 
     if (error) {
         return <div>Error: {error.message}</div>
@@ -82,6 +88,8 @@ export default function GetAllConsumePagination({ctx}) {
             </div>
         )
     } else {
+        let date_before = ''
+        
         return (
             <div>
                 <div className='d-block mx-auto' style={{width:"1080px"}}>
@@ -99,12 +107,38 @@ export default function GetAllConsumePagination({ctx}) {
                     {
                         items.length > 0 ?
                             items.map((elmt, idx) => {
-                                return (
-                                    <GetConsumeBox items={elmt} type="header"/>
-                                )
+                                const curr_date = convertDatetime(elmt.created_at,'calendar').substring(0,11)
+
+                                if(date_before == "" || date_before != curr_date){
+                                    date_before = curr_date
+                                    return (
+                                        <>
+                                            <div className='text-center'>
+                                                <h6 style={{fontSize:"var(--textMD)"}} className='bgd-primary text-white p-2 mb-3 rounded d-inline-block mx-auto'>{curr_date}</h6>
+                                            </div>
+                                            <GetConsumeBox items={elmt} type="header"/>
+                                        </>
+                                    )
+                                } else {
+                                    return (
+                                        <GetConsumeBox items={elmt} type="header"/>
+                                    )
+                                }
                             })
                         :
                             <GetAnimaText ctx="No Consume Found" url={'/icons/Consume.png'}/>
+                    }
+                    {
+                        items && consumeMaxPage > 0 ? 
+                            <div className='d-flex justify-content-start'>
+                                {
+                                    Array.from({ length: consumeMaxPage }, (v, i) => (
+                                        <button key={'page_'+i} onClick={() => fetchConsume(i+1)} className={consumeCurrPage == i+1 ? 'btn btn-page active':'btn btn-page'}>{i+1}</button>
+                                    ))
+                                }
+                            </div>
+                        :
+                            <></>
                     }
                 </div>
             </div>

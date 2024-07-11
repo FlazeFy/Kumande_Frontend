@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from "react"
+import Swal from 'sweetalert2'
 
 // Component
 import GetPieChart from '../../../components/charts/pie_chart'
@@ -28,24 +29,33 @@ export default function GetMostConsumeFrom({ctx}) {
                 Authorization: `Bearer ${token}`
             }
         })
-        .then(res => res.json())
-            .then(
-            (result) => {
-                setIsLoaded(true)
+        .then(res => {
+            return res.json().then(result => ({ status: res.status, result: result }))
+        })
+        .then(({ status, result }) => {
+            setIsLoaded(true)
+            if(status == 200){ 
                 setItems(result.data)
                 const item = result.data
-                storeLocal(ctx + "_sess",JSON.stringify(item))             
-            },
-            (error) => {
-                if(getLocal(ctx + "_sess") !== undefined){
-                    setIsLoaded(true)
-                    setItems(JSON.parse(getLocal(ctx + "_sess")))
-                } else {
-                    setIsLoaded(true)
-                    setError(error)
-                }
+                storeLocal(ctx + "_sess",JSON.stringify(item))  
+            } else {
+                setItems(null)
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Something wrong happen. Call the Admin!',
+                    icon: 'error',
+                }) 
             }
-        )
+        })
+        .catch(error => {                
+            if(getLocal(ctx + "_sess") !== undefined){
+                setIsLoaded(true)
+                setItems(JSON.parse(getLocal(ctx + "_sess")))
+            } else {
+                setIsLoaded(true)
+                setError(error)
+            }
+        })
     },[])
 
     if (error) {
@@ -60,7 +70,12 @@ export default function GetMostConsumeFrom({ctx}) {
         return (
             <div className='container shadow p-3'> 
                 <h2>{getCleanTitleFromCtx(ctx)}</h2>
-                <GetPieChart items={items} filter_name={null}/>  
+                {
+                    items ?
+                        <GetPieChart items={items} filter_name={null}/>  
+                    :
+                        <p className='text-secondary text-center fst-italic'>- No Data Found -</p>
+                }
             </div>
         )
     }

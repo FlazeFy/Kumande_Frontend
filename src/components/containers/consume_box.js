@@ -52,12 +52,14 @@ export default function GetConsumeBox({items, type, func}) {
                         type != 'detail' ?
                             <div style={{fontWeight:"500"}}>
                                 <a className='text-secondary me-3'>{items['consume_from']}</a>
+                                <a className='bgd-success rounded py-2 px-3 text-white'>
                                 {
-                                    items['is_payment'] === 0 ?
-                                        <a className='bg-success'>Free</a>
+                                    items['is_payment'] == null ?
+                                        'Free'
                                     :
-                                        <a className='text-success'>Rp. {items['payment_price'].toLocaleString()}</a>
+                                        `Rp. ${items['payment_price'].toLocaleString()}`
                                 }
+                                </a>
                             </div>
                         : 
                             <></>
@@ -83,11 +85,14 @@ export default function GetConsumeBox({items, type, func}) {
                 <h6 className='mt-2'>Tags</h6>
                 <div className='d-flex justify-content-start'>
                     {
-                        items['consume_tag'].map((tag, idx) => {
-                            return(
-                                <a className='btn btn-primary rounded-pill px-3 py-1 me-1'>{tag['tag_name']}</a>
-                            )
-                        })
+                        items['consume_tag'] ?
+                            items['consume_tag'].map((tag, idx) => {
+                                return(
+                                    <a className='btn btn-primary rounded-pill px-3 py-1 me-1'>{tag['tag_name']}</a>
+                                )
+                            })
+                        :
+                            <p className='text-secondary fst-italic'>- No Tag Found -</p>
                     }
                 </div>
                 {
@@ -138,7 +143,7 @@ export default function GetConsumeBox({items, type, func}) {
                                         :
                                             <div className='d-block mx-auto text-center'>
                                                 <img className='img img-fluid my-4' src='/icons/BudgetData.png' style={{width:"160px"}}/>
-                                                <h5 className='text-secondary'>No Schedule found for this Consume</h5>
+                                                <h5 className='text-secondary'>No Payment found for this Consume</h5>
                                             </div>                                
                                         }
                                 </div>

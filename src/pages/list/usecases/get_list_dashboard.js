@@ -23,22 +23,25 @@ export default function GetListDashboard({ctx}) {
                 Authorization: `Bearer ${token}`
             }
         })
-        .then(res => res.json())
-            .then(
-            (result) => {
-                setIsLoaded(true)
+        .then(res => {
+            return res.json().then(result => ({status:res.status, result:result}))
+        }).then(({status, result}) => {
+            setIsLoaded(true)
+
+            if(status == 200){
                 setItems(result.data.data) 
-            },
-            (error) => {
-                if(getLocal(ctx + "_sess") !== undefined){
-                    setIsLoaded(true)
-                    setItems(JSON.parse(getLocal(ctx + "_sess")))
-                } else {
-                    setIsLoaded(true)
-                    setError(error)
-                }
+            } else {
+                setItems(null)
             }
-        )
+        }).catch(error=> {
+            if(getLocal(ctx + "_sess") !== undefined){
+                setIsLoaded(true)
+                setItems(JSON.parse(getLocal(ctx + "_sess")))
+            } else {
+                setIsLoaded(true)
+                setError(error)
+            }
+        })
     },[])
 
 

@@ -46,9 +46,12 @@ export default function GetExistedConsume({ctx}) {
         return (
             <datalist id="consume_name_list">
                 {
-                    item.map((elmt, index) => (
-                        <option value={elmt.slug_name}>{elmt.consume_name}</option>
-                    ))
+                    item ?
+                        item.map((elmt, index) => (
+                            <option value={elmt.slug_name}>{elmt.consume_name}</option>
+                        ))
+                    :
+                        <></>
                 }
             </datalist>
         )

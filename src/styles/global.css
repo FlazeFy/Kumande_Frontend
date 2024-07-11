@@ -269,6 +269,9 @@ label.error{
 .bgd-danger {
     background: var(--dangerBG);
 }
+.bgd-primary {
+    background: var(--primaryColor);
+}
 
 .tr-form input, .tr-form select{
     border-radius: 0;

@@ -29,11 +29,12 @@ export default function PostConsume() {
     const [consumeProvide, setConsumeProvide] = useState("")
     const [consumeMainIng, setConsumeMainIng] = useState("")
     const [consumeCal, setConsumeCal] = useState(0)
-    const [consumeFrom, setConsumeFrom] = useState("")
-    const [consumeType, setConsumeType] = useState("")
+    const [consumeFrom, setConsumeFrom] = useState("GoFood")
+    const [consumeType, setConsumeType] = useState("Food")
     const [consumeComment, setConsumeComment] = useState(null)
-    const [paymentMethod, setPaymentMethod] = useState("")
+    const [paymentMethod, setPaymentMethod] = useState("GoPay")
     const [paymentPrice, setPaymentPrice] = useState(0)
+    const [consumeCreatedAt, setConsumeCreatedAt] = useState(null)
 
     const consumeNameRef = useRef(null)
     const consumeProvideRef = useRef(null)
@@ -169,99 +170,117 @@ export default function PostConsume() {
         }
     };
 
+    const choosePaymentMethod = (val) => {
+        if (paymentPriceRef.current) {
+            paymentPriceRef.current.value = 0
+            setPaymentMethod(val)
+
+            if(val == "Free" || val == "Gift"){
+                paymentPriceRef.current.readOnly = true
+            } else {
+                paymentPriceRef.current.readOnly = false
+            }
+        }
+    }
+
     const handleConsumeName = (slug) => {
         fetch(`http://127.0.0.1:8000/api/v1/consume/detail/${slug}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
-        .then(res => res.json())
-            .then(
-            (result) => {
-                const data = result.data
-                if (consumeNameRef.current) {
-                    consumeNameRef.current.value = data.consume_name
-                    setConsumeName(data.consume_name)
-                }
-                if (consumeProvideRef.current) {
-                    consumeProvideRef.current.value = data.consume_detail[0].provide
-                    setConsumeProvide(data.consume_detail[0].provide)
-                }
-                if (consumeMainIngRef.current) {
-                    consumeMainIngRef.current.value = data.consume_detail[0].main_ing
-                    setConsumeMainIng(data.consume_detail[0].main_ing)
-                }
-                if (consumeCalRef.current) {
-                    consumeCalRef.current.value = data.consume_detail[0].calorie
-                    setConsumeCal(data.consume_detail[0].calorie)
-                }
-                if (consumeFromRef.current) {
-                    consumeFromRef.current.value = data.consume_from
-                    setConsumeFrom(data.consume_from)
-                }
-                if (consumeTypeRef.current) {
-                    consumeTypeRef.current.value = data.consume_type
-                    setConsumeType(data.consume_type)
-                }
-                if (consumeCommentRef.current) {
-                    consumeCommentRef.current.value = data.consume_comment
-                    setConsumeComment(data.consume_comment)
-                }
-                if (paymentMethodRef.current) {
-                    paymentMethodRef.current.value = data.payment[0].payment_method
-                    setPaymentMethod(data.payment[0].payment_method)
-                }
-                if (paymentPriceRef.current) {
-                    paymentPriceRef.current.value = data.payment[0].payment_price
-                    setPaymentPrice(data.payment[0].payment_price)
-                }
-                const tags = data.consume_tag
+        .then(res => {
+            return res.json().then(result => ({ status: res.status, result: result }))
+        })
+            .then(({ status, result }) => {
+                if(status != 404){
+                    const data = result.data
+                    if (consumeNameRef.current) {
+                        consumeNameRef.current.value = data.consume_name
+                        setConsumeName(data.consume_name)
+                    }
+                    if (consumeProvideRef.current) {
+                        consumeProvideRef.current.value = data.consume_detail[0].provide
+                        setConsumeProvide(data.consume_detail[0].provide)
+                    }
+                    if (consumeMainIngRef.current) {
+                        consumeMainIngRef.current.value = data.consume_detail[0].main_ing
+                        setConsumeMainIng(data.consume_detail[0].main_ing)
+                    }
+                    if (consumeCalRef.current) {
+                        consumeCalRef.current.value = data.consume_detail[0].calorie
+                        setConsumeCal(data.consume_detail[0].calorie)
+                    }
+                    if (consumeFromRef.current) {
+                        consumeFromRef.current.value = data.consume_from
+                        setConsumeFrom(data.consume_from)
+                    }
+                    if (consumeTypeRef.current) {
+                        consumeTypeRef.current.value = data.consume_type
+                        setConsumeType(data.consume_type)
+                    }
+                    if (consumeCommentRef.current) {
+                        consumeCommentRef.current.value = data.consume_comment
+                        setConsumeComment(data.consume_comment)
+                    }
+                    if (paymentMethodRef.current) {
+                        paymentMethodRef.current.value = data.payment[0].payment_method
+                        setPaymentMethod(data.payment[0].payment_method)
+                    }
+                    if (paymentPriceRef.current) {
+                        paymentPriceRef.current.value = data.payment[0].payment_price
+                        setPaymentPrice(data.payment[0].payment_price)
+                    }
+                    const tags = data.consume_tag
 
-                tags.forEach((el,i) => {
-                    setSelectedTag(selectedTag.concat(
-                        <button key={i} className='btn btn-tag' value={{slug_name:el.slug_name, tag_name:el.tag_name}} title="Unselect this tag" onClick={() => removeTag(el.slug_name)}>
-                            {el.tag_name}
-                        </button>
-                    ));
-                });
+                    tags.forEach((el,i) => {
+                        setSelectedTag(selectedTag.concat(
+                            <button key={i} className='btn btn-tag' value={{slug_name:el.slug_name, tag_name:el.tag_name}} title="Unselect this tag" onClick={() => removeTag(el.slug_name)}>
+                                {el.tag_name}
+                            </button>
+                        ));
+                    });
 
-                setExistingHistory(
-                    data.payment != null ?
-                        <div className='row mt-2 ps-1 mx-1 p-1 rounded mb-3' style={{border:"1.25px solid #DFE2E6"}}>
-                            <div className='col'>
-                                <label className='text-secondary' style={{fontSize:"var(--textMD)"}}>Consume History</label>
-                                {
-                                    data.payment.length > 0 ? 
-                                        <ol>
-                                            {
-                                                data.payment.map((dt, idxHs) => (
-                                                    <li>At {convertDatetime(dt.created_at, 'calendar')} using {dt.payment_method} with ammount Rp. {numberToPrice(dt.payment_price)}</li>
-                                                ))
-                                            }
-                                        </ol>
-                                    : 
-                                        <p className='text-secondary fst-italic'>- No History Found -</p>
-                                }
+                    setExistingHistory(
+                        data.payment != null ?
+                            <div className='row mt-2 ps-1 mx-1 p-1 rounded mb-3' style={{border:"1.25px solid #DFE2E6"}}>
+                                <div className='col'>
+                                    <label className='text-secondary' style={{fontSize:"var(--textMD)"}}>Consume History</label>
+                                    {
+                                        data.payment.length > 0 ? 
+                                            <ol>
+                                                {
+                                                    data.payment.map((dt, idxHs) => (
+                                                        <li>At {convertDatetime(dt.created_at, 'calendar')} using {dt.payment_method} with ammount Rp. {numberToPrice(dt.payment_price)}</li>
+                                                    ))
+                                                }
+                                            </ol>
+                                        : 
+                                            <p className='text-secondary fst-italic'>- No History Found -</p>
+                                    }
+                                </div>
+                                <div className='col'>
+                                    <label className='text-secondary' style={{fontSize:"var(--textMD)"}}>Schedule</label>
+                                    {
+                                        data.schedule.length > 0 ? 
+                                            <ol>
+                                                {
+                                                    data.schedule.map((dt, idxHs) => (
+                                                        <li>For {dt.schedule_time[0].day} {dt.schedule_time[0].category} at {dt.schedule_time[0].time}</li>
+                                                    ))
+                                                }
+                                            </ol>
+                                        : 
+                                            <p className='text-secondary fst-italic'>- No Schedule Found -</p>
+                                    }
+                                </div>
                             </div>
-                            <div className='col'>
-                                <label className='text-secondary' style={{fontSize:"var(--textMD)"}}>Schedule</label>
-                                {
-                                    data.schedule.length > 0 ? 
-                                        <ol>
-                                            {
-                                                data.schedule.map((dt, idxHs) => (
-                                                    <li>For {dt.schedule_time[0].day} {dt.schedule_time[0].category} at {dt.schedule_time[0].time}</li>
-                                                ))
-                                            }
-                                        </ol>
-                                    : 
-                                        <p className='text-secondary fst-italic'>- No Schedule Found -</p>
-                                }
-                            </div>
-                        </div>
-                    : 
-                        <></>
-                )
+                        : 
+                            <></>
+                    )
+                } else {
+                    setConsumeName(slug)
+                }
             },
             (error) => { 
                 if(getLocal(ctx + "_sess") !== undefined){
@@ -286,18 +305,22 @@ export default function PostConsume() {
             <div className='container-fluid p-3'>
                 <h2>Add Consume</h2>
                 <h5>About Consume</h5>
-                <div className='row mb-3'>
-                    <div className='col'>
-                        <div className="form-floating">
-                            <input type="text" className="form-control" ref={consumeNameRef} onBlur={(e) => handleConsumeName(e.target.value)} list="consume_name_list"></input>
-                            <label htmlFor="floatingInput">Name</label>
-                        </div>
-                        <GetExistedConsume ctx="existed_consume"/>
-                    </div>
+                <div className="form-floating">
+                    <input type="text" className="form-control" ref={consumeNameRef} onBlur={(e) => handleConsumeName(e.target.value)} list="consume_name_list"></input>
+                    <label htmlFor="floatingInput">Name</label>
+                </div>
+                <GetExistedConsume ctx="existed_consume"/>
+                <div className='row my-3'>
                     <div className='col'>
                         <div className="form-floating">
                             <input type="text" className="form-control" ref={consumeProvideRef} onChange={(e) => setConsumeProvide(e.target.value)} id="floatingInput"></input>
                             <label htmlFor="floatingInput">Provide</label>
+                        </div>
+                    </div>
+                    <div className='col'>
+                        <div className="form-floating">
+                            <input type="datetime-local" className="form-control" onChange={(e) => setConsumeCreatedAt(e.target.value)} id="floatingInput"></input>
+                            <label htmlFor="floatingInput">Consume At</label>
                         </div>
                     </div>
                 </div>
@@ -325,6 +348,7 @@ export default function PostConsume() {
                                 <option value="ShopeeFood">ShopeeFood</option>
                                 <option value="Dine-In">Dine-In</option>
                                 <option value="Take Away">Take Away</option>
+                                <option value="Cooking">Cooking</option>
                             </select>
                             <label htmlFor="floatingSelect">From</label>
                         </div>
@@ -387,7 +411,7 @@ export default function PostConsume() {
                 <div className='row mb-3'>
                     <div className='col'>
                         <div className="form-floating mb-3">
-                            <select className="form-select" id="floatingSelect" ref={paymentMethodRef} onChange={(e) => setPaymentMethod(e.target.value)} aria-label="Floating label select example">
+                            <select className="form-select" id="floatingSelect" ref={paymentMethodRef} onChange={(e) => choosePaymentMethod(e.target.value)} aria-label="Floating label select example">
                                 <option value="GoPay">GoPay</option>
                                 <option value="Ovo">Ovo</option>
                                 <option value="Dana">Dana</option>
@@ -395,6 +419,7 @@ export default function PostConsume() {
                                 <option value="MBanking">MBanking</option>
                                 <option value="Cash">Cash</option>
                                 <option value="Gift">Gift</option>
+                                <option value="Free">Free</option>
                                 <option value="Cuppon">Cuppon</option>
                             </select>
                             <label htmlFor="floatingSelect">Method</label>
@@ -407,7 +432,7 @@ export default function PostConsume() {
                         </div>
                     </div>
                 </div>
-                <button className='btn btn-success mt-3' onClick={handleSubmit}><FontAwesomeIcon icon={faFloppyDisk}/> Save</button>
+                <button className='btn btn-success mt-3' ref={paymentMethodRef} onClick={handleSubmit}><FontAwesomeIcon icon={faFloppyDisk}/> {paymentMethod == "Gift" || paymentMethod == "Free" ? "Save Consume":"Save Consume & Payment"}</button>
             </div>
         )
     }
