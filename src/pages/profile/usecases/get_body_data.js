@@ -12,7 +12,7 @@ export default function GetBodyData({ctx}) {
     //Initial variable
     const [error, setError] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)
-    const [item, setItem] = useState([])
+    const [item, setItem] = useState(null)
     const token = getLocal("token_key")
 
     const builder = [

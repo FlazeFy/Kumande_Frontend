@@ -142,7 +142,7 @@ export default function GetMyBodyInfo({ctx}) {
                     <div className='col-lg-3 col-md-4 col-sm-6'>
                         <h5 className='mb-0'>Glucose</h5>
                         {
-                            items ?
+                            items.blood_glucose > 0 ?
                                 <GetRadialChart custom={
                                     {
                                         type:'half',
@@ -157,7 +157,7 @@ export default function GetMyBodyInfo({ctx}) {
                     <div className='col-lg-3 col-md-4 col-sm-6'>
                         <h5 className='mb-0'>Gout</h5>
                         {
-                            items ?
+                            items.gout > 0 ?
                                 <GetRadialChart custom={
                                     {
                                         type:'half',
@@ -172,7 +172,7 @@ export default function GetMyBodyInfo({ctx}) {
                     <div className='col-lg-3 col-md-4 col-sm-6'>
                         <h5 className='mb-0'>Cholesterol</h5>
                         {
-                            items ?
+                            items.cholesterol > 0 ?
                                 <GetRadialChart custom={
                                     {
                                         type:'half',
@@ -191,7 +191,7 @@ export default function GetMyBodyInfo({ctx}) {
                         <h5 className='mb-0'>Body Mass Index (BMI)</h5>
                         <p className='mb-0 text-secondary' style={{fontSize:"var(--textMD)"}}>Last Updated at {items ? convertDatetime(items.calorie_updated,'calendar'):''}</p>
                         {
-                            items ?
+                            items.bmi ?
                             <   GetRadialChart custom={
                                     {
                                         type:'half',

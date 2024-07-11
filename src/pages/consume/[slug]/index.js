@@ -10,6 +10,7 @@ import GetSimilarMainIng from "./usecases/get_similar_main_ing"
 import GetSimilarConsumeFrom from "./usecases/get_similar_consume_from"
 import GetSimilarYearMonthCreated from "./usecases/get_similar_year_month_created"
 import GetSimilarConsumeType from "./usecases/get_similar_consume_type"
+import GetSimilarConsume from "./usecases/get_similar_consume"
 
 export default function ConsumeDetail({ params }) {
   //Initial variable
@@ -69,11 +70,8 @@ export default function ConsumeDetail({ params }) {
             <GetNavbarToggle/>
             <div id="content-body">
               <GetConsumeBox ctx="consume_detail" items={item} type="detail"/>
-              <GetSimilarProvide ctx="similar_provide" provide={item.consume_detail[0].provide} slug={item.slug_name}/>
-              <GetSimilarMainIng ctx="similar_main_ing" main_ing={item.consume_detail[0].main_ing} slug={item.slug_name}/>
-              <GetSimilarConsumeFrom ctx="similar_consume_from" consume_from={item.consume_from} slug={item.slug_name}/>
-              <GetSimilarConsumeType ctx="similar_consume_type" consume_type={item.consume_type} slug={item.slug_name}/>
-              <GetSimilarYearMonthCreated ctx={`similar_consume_${month}_${year}`} month={month} year={year} slug={item.slug_name}/>
+=              <GetSimilarConsume ctx={`similar_consume`} provide={item.consume_detail[0].provide} main_ing={item.consume_detail[0].main_ing} 
+                consume_from={item.consume_from} consume_type={item.consume_type} month={month} year={year} slug={item.slug_name}/>
             </div>
           </div>
         </div>
