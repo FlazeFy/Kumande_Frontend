@@ -1,10 +1,8 @@
 "use client"
-import Axios from 'axios'
-import React, { useRef } from 'react'
+import React from 'react'
 import { getLocal } from '../../../modules/storages/local'
 import { useState, useEffect } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Swal from 'sweetalert2'
 import GetListStarted from './get_list_started'
 import { faBowlRice, faCake, faMugSaucer, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { convertDatetime } from '../../../modules/helpers/converter'

@@ -1,11 +1,7 @@
 "use client"
-import { faBell, faClock, faLocationDot } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useRef } from 'react'
+import React from 'react'
 import { useState, useEffect } from "react"
 import { getLocal } from '../../../../modules/storages/local'
-import Swal from 'sweetalert2'
-import Axios from 'axios'
 import GetRadialChart from '../../../../components/charts/radial_chart'
 import { convertDatetime } from '../../../../modules/helpers/converter'
 import GetManageBody from './get_manage_body'
@@ -16,7 +12,6 @@ export default function GetMyBodyInfo({ctx}) {
     const [isLoaded, setIsLoaded] = useState(false)
     const token = getLocal("token_key")
     const [items, setItems] = useState(null)
-    const [resMsgAll, setResMsgAll] = useState([])
     
     const fetchBodyInfo = () => {
         fetch(`http://127.0.0.1:8000/api/v1/user/body_info`, {

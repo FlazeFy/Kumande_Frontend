@@ -70,7 +70,7 @@ export default function ConsumeDetail({ params }) {
             <GetNavbarToggle/>
             <div id="content-body">
               <GetConsumeBox ctx="consume_detail" items={item} type="detail"/>
-=              <GetSimilarConsume ctx={`similar_consume`} provide={item.consume_detail[0].provide} main_ing={item.consume_detail[0].main_ing} 
+              <GetSimilarConsume ctx={`similar_consume`} provide={item.consume_detail[0].provide} main_ing={item.consume_detail[0].main_ing} 
                 consume_from={item.consume_from} consume_type={item.consume_type} month={month} year={year} slug={item.slug_name}/>
             </div>
           </div>

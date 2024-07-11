@@ -7,7 +7,6 @@ import Swal from 'sweetalert2'
 //Font awesome classicon
 import GetConsumeBox from '../../../../components/containers/consume_box'
 import { ucFirstWord } from '../../../../modules/helpers/converter'
-import GetBreakLine from '../../../../components/others/breakline'
 import { getMonthName } from '../../../../modules/helpers/generator'
 
 export default function GetSimilarConsume({ctx, consume_from, consume_type, provide, main_ing, month, year, slug}) {

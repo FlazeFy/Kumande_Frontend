@@ -1,7 +1,7 @@
 "use client"
 import { faCalculator, faClockRotateLeft, faDroplet, faPaperPlane, faPlus, faTrash, faWater, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useRef } from 'react'
+import React from 'react'
 import { useState, useEffect } from "react"
 import { getLocal } from '../../../../modules/storages/local'
 import Swal from 'sweetalert2'
@@ -19,7 +19,6 @@ export default function GetManageBody({ctx}) {
     const [itemsBodyInfo, setItemsBodyInfo] = useState(null)
     const [itemsCalorie, setItemsCalorie] = useState(null)
     const [itemsDashboard, setItemsDashboard] = useState(null)
-    const [resMsgAll, setResMsgAll] = useState([])
     
     // Toogle
     const [showInputRow, setShowInputRow] = useState(false)

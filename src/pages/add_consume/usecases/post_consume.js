@@ -6,7 +6,6 @@ import { useState, useEffect } from "react"
 import Swal from 'sweetalert2'
 
 //Font awesome classicon
-import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons"
 import { add_firestore } from '../../../modules/firebase/command'

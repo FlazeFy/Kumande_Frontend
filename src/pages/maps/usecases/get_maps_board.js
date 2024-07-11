@@ -2,7 +2,7 @@
 import React from 'react'
 import { useState, useEffect } from "react"
 import GoogleMapReact from 'google-map-react'
-import { getLocal, storeLocal } from '../../../modules/storages/local'
+import { getLocal } from '../../../modules/storages/local'
 
 export default function GetMapsboard({ctx}) {
     //Initial variable

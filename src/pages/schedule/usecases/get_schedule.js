@@ -7,14 +7,11 @@ import useSound from 'use-sound'
 import audioUrl from '../../../../public/digital-alarm-2-151919.mp3'
 
 // Modules
-import { ucFirstWord } from '../../../modules/helpers/converter'
-import { getLocal, storeLocal } from '../../../modules/storages/local'
+import { getLocal } from '../../../modules/storages/local'
 
 //Font awesome classicon
-import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBowlRice, faCake,  faHeart, faMugSaucer} from "@fortawesome/free-solid-svg-icons"
-import { async } from '@firebase/util'
 
 export default function GetSchedule({ctx, day, category}) {
     //Initial variable

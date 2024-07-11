@@ -9,7 +9,6 @@ import { faAngleDown, faAngleUp, faEdit, faRotateBackward, faXmark } from '@fort
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Swal from 'sweetalert2'
 import { add_firestore } from '../../../modules/firebase/command'
-import { async } from '@firebase/util'
 
 export default function GetBudgetDashboard({ctx}) {
     //Initial variable

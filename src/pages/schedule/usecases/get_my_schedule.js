@@ -12,7 +12,6 @@ import { getLocal, storeLocal } from '../../../modules/storages/local'
 import { getAllDay } from '../../../modules/helpers/generator'
 
 //Font awesome classicon
-import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBowlRice, faCake, faCalendar, faHeart, faMugSaucer, faPlus, faXmark} from "@fortawesome/free-solid-svg-icons"
 import GetAnimaText from '../../../components/messages/anima_text'

@@ -272,6 +272,9 @@ label.error{
 .bgd-primary {
     background: var(--primaryColor);
 }
+.bgd-secondary {
+    background: #b8b8b8;
+}
 
 .tr-form input, .tr-form select{
     border-radius: 0;
