@@ -5,11 +5,6 @@ import GetNavbarToggle from "../../../components/bars/navbartoggle"
 import { getLocal } from "../../../modules/storages/local"
 import Swal from 'sweetalert2'
 import GetConsumeBox from "../../../components/containers/consume_box"
-import GetSimilarProvide from "./usecases/get_similar_provide"
-import GetSimilarMainIng from "./usecases/get_similar_main_ing"
-import GetSimilarConsumeFrom from "./usecases/get_similar_consume_from"
-import GetSimilarYearMonthCreated from "./usecases/get_similar_year_month_created"
-import GetSimilarConsumeType from "./usecases/get_similar_consume_type"
 import GetSimilarConsume from "./usecases/get_similar_consume"
 
 export default function ConsumeDetail({ params }) {

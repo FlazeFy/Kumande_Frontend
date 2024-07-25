@@ -9,6 +9,7 @@ import { calculateAge, getCleanTitleFromCtx } from '../../../modules/helpers/con
 // Modules
 import { getLocal, storeLocal } from '../../../modules/storages/local'
 import { getAge } from '../../../modules/helpers/generator'
+import GetQRCode from './get_qrcode'
 
 export default function GetMyProfile({ctx}) {
     //Initial variable
@@ -17,6 +18,7 @@ export default function GetMyProfile({ctx}) {
     const [item, setItem] = useState([])
     const token = getLocal("token_key")
     const [resMsgAll, setResMsgAll] = useState([])
+    const [id, setId] = useState(null)
 
     // Form
     const [fullname, setFullname] = useState("")
@@ -40,6 +42,7 @@ export default function GetMyProfile({ctx}) {
                 setEmail(item[0].email)
                 setGender(item[0].gender)
                 setBornAt(item[0].born_at)
+                setId(item[0].id)
                 storeLocal(ctx + "_sess",JSON.stringify(item))             
             },
             (error) => {
@@ -127,7 +130,10 @@ export default function GetMyProfile({ctx}) {
                     </select>
                     <label for="floatingSelectGrid">Gender</label>
                 </div>
-                <button className='btn btn-success' onClick={handleSubmit}>Save Changes</button>
+                <div className='d-flex justify-content-between'>
+                    <button className='btn btn-success' onClick={handleSubmit}>Save Changes</button>
+                    <GetQRCode id={id}/>
+                </div>
             </div>
         )
     }
