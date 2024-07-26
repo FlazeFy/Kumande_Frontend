@@ -1,10 +1,11 @@
 "use client"
 import React from 'react'
+import GoogleMapReact from 'google-map-react'
 
 //Font awesome classicon
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBowlRice, faCake, faCalendar, faEdit, faHeart, faMugSaucer } from "@fortawesome/free-solid-svg-icons"
+import { faBowlRice, faCake, faCalendar, faEdit, faHeart, faLocationDot,  faMugSaucer } from "@fortawesome/free-solid-svg-icons"
 import GetBreakLine from '../others/breakline'
 import { convertDatetime, numberToPrice, ucFirstChar } from '../../modules/helpers/converter'
 
@@ -16,6 +17,21 @@ export default function GetConsumeBox({items, type, func}) {
             return 'none'
         }
     }
+
+    const Marker = ({text}) => (
+        <div className='position-relative'>
+            <img src="https://maps.google.com/mapfiles/ms/icons/blue-dot.png" alt="Marker" />
+            <h6 className='text-white text-center position-absolute' style={{width:"100px", left:"-30px"}}>{text}</h6>
+        </div>
+    );
+
+    const defaultProps = {
+        center: {
+          lat: items['consume_detail'][0]['provide_lat'],
+          lng: items['consume_detail'][0]['provide_long']
+        },
+        zoom: 12
+    };
 
     const handleClick = () => {
         if (type !== 'detail') {
@@ -70,29 +86,63 @@ export default function GetConsumeBox({items, type, func}) {
                 {
                     type == 'detail' ? <hr></hr> : <></>
                 }
-                <h6>Detail</h6>
-                <div className='d-flex justify-content-start'>
-                    <a className='btn btn-success rounded-pill px-3 py-1 me-1'>
-                        {items['consume_detail'][0]['provide']}
-                    </a>
-                    <a className='btn btn-warning rounded-pill px-3 py-1 me-1'>
-                        {items['consume_detail'][0]['calorie']} Cal
-                    </a>
-                    <a className='btn btn-danger rounded-pill px-3 py-1'>
-                        {items['consume_detail'][0]['main_ing']}
-                    </a>
-                </div>
-                <h6 className='mt-2'>Tags</h6>
-                <div className='d-flex justify-content-start'>
+                <div className='row'>
+                    <div className='col'>
+                        <h6>Detail</h6>
+                        <div className='d-flex justify-content-start'>
+                            <a className='btn btn-success rounded-pill px-3 py-1 me-1'>
+                                {items['consume_detail'][0]['provide']}
+                            </a>
+                            <a className='btn btn-warning rounded-pill px-3 py-1 me-1'>
+                                {items['consume_detail'][0]['calorie']} Cal
+                            </a>
+                            <a className='btn btn-danger rounded-pill px-3 py-1 me-1'>
+                                {items['consume_detail'][0]['main_ing']}
+                            </a>
+                            {
+                                typeof items['consume_detail'][0]['provide_lat'] !== "undefined" ?
+                                    <a className='btn btn-primary rounded-pill px-3 py-1' style={{fontSize:"var(--textMD)"}} href={`https://www.google.com/maps/place/${items['consume_detail'][0]['provide_lat']},${items['consume_detail'][0]['provide_long']}`}>
+                                        <FontAwesomeIcon icon={faLocationDot}/> See On Maps
+                                    </a>
+                                :
+                                    <></>
+                            }
+                        </div>
+                        <h6 className='mt-2'>Tags</h6>
+                        <div className='d-flex justify-content-start'>
+                            {
+                                items['consume_tag'] ?
+                                    items['consume_tag'].map((tag, idx) => {
+                                        return(
+                                            <a className='btn btn-primary rounded-pill px-3 py-1 me-1'>{tag['tag_name']}</a>
+                                        )
+                                    })
+                                :
+                                    <p className='text-secondary fst-italic'>- No Tag Found -</p>
+                            }
+                        </div>
+                    </div>
                     {
-                        items['consume_tag'] ?
-                            items['consume_tag'].map((tag, idx) => {
-                                return(
-                                    <a className='btn btn-primary rounded-pill px-3 py-1 me-1'>{tag['tag_name']}</a>
-                                )
-                            })
-                        :
-                            <p className='text-secondary fst-italic'>- No Tag Found -</p>
+                        type == 'detail' && typeof items['consume_detail'][0]['provide_lat'] !== "undefined"?
+                            <div className='col'>
+                                <h6>Maps</h6>
+                                <div style={{ height: '400px', width: '100%'}}>
+                                    <GoogleMapReact 
+                                        bootstrapURLKeys={{ key: "AIzaSyDXu2ivsJ8Hj6Qg1punir1LR2kY9Q_MSq8" }}
+                                        defaultCenter={defaultProps.center}
+                                        defaultZoom={defaultProps.zoom}
+                                    >
+                                    <Marker
+                                        key={items['consume_detail'][0]['provide']}
+                                        lat={items['consume_detail'][0]['provide_lat']}
+                                        lng={items['consume_detail'][0]['provide_long']}
+                                        text={items['consume_detail'][0]['provide']}
+                                    />
+                                    </GoogleMapReact>
+                                </div>
+                            </div>
+                        : 
+                            <></>
                     }
                 </div>
                 {
@@ -259,6 +309,14 @@ export default function GetConsumeBox({items, type, func}) {
                     <a className='btn btn-danger rounded-pill px-3 py-1' style={{fontSize:"var(--textMD)"}}>
                         {items.consume_detail[0]['main_ing']}
                     </a>
+                    {
+                        typeof items['consume_detail'][0]['provide_lat'] !== "undefined" ?
+                            <a className='btn btn-primary rounded-pill px-3 py-1' style={{fontSize:"var(--textMD)"}} href={`https://www.google.com/maps/place/${items['consume_detail'][0]['provide_lat']},${items['consume_detail'][0]['provide_long']}`}>
+                                <FontAwesomeIcon icon={faLocationDot}/> See On Maps
+                            </a>
+                        :
+                            <></>
+                    }
                 </div>
             </button>
         )

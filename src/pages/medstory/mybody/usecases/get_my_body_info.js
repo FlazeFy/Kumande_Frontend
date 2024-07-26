@@ -3,8 +3,11 @@ import React from 'react'
 import { useState, useEffect } from "react"
 import { getLocal } from '../../../../modules/storages/local'
 import GetRadialChart from '../../../../components/charts/radial_chart'
-import { convertDatetime } from '../../../../modules/helpers/converter'
+import { convertDatetime, ucFirstChar } from '../../../../modules/helpers/converter'
 import GetManageBody from './get_manage_body'
+import Swal from 'sweetalert2'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBowlRice, faCake, faMugSaucer, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
 
 export default function GetMyBodyInfo({ctx}) {
     //Initial variable
@@ -12,6 +15,7 @@ export default function GetMyBodyInfo({ctx}) {
     const [isLoaded, setIsLoaded] = useState(false)
     const token = getLocal("token_key")
     const [items, setItems] = useState(null)
+    const [itemsAllergic, setItemsAllergic] = useState(null)
     
     const fetchBodyInfo = () => {
         fetch(`http://127.0.0.1:8000/api/v1/user/body_info`, {
@@ -30,6 +34,11 @@ export default function GetMyBodyInfo({ctx}) {
                 setItems(null)
             }
         }).catch(error=> {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Something went wrong. Call the Admin!',
+                icon: 'error',
+            })
             if(getLocal(ctx + "_sess") !== undefined){
                 setIsLoaded(true)
                 setItems(JSON.parse(getLocal(ctx + "_sess")))
@@ -40,8 +49,41 @@ export default function GetMyBodyInfo({ctx}) {
         })
     }
 
+    const fetchAllergic = () => {
+        fetch(`http://127.0.0.1:8000/api/v1/analytic/allergic`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then(res => {
+            return res.json().then(result => ({status:res.status, result:result}))
+        }).then(({status, result}) => {
+            setIsLoaded(true)
+
+            if(status == 200){
+                setItemsAllergic(result.data) 
+            } else {
+                setItemsAllergic(null)
+            }
+        }).catch(error=> {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Something went wrong. Call the Admin!',
+                icon: 'error',
+            })
+            if(getLocal(ctx + "_sess") !== undefined){
+                setIsLoaded(true)
+                setItemsAllergic(JSON.parse(getLocal(ctx + "_sess")))
+            } else {
+                setIsLoaded(true)
+                setError(error)
+            }
+        })
+    }
+
     useEffect(() => {
-        fetchBodyInfo();
+        fetchBodyInfo()
+        fetchAllergic()
     }, []);
 
     if (error) {
@@ -200,7 +242,62 @@ export default function GetMyBodyInfo({ctx}) {
                     </div>
                     <div className='col-lg-9 col-md-4 col-sm-12'>
                         <h5 className='mb-0'>Allergic</h5>
-                        <p className='mb-0 text-secondary' style={{fontSize:"var(--textMD)"}}>Last Updated at </p>
+                        <p className='mb-2 text-secondary' style={{fontSize:"var(--textMD)"}}>Last Updated at {itemsAllergic ? convertDatetime(itemsAllergic[0].created_at,'calendar'):''}</p>
+                        {
+                            itemsAllergic ?      
+                                <div className='row'>
+                                    { 
+                                        itemsAllergic.map((dt, idx) => {
+                                            return (
+                                                <div className='col'>
+                                                    <button className='box-reminder' 
+                                                        title='Edit the Allergic'>
+                                                        <div style={{width:"40px"}} className="pt-2">
+                                                            <FontAwesomeIcon icon={faTriangleExclamation} style={{fontSize:"calc(var(--textJumbo)*1.5)"}}/>
+                                                        </div>
+                                                        <div className='w-100 ms-3'>
+                                                            <h5 className='mb-1'>{ucFirstChar(dt.allergic_context)}</h5>
+                                                            {
+                                                                dt.allergic_desc ?
+                                                                    <p className='mb-1'>{dt.allergic_desc}</p>
+                                                                :
+                                                                    <a className='fst-italic text-secondary mb-1'>- No Description Provided -</a>
+                                                            }
+                                                            <hr className='my-2'></hr>
+                                                            <div className='context'>
+                                                                {
+                                                                    dt.detected_on != null ?
+                                                                        dt.detected_on.map((ctx, cidx)=> {
+                                                                            return (
+                                                                                <a className='me-2 btn btn-primary py-1 px-2 text-white mb-2 text-start' style={{color:"var(--primaryColor)", fontWeight:"500", fontSize:"var(--textMD)"}} href={`/consume/${ctx['slug_name']}`}>
+                                                                                {
+                                                                                    ctx['consume_type'] == 'Food' ?
+                                                                                        <FontAwesomeIcon icon={faBowlRice} className='me-2'/>
+                                                                                    : ctx['consume_type'] == 'Drink' ?
+                                                                                        <FontAwesomeIcon icon={faMugSaucer} className='me-2'/>
+                                                                                    : ctx['consume_type'] == 'Snack' ?
+                                                                                        <FontAwesomeIcon icon={faCake} className='me-2'/>
+                                                                                    : 
+                                                                                        <></>
+                                                                                }
+                                                                                {ctx['consume_name']}
+                                                                                </a>
+                                                                            )
+                                                                        })
+                                                                    :
+                                                                        <p className='fst-italic text-secondary'>- Reminder not configured yet -</p>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </button>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>        
+                            :
+                                <p className='text-secondary text-center fst-italic'>- No Data Found -</p>
+                        }
                     </div>
                 </div>
             </div>
