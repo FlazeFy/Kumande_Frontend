@@ -34,11 +34,14 @@ export default function GetMyTag({ctx}) {
                 storeLocal(ctx + "_sess",JSON.stringify(item))  
             } else {
                 setItems(null)
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Something wrong happen. Call the Admin!',
-                    icon: 'error',
-                }) 
+
+                if(status != 404){
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Something wrong happen. Call the Admin!',
+                        icon: 'error',
+                    }) 
+                }
             }
         })
         .catch(error => {                
@@ -75,16 +78,23 @@ export default function GetMyTag({ctx}) {
                     </thead>
                     <tbody>
                         {
-                            items.map((dt, idx) => {
-                                return (
-                                    <tr key={idx}>
-                                        <td>{dt.tag_name}</td>
-                                        <td>{dt.total_used}</td>
-                                        <td><button className='btn btn-success my-1'><FontAwesomeIcon icon={faChartSimple}/></button></td>
-                                        <td><button className='btn btn-warning my-1'><FontAwesomeIcon icon={faEdit}/></button></td>
-                                    </tr>
-                                )
-                            })
+                            items ?
+                                items.map((dt, idx) => {
+                                    return (
+                                        <tr key={idx}>
+                                            <td>{dt.tag_name}</td>
+                                            <td>{dt.total_used}</td>
+                                            <td><button className='btn btn-success my-1'><FontAwesomeIcon icon={faChartSimple}/></button></td>
+                                            <td><button className='btn btn-warning my-1'><FontAwesomeIcon icon={faEdit}/></button></td>
+                                        </tr>
+                                    )
+                                })
+                            :
+                                <tr key={1}>
+                                    <td colSpan={4}>
+                                        <a className='fst-italic text-secondary mb-1'>- No Tag Founded -</a>
+                                    </td>
+                                </tr>
                         }
                     </tbody>
                 </table>

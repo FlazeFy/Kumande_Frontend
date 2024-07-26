@@ -7,7 +7,8 @@ import { convertDatetime, ucFirstChar } from '../../../../modules/helpers/conver
 import GetManageBody from './get_manage_body'
 import Swal from 'sweetalert2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBowlRice, faCake, faMugSaucer, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
+import { faBowlRice, faCake, faFloppyDisk, faMugSaucer, faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons'
+import Axios from 'axios'
 
 export default function GetMyBodyInfo({ctx}) {
     //Initial variable
@@ -16,6 +17,12 @@ export default function GetMyBodyInfo({ctx}) {
     const token = getLocal("token_key")
     const [items, setItems] = useState(null)
     const [itemsAllergic, setItemsAllergic] = useState(null)
+
+    // Form
+    const [allergicName, setAllergicName] = useState("")
+    const [allergicDesc, setAllergicDesc] = useState("")
+    const [createdAt, setCreatedAt] = useState(null)
+    const [idAllergic, setIdAllergic] = useState(null)
     
     const fetchBodyInfo = () => {
         fetch(`http://127.0.0.1:8000/api/v1/user/body_info`, {
@@ -85,6 +92,55 @@ export default function GetMyBodyInfo({ctx}) {
         fetchBodyInfo()
         fetchAllergic()
     }, []);
+
+    const openEditAllergicModal = (dt) => {
+        setAllergicName(dt.allergic_context)
+        setAllergicDesc(dt.allergic_desc)
+        setCreatedAt(dt.created_at)
+        setIdAllergic(dt.id)
+    }
+
+    const handleUpdateAllergic = async (id) => {
+        const data = {
+            allergic_context: allergicName,
+            allergic_desc: allergicDesc && allergicDesc.trim() == "" ? null : allergicDesc,
+        }
+
+        try {
+            const response = await Axios.put(`http://127.0.0.1:8000/api/v1/analytic/allergic/${id}`, JSON.stringify(data), {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                }
+            })
+
+            if(response.status == 200){
+                fetchAllergic()
+                Swal.fire({
+                    title: "Success!",
+                    text: response.data.message,
+                    icon: "success"
+                })
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Something went wrong!",
+                    text: response.data.message,
+                })
+            }
+        } catch (error) {
+            const errorMessage = error.response && error.response.data && error.response.data.message
+                ? error.response.data.message
+                : error.message || "An unexpected error occurred"
+
+            Swal.fire({
+                icon: "error",
+                title: "Something went wrong!",
+                text: errorMessage,
+            })
+        }
+    }
 
     if (error) {
         return <div>Error: {error.message}</div>
@@ -245,56 +301,80 @@ export default function GetMyBodyInfo({ctx}) {
                         <p className='mb-2 text-secondary' style={{fontSize:"var(--textMD)"}}>Last Updated at {itemsAllergic ? convertDatetime(itemsAllergic[0].created_at,'calendar'):''}</p>
                         {
                             itemsAllergic ?      
-                                <div className='row'>
-                                    { 
-                                        itemsAllergic.map((dt, idx) => {
-                                            return (
-                                                <div className='col'>
-                                                    <button className='box-reminder' 
-                                                        title='Edit the Allergic'>
-                                                        <div style={{width:"40px"}} className="pt-2">
-                                                            <FontAwesomeIcon icon={faTriangleExclamation} style={{fontSize:"calc(var(--textJumbo)*1.5)"}}/>
-                                                        </div>
-                                                        <div className='w-100 ms-3'>
-                                                            <h5 className='mb-1'>{ucFirstChar(dt.allergic_context)}</h5>
-                                                            {
-                                                                dt.allergic_desc ?
-                                                                    <p className='mb-1'>{dt.allergic_desc}</p>
-                                                                :
-                                                                    <a className='fst-italic text-secondary mb-1'>- No Description Provided -</a>
-                                                            }
-                                                            <hr className='my-2'></hr>
-                                                            <div className='context'>
-                                                                {
-                                                                    dt.detected_on != null ?
-                                                                        dt.detected_on.map((ctx, cidx)=> {
-                                                                            return (
-                                                                                <a className='me-2 btn btn-primary py-1 px-2 text-white mb-2 text-start' style={{color:"var(--primaryColor)", fontWeight:"500", fontSize:"var(--textMD)"}} href={`/consume/${ctx['slug_name']}`}>
-                                                                                {
-                                                                                    ctx['consume_type'] == 'Food' ?
-                                                                                        <FontAwesomeIcon icon={faBowlRice} className='me-2'/>
-                                                                                    : ctx['consume_type'] == 'Drink' ?
-                                                                                        <FontAwesomeIcon icon={faMugSaucer} className='me-2'/>
-                                                                                    : ctx['consume_type'] == 'Snack' ?
-                                                                                        <FontAwesomeIcon icon={faCake} className='me-2'/>
-                                                                                    : 
-                                                                                        <></>
-                                                                                }
-                                                                                {ctx['consume_name']}
-                                                                                </a>
-                                                                            )
-                                                                        })
-                                                                    :
-                                                                        <p className='fst-italic text-secondary'>- Reminder not configured yet -</p>
-                                                                }
+                                <>
+                                    <div className='row'>
+                                        { 
+                                            itemsAllergic.map((dt, idx) => {
+                                                return (
+                                                    <div className='col'>
+                                                        <button className='box-reminder' data-bs-toggle="modal" data-bs-target={`#manageAllergic`} onClick={(e)=>openEditAllergicModal(dt)}
+                                                            title='Edit the Allergic'>
+                                                            <div style={{width:"40px"}} className="pt-2">
+                                                                <FontAwesomeIcon icon={faTriangleExclamation} style={{fontSize:"calc(var(--textJumbo)*1.5)"}}/>
                                                             </div>
-                                                        </div>
-                                                    </button>
+                                                            <div className='w-100 ms-3'>
+                                                                <h5 className='mb-1'>{ucFirstChar(dt.allergic_context)}</h5>
+                                                                {
+                                                                    dt.allergic_desc ?
+                                                                        <p className='mb-1'>{dt.allergic_desc}</p>
+                                                                    :
+                                                                        <a className='fst-italic text-secondary mb-1'>- No Description Provided -</a>
+                                                                }
+                                                                <hr className='my-2'></hr>
+                                                                <div className='context'>
+                                                                    {
+                                                                        dt.detected_on != null ?
+                                                                            dt.detected_on.map((ctx, cidx)=> {
+                                                                                return (
+                                                                                    <a className='me-2 btn btn-danger py-1 px-2 text-white mb-2 text-start' style={{color:"var(--primaryColor)", fontWeight:"500", fontSize:"var(--textMD)"}} href={`/consume/${ctx['slug_name']}`}>
+                                                                                    {
+                                                                                        ctx['consume_type'] == 'Food' ?
+                                                                                            <FontAwesomeIcon icon={faBowlRice} className='me-2'/>
+                                                                                        : ctx['consume_type'] == 'Drink' ?
+                                                                                            <FontAwesomeIcon icon={faMugSaucer} className='me-2'/>
+                                                                                        : ctx['consume_type'] == 'Snack' ?
+                                                                                            <FontAwesomeIcon icon={faCake} className='me-2'/>
+                                                                                        : 
+                                                                                            <></>
+                                                                                    }
+                                                                                    {ctx['consume_name']}
+                                                                                    </a>
+                                                                                )
+                                                                            })
+                                                                        :
+                                                                            <p className='fst-italic text-success' style={{fontWeight:"600"}}>- All Consume is Safe -</p>
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </button>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div> 
+                                    <div className="modal fade" id={`manageAllergic`} aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div className="modal-dialog">
+                                            <div className="modal-content">
+                                                <div className="modal-header">
+                                                    <h5 className="modal-title" id="exampleModalLabel">Manage Allergic</h5>
+                                                    <button type="button" className="btn_close_modal" data-bs-dismiss="modal" aria-label="Close"><FontAwesomeIcon icon={faXmark}/></button>
                                                 </div>
-                                            )
-                                        })
-                                    }
-                                </div>        
+                                                <div className="modal-body text-start p-4">
+                                                    <div className="form-floating mb-2">
+                                                        <input type="text" className="form-control" defaultValue={allergicName} onChange={(e) => setAllergicName(e.target.value)} id="floatingInput"></input>
+                                                        <label htmlFor="floatingInput">Allergic Name</label>
+                                                    </div>
+                                                    <div className="form-floating">
+                                                        <textarea className="form-control" style={{height:"100px"}} defaultValue={allergicDesc} onChange={(e) => setAllergicDesc(e.target.value)} id="floatingInput"></textarea>
+                                                        <label htmlFor="floatingInput">Description</label>
+                                                    </div>
+                                                    <a className='fst-italic text-secondary' style={{fontSize:"var(--textMD)"}}>Created at {convertDatetime(createdAt,'calendar')}</a>
+                                                    <button className='w-100 btn btn-success mt-2 py-2' data-bs-dismiss="modal" onClick={(e) => handleUpdateAllergic(idAllergic)}><FontAwesomeIcon icon={faFloppyDisk}/> Save Changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </>       
                             :
                                 <p className='text-secondary text-center fst-italic'>- No Data Found -</p>
                         }

@@ -81,6 +81,7 @@ export default function FilterConsumeCal({ctx}) {
                     maxValue={selectMaxValue}
                     onChange={(e) => {
                         handleInput(e)
+                        alert(e)
                     }}
                 />
             </div>
