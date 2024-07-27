@@ -1,0 +1,93 @@
+"use client"
+import React from 'react'
+import { useState, useEffect } from "react"
+import { getLocal } from '../../../../modules/storages/local'
+import GetRadialChart from '../../../../components/charts/radial_chart'
+import { convertDatetime, ucFirstChar } from '../../../../modules/helpers/converter'
+import GetManageBody from './get_manage_body'
+import Swal from 'sweetalert2'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFloppyDisk, faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
+import Axios from 'axios'
+
+export default function PostAllergic({fetchAllergic}) {
+    //Initial variable
+    const token = getLocal("token_key")
+
+    // Form
+    const [allergicName, setAllergicName] = useState("")
+    const [allergicDesc, setAllergicDesc] = useState("")
+
+    const handleAddAllergic = async () => {
+        const data = {
+            allergic_context: allergicName,
+            allergic_desc: allergicDesc && allergicDesc.trim() == "" ? null : allergicDesc,
+        }
+
+        setAllergicName("")
+        setAllergicDesc("")
+        try {
+            const response = await Axios.post(`http://127.0.0.1:8000/api/v1/analytic/allergic`, JSON.stringify(data), {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                }
+            })
+
+            if(response.status == 200){
+                fetchAllergic()
+                Swal.fire({
+                    title: "Success!",
+                    text: response.data.message,
+                    icon: "success"
+                })
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Something went wrong!",
+                    text: response.data.message,
+                })
+            }
+        } catch (error) {
+            const errorMessage = error.response && error.response.data && error.response.data.message
+                ? error.response.data.message
+                : error.message || "An unexpected error occurred"
+
+            Swal.fire({
+                icon: "error",
+                title: "Something went wrong!",
+                text: errorMessage,
+            })
+        }
+    }
+
+    return (
+        <>
+            <button className='btn btn-primary' data-bs-toggle="modal" data-bs-target={`#addAllergic`}
+                title='Add Allergic'><FontAwesomeIcon icon={faPlus}/> Add Allergic</button>
+            <div className="modal fade" id={`addAllergic`} aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">Add Allergic</h5>
+                            <button type="button" className="btn_close_modal" data-bs-dismiss="modal" aria-label="Close"><FontAwesomeIcon icon={faXmark}/></button>
+                        </div>
+                        <div className="modal-body text-start p-4">
+                            <div className="form-floating mb-2">
+                                <input type="text" className="form-control" onChange={(e) => setAllergicName(e.target.value)} id="floatingInput"></input>
+                                <label htmlFor="floatingInput">Allergic Name</label>
+                            </div>
+                            <div className="form-floating">
+                                <textarea className="form-control" style={{height:"100px"}} onChange={(e) => setAllergicDesc(e.target.value)} id="floatingInput"></textarea>
+                                <label htmlFor="floatingInput">Description</label>
+                            </div>
+                            <button className='w-100 btn btn-success mt-2 py-2' data-bs-dismiss="modal" onClick={(e) => handleAddAllergic()}><FontAwesomeIcon icon={faFloppyDisk}/> Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>  
+    )
+}
+  

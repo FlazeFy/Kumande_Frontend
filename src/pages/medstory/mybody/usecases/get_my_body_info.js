@@ -7,8 +7,9 @@ import { convertDatetime, ucFirstChar } from '../../../../modules/helpers/conver
 import GetManageBody from './get_manage_body'
 import Swal from 'sweetalert2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBowlRice, faCake, faFloppyDisk, faMugSaucer, faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faBowlRice, faCake, faFloppyDisk, faMugSaucer, faTrash, faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons'
 import Axios from 'axios'
+import PostAllergic from './post_allergic'
 
 export default function GetMyBodyInfo({ctx}) {
     //Initial variable
@@ -140,6 +141,60 @@ export default function GetMyBodyInfo({ctx}) {
                 text: errorMessage,
             })
         }
+    }
+
+    const handleDeleteAllergic = async (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This will also impact on consume analyze for next use",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, Delete it!",
+            cancelButtonText: "No, Cancel!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const response = await Axios.delete(`http://127.0.0.1:8000/api/v1/analytic/allergic/${id}`, {
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`,
+                        }
+                    })
+    
+                    if (response.status === 200) {
+                        fetchAllergic()
+                        Swal.fire({
+                            title: "success",
+                            text: response.data.message,
+                            icon: "success"
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Something went wrong!",
+                            text: response.data.message,
+                        })
+                    }
+                } catch (error) {
+                    const errorMessage = error.response && error.response.data && error.response.data.message
+                        ? error.response.data.message
+                        : error.message || "An unexpected error occurred"
+    
+                    Swal.fire({
+                        icon: "error",
+                        title: "Something went wrong!",
+                        text: errorMessage,
+                    })
+                }
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire({
+                    title: "Cancelled",
+                    text: "Delete allergic dismissed",
+                    icon: "error"
+                })
+            }
+        })
     }
 
     if (error) {
@@ -297,7 +352,11 @@ export default function GetMyBodyInfo({ctx}) {
                         }
                     </div>
                     <div className='col-lg-9 col-md-4 col-sm-12'>
-                        <h5 className='mb-0'>Allergic</h5>
+                        <div className='d-flex justify-content-between'>
+                            <div></div>
+                            <h5 className='mb-0'>Allergic</h5>
+                            <PostAllergic fetchAllergic={fetchAllergic} />
+                        </div>
                         <p className='mb-2 text-secondary' style={{fontSize:"var(--textMD)"}}>Last Updated at {itemsAllergic ? convertDatetime(itemsAllergic[0].created_at,'calendar'):''}</p>
                         {
                             itemsAllergic ?      
@@ -306,7 +365,7 @@ export default function GetMyBodyInfo({ctx}) {
                                         { 
                                             itemsAllergic.map((dt, idx) => {
                                                 return (
-                                                    <div className='col'>
+                                                    <div className='col-12'>
                                                         <button className='box-reminder' data-bs-toggle="modal" data-bs-target={`#manageAllergic`} onClick={(e)=>openEditAllergicModal(dt)}
                                                             title='Edit the Allergic'>
                                                             <div style={{width:"40px"}} className="pt-2">
@@ -370,6 +429,7 @@ export default function GetMyBodyInfo({ctx}) {
                                                     </div>
                                                     <a className='fst-italic text-secondary' style={{fontSize:"var(--textMD)"}}>Created at {convertDatetime(createdAt,'calendar')}</a>
                                                     <button className='w-100 btn btn-success mt-2 py-2' data-bs-dismiss="modal" onClick={(e) => handleUpdateAllergic(idAllergic)}><FontAwesomeIcon icon={faFloppyDisk}/> Save Changes</button>
+                                                    <button className='w-100 btn btn-danger mt-2 py-2' data-bs-dismiss="modal" onClick={(e) => handleDeleteAllergic(idAllergic)}><FontAwesomeIcon icon={faTrash}/> Delete Allergic</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -384,4 +444,3 @@ export default function GetMyBodyInfo({ctx}) {
         )
     }
 }
-  
