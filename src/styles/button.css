@@ -92,7 +92,7 @@
     font-size: var(--textMD) !important;
 }
 
-.btn.container, .btn.add.container {
+.btn.container, .btn.add.container, .btn-main {
     -webkit-transition: all 0.3s;
     -o-transition: all 0.3s;
     transition: all 0.3s; 
@@ -107,4 +107,21 @@
 .btn.add.container:hover {
     border: calc(var(--spaceMini)*0.75) solid var(--primaryColor) !important;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
+}
+
+.btn-main {
+    padding: 0;
+    position: relative;
+    justify-content: start;
+    color: var(--whiteColor);
+    background-image: linear-gradient(to right, var(--primaryColor) , var(--primaryLightBG));
+    cursor: pointer;
+    border-radius: var(--roundedLG);
+    width: 100%;
+    border: none;
+    display: flex;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
+}
+.btn-main:hover {
+    transform: scale(1.015);
 }

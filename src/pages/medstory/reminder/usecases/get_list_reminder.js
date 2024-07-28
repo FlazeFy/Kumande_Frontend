@@ -6,6 +6,7 @@ import { useState, useEffect } from "react"
 import { getLocal } from '../../../../modules/storages/local'
 import Swal from 'sweetalert2'
 import Axios from 'axios'
+import PostListReminder from './post_reminder'
 
 export default function GetListReminder({ctx}) {
     //Initial variable
@@ -108,6 +109,7 @@ export default function GetListReminder({ctx}) {
             <div className='row pt-2'>
                 <h4>Reminder List</h4>
                 <div className='row'>
+                    <PostListReminder fetchReminders={fetchReminders}/>
                     {
                         items.map((dt, idx)=> {
                             return (
