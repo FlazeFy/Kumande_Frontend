@@ -16,6 +16,10 @@ export default function ConsumeDetail({ params }) {
   const token = getLocal("token_key")
 
   useEffect(() => {
+    fetchConsume()
+  },[])
+
+  const fetchConsume = () => {
     fetch('http://127.0.0.1:8000/api/v1/consume/detail/'+params.slug, {
       headers: {
           Authorization: `Bearer ${token}`
@@ -42,7 +46,7 @@ export default function ConsumeDetail({ params }) {
         }
       }
     )
-  },[])
+  }
 
   if (error) {
     return <div>Error: {error.message}</div>
@@ -64,7 +68,7 @@ export default function ConsumeDetail({ params }) {
           <div id="content" className="p-4 p-md-5">
             <GetNavbarToggle/>
             <div id="content-body">
-              <GetConsumeBox ctx="consume_detail" items={item} type="detail"/>
+              <GetConsumeBox fetchConsume={fetchConsume} ctx="consume_detail" items={item} type="detail"/>
               <GetSimilarConsume ctx={`similar_consume`} provide={item.consume_detail[0].provide} main_ing={item.consume_detail[0].main_ing} 
                 consume_from={item.consume_from} consume_type={item.consume_type} month={month} year={year} slug={item.slug_name}/>
             </div>

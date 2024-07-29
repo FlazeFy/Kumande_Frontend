@@ -3,13 +3,13 @@ import React from 'react'
 import GoogleMapReact from 'google-map-react'
 
 //Font awesome classicon
-import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBowlRice, faCake, faCalendar, faEdit, faHeart, faLocationDot,  faMugSaucer } from "@fortawesome/free-solid-svg-icons"
 import GetBreakLine from '../others/breakline'
-import { convertDatetime, numberToPrice, ucFirstChar } from '../../modules/helpers/converter'
+import { convertDatetime } from '../../modules/helpers/converter'
+import ManagePayment from '../../pages/consume/[slug]/usecases/manage_payment'
 
-export default function GetConsumeBox({items, type, func}) {
+export default function GetConsumeBox({items, type, func, fetchConsume}) {
     const getFavorite = (val) => {
         if(val == 1){
             return 'var(--spaceSM) solid var(--dangerBG)'
@@ -183,7 +183,9 @@ export default function GetConsumeBox({items, type, func}) {
                                                                                 <></>
                                                                         }
                                                                     </td>
-                                                                    <td><a className='btn btn-warning'><FontAwesomeIcon icon={faEdit}/></a></td>
+                                                                    <td>
+                                                                        <ManagePayment dt={item} fetchConsume={fetchConsume}/>
+                                                                    </td>
                                                                 </tr>
                                                             )
                                                         })
