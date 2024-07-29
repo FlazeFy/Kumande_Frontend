@@ -4,7 +4,7 @@ import Axios from 'axios'
 import Swal from 'sweetalert2'
 
 // Component
-import { calculateAge, getCleanTitleFromCtx } from '../../../modules/helpers/converter'
+import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
 
 // Modules
 import { getLocal, storeLocal } from '../../../modules/storages/local'

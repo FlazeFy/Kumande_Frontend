@@ -8,7 +8,7 @@ import Swal from 'sweetalert2'
 import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
 
 // Modules
-import { getLocal, storeLocal } from '../../../modules/storages/local'
+import { getLocal } from '../../../modules/storages/local'
 import GetAnalyzeTag from './get_analyze_tag'
 import PostTag from './post_tag'
 

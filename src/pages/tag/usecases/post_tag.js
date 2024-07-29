@@ -1,7 +1,7 @@
-import { faChartSimple, faEdit, faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Swal from 'sweetalert2'
 import Axios from 'axios'
 

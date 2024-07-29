@@ -1,0 +1,14 @@
+.swal2-popup {
+    border: var(--spaceMini) solid var(--primaryColor) !important;
+    border-radius: var(--roundedLG);
+}
+.swal2-confirm {
+    background: var(--successBG) !important;
+}
+.swal2-confirm:hover {
+    background: var(--successDarkBG) !important;
+}
+
+.modal {
+    color: var(--blackColor);
+}

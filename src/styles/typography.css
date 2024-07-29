@@ -1,3 +1,40 @@
+/* Default Text */
+a {
+    text-decoration: none !important;
+}
+
+/* Informative Text */
+.err-msg {
+    font-weight: 500;
+    font-style: italic;
+    font-size: var(--textMD);
+}
+label.input{
+    float: left;
+    font-size: var(--textLG);
+    margin-bottom: 2px;
+    font-weight: 500;
+    color: var(--whiteColor);
+}
+label.error{
+    font-size: var(--textXSM);
+    color: #D5534C;
+    margin: 0;
+}
+
+/* Tag Module */
+.tag-filter-holder a {
+    display: block;
+    margin-right: var(--spaceXXSM);
+    margin-bottom: var(--spaceXXSM);
+    background: var(--primaryColor);
+    color: var(--whiteColor) !important;
+    font-size: var(--textXMD);
+    padding: var(--spaceXXSM) var(--spaceSM);
+    border-radius: var(--roundedMD);
+}
+
+/* Main Text BS5 */
 .text-primary {
     color: var(--primaryColor) !important;
 }

@@ -1,0 +1,86 @@
+.container-fluid, .container {
+    border: 1.5px solid var(--primaryColor) !important;
+    border-radius: var(--roundedSM);
+}
+.box-content-header {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 80% 80% var(--roundedLG) var(--roundedLG);
+    text-align: center;
+}
+.box-content-header img {
+    width: 120px;
+    margin: var(--spaceMD);
+}
+.box-content-header .content {
+    margin: 0;
+    color: var(--whiteColor);
+    padding: var(--spaceXLG) var(--spaceMD);
+    border-radius: 0 0 var(--roundedMD) var(--roundedMD);
+    background-image: linear-gradient(var(--primaryLightBG),var(--primaryColor));
+}
+
+/* Consume Module */
+.consume-box {
+    border-radius: var(--roundedMD);
+    width: 100%;
+    padding: var(--spaceLG);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    margin-bottom: var(--spaceLG);
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s; 
+    cursor: pointer;
+}
+.consume-box:hover {
+    transform: scale(1.02);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+/* Tag Module */
+.tag-list {
+    max-width: 90vw;
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+.tag-filter-holder {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Reminder Module */
+.box-reminder {
+    width: 100%;
+    text-align: start;
+    border-radius: var(--roundedLG);
+    margin-bottom: var(--spaceLG);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: var(--spaceXMD);
+    border: var(--spaceMini) solid var(--dangerBG);
+    border-left: var(--spaceMD) solid var(--dangerBG);
+    cursor: pointer;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s; 
+    background: var(--whiteColor);
+    display: flex;
+    justify-content: space-between;
+}
+.box-reminder div:first-child path {
+    color: var(--dangerBG);
+}
+.box-reminder.active div:first-child path {
+    color: var(--successBG);
+}
+.box-reminder .context, .box-reminder button{
+    font-size: var(--textMD) !important;
+}
+.box-reminder:hover {
+    transform: scale(1.025);
+}
+.box-reminder.active {
+    border: var(--spaceMini) solid var(--successBG);
+    border-left: var(--spaceMD) solid var(--successBG);
+}
