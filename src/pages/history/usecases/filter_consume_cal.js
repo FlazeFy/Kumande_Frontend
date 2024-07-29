@@ -56,7 +56,13 @@ export default function FilterConsumeCal({ctx}) {
    
 
     const handleInput = (e) => {
-        storeLocal("Table_filter_"+ctx,e.minValue+"-"+e.maxValue)
+        let minVal = 0 
+        if (!isNaN(e.minValue)){
+            minVal = e.minValue 
+        }
+        const maxVal = e.maxValue
+
+        storeLocal("Table_filter_"+ctx,minVal+"-"+maxVal)
         window.location.reload()
     }
     
@@ -81,7 +87,6 @@ export default function FilterConsumeCal({ctx}) {
                     maxValue={selectMaxValue}
                     onChange={(e) => {
                         handleInput(e)
-                        alert(e)
                     }}
                 />
             </div>

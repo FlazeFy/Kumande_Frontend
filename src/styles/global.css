@@ -280,3 +280,9 @@ label.error{
     border-radius: 0;
     padding: 0;
 }
+
+.err-msg {
+    font-weight: 500;
+    font-style: italic;
+    font-size: var(--textMD);
+}

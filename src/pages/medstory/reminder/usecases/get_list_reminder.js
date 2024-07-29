@@ -1,5 +1,5 @@
 "use client"
-import { faBell, faClock, faLocationDot } from '@fortawesome/free-solid-svg-icons'
+import { faBell, faClock, faImage, faLink, faLocationDot } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { useState, useEffect } from "react"
@@ -142,7 +142,8 @@ export default function GetListReminder({ctx}) {
                                                         dt.reminder_attachment.map((ctx, cidx)=> {
                                                             return (
                                                                 <button className='btn btn-success rounded-pill ms-1 mb-2'>
-                                                                    <FontAwesomeIcon icon={ctx.attachment_type == 'location'?faLocationDot:""}/> {ctx.attachment_name}
+                                                                    <FontAwesomeIcon className='me-1' icon={ctx.attachment_type == 'location'? faLocationDot : ctx.attachment_type == 'url' ? faLink : ctx.attachment_type == 'image' ? faImage : ""}/> 
+                                                                        {ctx.attachment_type == 'location' ? ctx.attachment_name : ctx.attachment_type == 'url' || 'image' ? `Click to open the ${ctx.attachment_type}` : ""}
                                                                 </button>
                                                             )
                                                         })

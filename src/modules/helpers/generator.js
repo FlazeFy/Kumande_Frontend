@@ -86,3 +86,13 @@ export const getAge = (born) => {
         throw err
     }
 }
+
+export const getDaysInMonth = (month) => {
+    try {
+        const monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        const monthIndex = parseInt(month) - 1
+        return monthIndex === 1 ? 29 : monthDays[monthIndex]
+    } catch (err) {
+        throw err
+    }
+}

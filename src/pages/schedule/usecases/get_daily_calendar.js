@@ -86,14 +86,16 @@ export default function GetDailyCalendar({ctx}) {
             </div>
         )
     } else {
-        items.forEach((el)=> {
-            event.push(
-                { 
-                    title: getUnit(el['total'],ctx), 
-                    date: `${year}-${fixNumber(month)}-${fixNumber(el['context'])}` 
-                }
-            )
-        })
+        if(items){
+            items.forEach((el)=> {
+                event.push(
+                    { 
+                        title: getUnit(el['total'],ctx), 
+                        date: `${year}-${fixNumber(month)}-${fixNumber(el['context'])}` 
+                    }
+                )
+            })
+        }
         
         return (
             <div>

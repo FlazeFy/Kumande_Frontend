@@ -1,16 +1,13 @@
 "use client"
 import React from 'react'
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { getLocal } from '../../../../modules/storages/local'
-import GetRadialChart from '../../../../components/charts/radial_chart'
-import { convertDatetime, ucFirstChar } from '../../../../modules/helpers/converter'
-import GetManageBody from './get_manage_body'
 import Swal from 'sweetalert2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFloppyDisk, faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faFloppyDisk, faXmark } from '@fortawesome/free-solid-svg-icons'
 import Axios from 'axios'
 
-export default function PostAllergic({fetchAllergic}) {
+export default function PostAllergic({fetchAllergic, count, total_found}) {
     //Initial variable
     const token = getLocal("token_key")
 
@@ -64,8 +61,16 @@ export default function PostAllergic({fetchAllergic}) {
 
     return (
         <>
-            <button className='btn btn-primary' data-bs-toggle="modal" data-bs-target={`#addAllergic`}
-                title='Add Allergic'><FontAwesomeIcon icon={faPlus}/> Add Allergic</button>
+            <button className='btn-main mb-3' style={{height:"150px"}} data-bs-toggle="modal" data-bs-target={`#addAllergic`} title='Add Allergic'>
+                <div className='ms-2 me-4'>
+                    <img style={{height:"140px",bottom:"0"}} src={'/icons/Allergic.png'}/>
+                </div>
+                <div className='text-start py-4'>
+                    <p className='mb-0'>{count == 0 ? 'You have some allergic and want to monitor all your food? You will receive warning alert' : 'From our analyze for all your consume history'}</p>
+                    <p className='mb-0'>{count == 0 && total_found == 0 ? 'About the possible food that possible be your allergic' : total_found > 0 ? `We have found ${total_found.length}`:'All of your food is safe!'}</p>
+                    <h2>{count == 0 ? 'Start Monitoring Your Consume' : 'Add More Allergic'}</h2>
+                </div>
+            </button>
             <div className="modal fade" id={`addAllergic`} aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
