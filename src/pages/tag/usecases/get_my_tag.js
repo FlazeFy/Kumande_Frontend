@@ -9,6 +9,7 @@ import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
 
 // Modules
 import { getLocal, storeLocal } from '../../../modules/storages/local'
+import PostTag from './post_tag'
 
 export default function GetMyTag({ctx}) {
     //Initial variable
@@ -18,6 +19,10 @@ export default function GetMyTag({ctx}) {
     const token = getLocal("token_key")
 
     useEffect(() => {
+        fetchTag()
+    },[])
+
+    const fetchTag = () => {
         fetch(`http://127.0.0.1:8000/api/v1/tag/my`, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -53,7 +58,7 @@ export default function GetMyTag({ctx}) {
                 setError(error)
             }
         })
-    },[])
+    }
 
     if (error) {
         return <div><h2>{getCleanTitleFromCtx(ctx)}</h2> Error: {error.message}</div>
@@ -96,6 +101,7 @@ export default function GetMyTag({ctx}) {
                                     </td>
                                 </tr>
                         }
+                        <PostTag fetchTag={fetchTag}/>
                     </tbody>
                 </table>
             </div>

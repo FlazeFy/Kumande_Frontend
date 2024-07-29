@@ -7,7 +7,7 @@ import { convertDatetime, ucFirstChar } from '../../../../modules/helpers/conver
 import GetManageBody from './get_manage_body'
 import Swal from 'sweetalert2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBowlRice, faCake, faFloppyDisk, faMugSaucer, faTrash, faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faBowlRice, faCake, faCheckCircle, faFloppyDisk, faMugSaucer, faTrash, faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons'
 import Axios from 'axios'
 import PostAllergic from './post_allergic'
 
@@ -374,10 +374,10 @@ export default function GetMyBodyInfo({ctx}) {
                                     itemsAllergic.map((dt, idx) => {
                                         return (
                                             <div className='col-12'>
-                                                <button className='box-reminder' data-bs-toggle="modal" data-bs-target={`#manageAllergic`} onClick={(e)=>openEditAllergicModal(dt)}
+                                                <button className={dt.detected_on ? 'box-reminder':'box-reminder active'} data-bs-toggle="modal" data-bs-target={`#manageAllergic`} onClick={(e)=>openEditAllergicModal(dt)}
                                                     title='Edit the Allergic'>
                                                     <div style={{width:"40px"}} className="pt-2">
-                                                        <FontAwesomeIcon icon={faTriangleExclamation} style={{fontSize:"calc(var(--textJumbo)*1.5)"}}/>
+                                                        <FontAwesomeIcon icon={dt.detected_on ? faTriangleExclamation:faCheckCircle} style={{fontSize:"calc(var(--textJumbo)*1.5)"}}/>
                                                     </div>
                                                     <div className='w-100 ms-3'>
                                                         <h5 className='mb-1'>{ucFirstChar(dt.allergic_context)}</h5>
