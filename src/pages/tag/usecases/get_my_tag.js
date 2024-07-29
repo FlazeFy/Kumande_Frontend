@@ -1,6 +1,6 @@
 import { faChartSimple, faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import React, { useRef } from 'react'
 import { useState, useEffect } from "react"
 import Swal from 'sweetalert2'
 
@@ -9,6 +9,7 @@ import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
 
 // Modules
 import { getLocal, storeLocal } from '../../../modules/storages/local'
+import GetAnalyzeTag from './get_analyze_tag'
 import PostTag from './post_tag'
 
 export default function GetMyTag({ctx}) {
@@ -17,6 +18,15 @@ export default function GetMyTag({ctx}) {
     const [isLoaded, setIsLoaded] = useState(false)
     const [items, setItems] = useState([])
     const token = getLocal("token_key")
+
+    const [analyzeTagData, setAnalyzeTagData] = useState(null)
+
+    // Ref
+    const analyzeTagDataRef = useRef(null)
+
+    const handleAnalyzeTagData = (dt) => {
+        setAnalyzeTagData(dt)
+    }
 
     useEffect(() => {
         fetchTag()
@@ -35,8 +45,6 @@ export default function GetMyTag({ctx}) {
             setIsLoaded(true)
             if(status == 200){ 
                 setItems(result.data)
-                const item = result.data
-                storeLocal(ctx + "_sess",JSON.stringify(item))  
             } else {
                 setItems(null)
 
@@ -89,7 +97,9 @@ export default function GetMyTag({ctx}) {
                                         <tr key={idx}>
                                             <td>{dt.tag_name}</td>
                                             <td>{dt.total_used}</td>
-                                            <td><button className='btn btn-success my-1'><FontAwesomeIcon icon={faChartSimple}/></button></td>
+                                            <td>
+                                                <button className='btn btn-success my-1' data-bs-toggle="modal" data-bs-target="#analyze_tag" onClick={(e) => handleAnalyzeTagData(dt)}><FontAwesomeIcon icon={faChartSimple}/></button>
+                                            </td>
                                             <td><button className='btn btn-warning my-1'><FontAwesomeIcon icon={faEdit}/></button></td>
                                         </tr>
                                     )
@@ -104,6 +114,8 @@ export default function GetMyTag({ctx}) {
                         <PostTag fetchTag={fetchTag}/>
                     </tbody>
                 </table>
+                {items && <GetAnalyzeTag dt={analyzeTagData} ref={analyzeTagDataRef}/>}
+
             </div>
         )
     }
