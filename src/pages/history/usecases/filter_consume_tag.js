@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import GetAnimaText from '../../../components/messages/anima_text'
+import { isMobile } from '../../../modules/helpers/validator'
 import { getLocal, storeLocal } from '../../../modules/storages/local'
 
 export default function FilterConsumeTag({ctx}) {
@@ -9,6 +10,7 @@ export default function FilterConsumeTag({ctx}) {
     const [items, setItems] = useState([])
     let tags = []
     const token = getLocal("token_key")
+    const is_mobile = isMobile()
 
     useEffect(() => {
         fetch(`http://127.0.0.1:8000/api/v1/tag`, {
@@ -68,7 +70,7 @@ export default function FilterConsumeTag({ctx}) {
         const tagSelected = JSON.parse(getLocal("Table_filter_"+ctx))
         return (
             <>
-                <div className='w-50 p-2 rounded ms-2' style={{border:"1px solid #DFE2E6", cursor:"pointer"}} title="Click to select tag"
+                <div className={is_mobile ?'W-100 p-2 rounded mb-2':'w-50 p-2 rounded ms-2'} style={{border:"1px solid #DFE2E6", cursor:"pointer"}} title="Click to select tag"
                     data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <label className='text-secondary'>Tags</label>
                         <p className='tag-filter-holder'>
@@ -80,7 +82,7 @@ export default function FilterConsumeTag({ctx}) {
                                             );
                                         })
                                     :
-                                        <div className="alert alert-warning mt-2 mb-0" role="alert">
+                                        <div className={is_mobile ?"alert alert-warning mt-2 mb-0 w-100":"alert alert-warning mt-2 mb-0"} role="alert">
                                             No tag has been selected
                                         </div>
                             }

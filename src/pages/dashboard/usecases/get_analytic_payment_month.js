@@ -3,6 +3,7 @@ import React from 'react'
 import { useState, useEffect } from "react"
 import { numberToPrice, ucFirstWord } from '../../../modules/helpers/converter'
 import { getTodayDate } from '../../../modules/helpers/generator'
+import { isMobile } from '../../../modules/helpers/validator'
 
 import { getLocal } from '../../../modules/storages/local'
 
@@ -14,6 +15,7 @@ export default function GetAnalyticPaymentMonth({ctx}) {
     const token = getLocal("token_key")
     const mon = getTodayDate('month')
     const yr =  getTodayDate('year')
+    const is_mobile = isMobile()
 
     useEffect(() => {
         fetch('http://127.0.0.1:8000/api/v1/analytic/payment/month/'+mon+'/year/'+yr, {
@@ -52,7 +54,7 @@ export default function GetAnalyticPaymentMonth({ctx}) {
             <div className='container-fluid p-0' style={{background:"var(--primaryColor)"}}>
                 <h3 className='m-2 text-white'>{ucFirstWord(ctx)}</h3>
                 <div className='row'>
-                    <div className='col-lg-3 col-md-3 col-sm-6 pe-0'>
+                    <div className={`col-lg-3 col-md-3 col-sm-6 col-6 pe-0`}>
                         <div className='container bg-white p-2 d-flex justify-content-start'>
                             <div style={{color:"var(--warningBG)"}}>
                                 <h5 className='mb-0'>Total</h5>
@@ -61,7 +63,7 @@ export default function GetAnalyticPaymentMonth({ctx}) {
                             </div>
                         </div>
                     </div>
-                    <div className='col-lg-3 col-md-3 col-sm-6 px-0'>
+                    <div className={`col-lg-3 col-md-3 col-sm-6 col-6 ${is_mobile ? 'ps-0' : 'px-0'}`}>
                         <div className='container bg-white p-2 d-flex justify-content-start'>
                             <div style={{color:"var(--successBG)"}}>
                                 <h5 className='mb-0'>Average</h5>
@@ -70,7 +72,7 @@ export default function GetAnalyticPaymentMonth({ctx}) {
                             </div>
                         </div>
                     </div>
-                    <div className='col-lg-3 col-md-3 col-sm-6 px-0'>
+                    <div className={`col-lg-3 col-md-3 col-sm-6 col-6 ${is_mobile ? 'pe-0' : 'px-0'}`}>
                         <div className='container bg-white p-2 d-flex justify-content-start'>
                             <div style={{color:"var(--dangerBG)"}}>
                                 <h5 className='mb-0'>Max</h5>
@@ -79,7 +81,7 @@ export default function GetAnalyticPaymentMonth({ctx}) {
                             </div>
                         </div>
                     </div>
-                    <div className='col-lg-3 col-md-3 col-sm-6 ps-0'>
+                    <div className={`col-lg-3 col-md-3 col-sm-6 col-6 ps-0`}>
                         <div className='container bg-white p-2 d-flex justify-content-start'>
                             <div style={{color:"var(--infoBG)"}}>
                                 <h5 className='mb-0'>Min</h5>

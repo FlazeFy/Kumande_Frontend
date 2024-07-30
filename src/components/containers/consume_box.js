@@ -8,8 +8,12 @@ import { faBowlRice, faCake, faCalendar, faEdit, faHeart, faLocationDot,  faMugS
 import GetBreakLine from '../others/breakline'
 import { convertDatetime } from '../../modules/helpers/converter'
 import ManagePayment from '../../pages/consume/[slug]/usecases/manage_payment'
+import { isMobile } from '../../modules/helpers/validator'
 
 export default function GetConsumeBox({items, type, func, fetchConsume}) {
+    // Initial Variable
+    const is_mobile = isMobile()
+
     const getFavorite = (val) => {
         if(val == 1){
             return 'var(--spaceSM) solid var(--dangerBG)'
@@ -65,7 +69,7 @@ export default function GetConsumeBox({items, type, func, fetchConsume}) {
                         </a>
                     </div>
                     {
-                        type != 'detail' ?
+                        type != 'detail' && !is_mobile ?
                             <div style={{fontWeight:"500"}}>
                                 <a className='text-secondary me-3'>{items['consume_from']}</a>
                                 <a className='bgd-success rounded py-2 px-3 text-white'>
@@ -91,7 +95,7 @@ export default function GetConsumeBox({items, type, func, fetchConsume}) {
                         <h6>Detail</h6>
                         <div className='d-flex justify-content-start'>
                             <a className='btn btn-success rounded-pill px-3 py-1 me-1'>
-                                {items['consume_detail'][0]['provide']}
+                                {!is_mobile ? items['consume_detail'][0]['provide'] : <><FontAwesomeIcon icon={faLocationDot}/> Maps</>}
                             </a>
                             <a className='btn btn-warning rounded-pill px-3 py-1 me-1'>
                                 {items['consume_detail'][0]['calorie']} Cal
@@ -108,19 +112,45 @@ export default function GetConsumeBox({items, type, func, fetchConsume}) {
                                     <></>
                             }
                         </div>
-                        <h6 className='mt-2'>Tags</h6>
-                        <div className='d-flex justify-content-start'>
+                        <h6 className='mt-2'>
                             {
-                                items['consume_tag'] ?
-                                    items['consume_tag'].map((tag, idx) => {
-                                        return(
-                                            <a className='btn btn-primary rounded-pill px-3 py-1 me-1'>{tag['tag_name']}</a>
-                                        )
-                                    })
+                                is_mobile ? 
+                                    <span className='btn btn-primary rounded-pill px-3 py-1 text-white me-1'># {items['consume_tag'].length} Tags</span>
                                 :
-                                    <p className='text-secondary fst-italic'>- No Tag Found -</p>
+                                    <>Tags</>
                             }
-                        </div>
+                            {
+                                is_mobile && (
+                                    <>
+                                        <a className='bgd-primary rounded-pill py-2 px-3 text-white me-1'>{items['consume_from']}</a>
+                                        <a className='bgd-success rounded-pill py-2 px-3 text-white'>
+                                            {
+                                                items['is_payment'] == null ?
+                                                    'Free'
+                                                :
+                                                    `Rp. ${items['payment_price'].toLocaleString()}`
+                                            }
+                                        </a>
+                                    </>
+                                ) 
+                            }
+                        </h6>
+                        {
+                            !is_mobile && (
+                                <div className='d-flex justify-content-start'>
+                                    {
+                                        items['consume_tag'] ?
+                                            items['consume_tag'].map((tag, idx) => {
+                                                return(
+                                                    <a className='btn btn-primary rounded-pill px-3 py-1 me-1'>{tag['tag_name']}</a>
+                                                )
+                                            })
+                                        :
+                                            <p className='text-secondary fst-italic'>- No Tag Found -</p>
+                                    }
+                                </div>
+                            )
+                        }
                     </div>
                     {
                         type == 'detail' && typeof items['consume_detail'][0]['provide_lat'] !== "undefined"?

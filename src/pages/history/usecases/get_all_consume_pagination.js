@@ -3,7 +3,7 @@ import React from 'react'
 import { useState, useEffect } from "react"
 import GetConsumeBox from '../../../components/containers/consume_box'
 import GetAnimaText from '../../../components/messages/anima_text'
-import { getCleanTitleFromCtx, ucFirstWord } from '../../../modules/helpers/converter'
+import { getCleanTitleFromCtx, ucFirstWord, convertDatetime } from '../../../modules/helpers/converter'
 
 import { getLocal, storeLocal } from '../../../modules/storages/local'
 import FilterConsumeCal from './filter_consume_cal'
@@ -12,7 +12,7 @@ import FilterConsumeTag from './filter_consume_tag'
 import FilterConsumeType from './filter_consume_type'
 import FilterIsFavoriteConsume from './filter_is_favorite'
 import FilterOrderConsume from './filter_order_consume'
-import { convertDatetime } from '../../../modules/helpers/converter'
+import { isMobile } from '../../../modules/helpers/validator'
 
 export default function GetAllConsumePagination({ctx}) {
     //Initial variable
@@ -20,6 +20,7 @@ export default function GetAllConsumePagination({ctx}) {
     const [isLoaded, setIsLoaded] = useState(false)
     const [items, setItems] = useState([])
     const token = getLocal("token_key")
+    const is_mobile = isMobile()
 
     //Default config
     const keyOrder = getLocal("Table_order_"+ctx)
@@ -92,15 +93,23 @@ export default function GetAllConsumePagination({ctx}) {
         
         return (
             <div>
-                <div className='d-block mx-auto' style={{width:"1080px"}}>
+                <div className='d-block mx-auto'>
                     <h3 className='m-2 text-primary'>{getCleanTitleFromCtx(ucFirstWord(ctx))}</h3>
-                    <div className="d-flex justify-content-start">
-                        <FilterOrderConsume/>
-                        <FilterIsFavoriteConsume/>
-                        <FilterConsumeType/>
-                        <FilterConsumeLimit/>
+                    <div className={is_mobile ? 'row' : "d-flex justify-content-start"}>
+                        <div className={is_mobile ? 'col-6' : ''}>
+                            <FilterOrderConsume/>
+                        </div>
+                        <div className={is_mobile ? 'col-6' : ''}>
+                            <FilterIsFavoriteConsume/>
+                        </div>
+                        <div className={is_mobile ? 'col-6' : ''}>
+                            <FilterConsumeType/>
+                        </div>
+                        <div className={is_mobile ? 'col-6' : ''}>
+                            <FilterConsumeLimit/>
+                        </div>
                     </div>
-                    <div className="d-flex justify-content-start mb-3">
+                    <div className={is_mobile ? 'row' : "d-flex justify-content-start mb-3"}>
                         <FilterConsumeCal ctx="max_min_cal"/>
                         <FilterConsumeTag ctx="consume_tag"/>
                     </div>

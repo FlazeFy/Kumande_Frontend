@@ -3,9 +3,11 @@ import React from 'react'
 import { useState, useEffect } from "react"
 import { getLocal } from '../../../../modules/storages/local'
 import GetRadialChart from '../../../../components/charts/radial_chart'
-import { convertDatetime } from '../../../../modules/helpers/converter'
+import { convertDatetime, ucFirstChar, ucFirstWord } from '../../../../modules/helpers/converter'
 import GetManageBody from './get_manage_body'
 import Swal from 'sweetalert2'
+import Axios from 'axios'
+import GetDataTable from '../../../../modules/templates/get_data_table'
 
 export default function GetMyBodyInfo({ctx}) {
     //Initial variable
@@ -13,6 +15,8 @@ export default function GetMyBodyInfo({ctx}) {
     const [isLoaded, setIsLoaded] = useState(false)
     const token = getLocal("token_key")
     const [items, setItems] = useState(null)
+    const [itemsBloodPreasure, setItemsBloodPreasure] = useState(null)
+    const [summaryBloodPreasure,setSummaryBloodPreasure] = useState(null)
     
     const fetchBodyInfo = () => {
         fetch(`http://127.0.0.1:8000/api/v1/user/body_info`, {
@@ -46,10 +50,43 @@ export default function GetMyBodyInfo({ctx}) {
         })
     }
 
+    const fetchAnalyze = async () => {
+        try {
+            const data = {
+                blood_pressure: "126/90"
+            }
+            let response = await Axios.post("http://127.0.0.1:9000/api/v1/analyze/consume_data/consume_body_relation", JSON.stringify(data), {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-Custom-Header': '2d98f524-de02-11ed-b5ea-0242ac120002'
+                }
+            })
+            
+            if(response.status == 200){
+                setItemsBloodPreasure(response.data.general_analyze_sodium)
+                setSummaryBloodPreasure(response.data.summary_analyze_blood_preasure)
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                })
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+            })
+        }
+    }
+
     useEffect(() => {
         fetchBodyInfo()
+        fetchAnalyze()
     }, []);
-
+    
     if (error) {
         return <div>Error: {error.message}</div>
     } else if (!isLoaded) {
@@ -69,6 +106,22 @@ export default function GetMyBodyInfo({ctx}) {
         let diastolic_status
         let systolic
         let diastolic
+
+        const columnsBloodPreasure = [
+            { name: 'Consume Name', selector: row => ucFirstWord(row.consume_name), sortable: true },
+            { name: 'Calorie', selector: row => `${row.calorie} Cal`, sortable: true },
+            { name: 'Sodium / 100 g', selector: row => `${row.sodium} mg`, sortable: true },
+            { name: 'Status', selector: row => 
+                <div className={
+                    row.sodium_status == 'Very Low' ? 'bgd-primary rounded-pill text-center text-white py-2 px-3' :
+                    row.sodium_status == 'Low' ? 'bgd-success rounded-pill text-center text-white py-2 px-3' :
+                    row.sodium_status == 'Moderate' ? 'bgd-warning rounded-pill text-center text-white py-2 px-3' : 
+                    'bgd-danger rounded-pill text-center text-white py-2 px-3'
+                }>{row.sodium_status}</div>, 
+                sortable: true 
+            },
+        ];
+    
 
         if(items){
             // BMI Status (Source : CDC)
@@ -129,25 +182,43 @@ export default function GetMyBodyInfo({ctx}) {
                 </div>
                 <div className='row text-center px-3'>
                     <div className='col-lg-12'>
-                        <div className='shadow rounded py-3 px-4 mb-4' style={{height:"36vh"}}>
+                        <div className='shadow rounded py-3 px-4 mb-4' style={{minHeight:"36vh"}}>
                             <div className='row w-100'>
                                 <div className='col-lg-4'>
                                     <h4 className='mb-0'>Blood Preasure</h4>
                                     {
                                         items ?
-                                            <GetRadialChart custom={
+                                            <>
+                                                <GetRadialChart custom={
+                                                    {
+                                                        type:'half',
+                                                        extra_desc: '',
+                                                        value: [systolic,diastolic]
+                                                    }
+                                                } val={[systolic - 70, diastolic - 40]} label={[`Systolic (${systolic_status})`,`Diastolic (${diastolic_status})`]}/>
                                                 {
-                                                    type:'half',
-                                                    extra_desc: '',
-                                                    value: [systolic,diastolic]
+                                                    !summaryBloodPreasure ? 
+                                                        <span className='text-secondary text-center fst-italic'>- No Summary -</span>
+                                                    :
+                                                        <>
+                                                            <br></br>
+                                                            <h5>Summary</h5>
+                                                            <p>{summaryBloodPreasure}</p>
+                                                        </>
                                                 }
-                                            } val={[systolic - 70, diastolic - 40]} label={[`Systolic (${systolic_status})`,`Diastolic (${diastolic_status})`]}/>
+                                            </>
                                         :   
                                         <p className='text-secondary text-center fst-italic'>- No Data Found -</p>
                                     }
                                 </div>
                                 <div className='col-lg-8'>
                                     <h4 className='mb-0'>Analyze</h4>
+                                    {
+                                        itemsBloodPreasure ?
+                                            <GetDataTable data={itemsBloodPreasure} columns={columnsBloodPreasure} />
+                                        : 
+                                            <p className='text-secondary text-center fst-italic'>- No Data Found -</p>
+                                    }
                                 </div>
                             </div>
                         </div>

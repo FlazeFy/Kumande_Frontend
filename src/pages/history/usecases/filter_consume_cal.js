@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import MultiRangeSlider from "multi-range-slider-react"
 import { getLocal, storeLocal } from '../../../modules/storages/local'
+import { isMobile } from '../../../modules/helpers/validator'
 
 export default function FilterConsumeCal({ctx}) {
     //Initial variable
@@ -11,6 +12,7 @@ export default function FilterConsumeCal({ctx}) {
     const [selectMinValue, setSelectMinValue] = useState(0)
     const [selectMaxValue, setSelectMaxValue] = useState(1000)
     const token = getLocal("token_key")
+    const is_mobile = isMobile()
     
     useEffect(() => {
         fetch(`http://127.0.0.1:8000/api/v1/consume/calorie/maxmin`, {
@@ -76,7 +78,7 @@ export default function FilterConsumeCal({ctx}) {
         )
     } else {
         return (
-            <div className='w-50 p-2 rounded' style={{border:"1px solid #DFE2E6"}}>
+            <div className={is_mobile ?'W-100 p-2 rounded mb-2':'w-50 p-2 rounded'} style={{border:"1px solid #DFE2E6"}}>
                 <label className='text-secondary'>Calorie</label>
                 <MultiRangeSlider
                     min={minValue}

@@ -12,6 +12,7 @@ import { getLocal, storeLocal } from '../../../modules/storages/local'
 // Components
 import GetScheduleBox from '../../../components/containers/schedule_box'
 import { getTodayDate } from '../../../modules/helpers/generator'
+import { isMobile } from '../../../modules/helpers/validator'
 
 export default function GetTodaySchedule({ctx}) {
     //Initial variable
@@ -21,6 +22,7 @@ export default function GetTodaySchedule({ctx}) {
     const [items, setItems] = useState(null)
     const token = getLocal("token_key")
     const day = getTodayDate('day')
+    const is_mobile = isMobile()
 
     const is_remind_schedule = getLocal('is_remind_schedule')
 
@@ -123,13 +125,13 @@ export default function GetTodaySchedule({ctx}) {
             <div className='container-fluid p-0' style={{background:"var(--primaryColor)"}}>
                 <h3 className='m-2 text-white'>{ucFirstWord(ctx)}</h3>
                 <div className='row'>
-                    <div className='col-lg-4 col-md-4 col-sm-6 pe-0'>
+                    <div className={`col-lg-4 col-md-4 col-sm-6 ${is_mobile ? '' : 'pe-0'}`}>
                         <GetScheduleBox time="breakfast" items={items} />
                     </div>
-                    <div className='col-lg-4 col-md-4 col-sm-6 px-0'>
+                    <div className={`col-lg-4 col-md-4 col-sm-6 ${is_mobile ? '' : 'px-0'}`}>
                         <GetScheduleBox time="lunch" items={items} />
                     </div>
-                    <div className='col-lg-4 col-md-4 col-sm-6 ps-0'>
+                    <div className={`col-lg-4 col-md-4 col-sm-6 ${is_mobile ? '' : 'ps-0'}`}>
                         <GetScheduleBox time="dinner" items={items} />
                     </div>
                 </div>

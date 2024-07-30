@@ -82,6 +82,10 @@ body {
     height: 80px;
     width: 80px;
 }
+.img-icon-md {
+    height: 40px;
+    width: 40px;
+}
 
 /* Background */
 .bg-success-light {
@@ -121,8 +125,6 @@ body {
     animation-duration: var(--duration);
 }
   
-
-  
 @keyframes loop {
     0% {
         transform: translateX(0);
@@ -131,6 +133,3 @@ body {
         transform: translateX(-50%);
     }
 }
-
-
-
