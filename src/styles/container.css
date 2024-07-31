@@ -71,6 +71,9 @@
 .box-reminder div:first-child path {
     color: var(--dangerBG);
 }
+.box-reminder.warning div:first-child path {
+    color: var(--warningBG);
+}
 .box-reminder.active div:first-child path {
     color: var(--successBG);
 }
@@ -83,4 +86,8 @@
 .box-reminder.active {
     border: var(--spaceMini) solid var(--successBG);
     border-left: var(--spaceMD) solid var(--successBG);
+}
+.box-reminder.warning {
+    border: var(--spaceMini) solid var(--warningBG);
+    border-left: var(--spaceMD) solid var(--warningBG);
 }

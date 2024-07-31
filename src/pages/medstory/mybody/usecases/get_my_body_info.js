@@ -8,6 +8,8 @@ import GetManageBody from './get_manage_body'
 import Swal from 'sweetalert2'
 import Axios from 'axios'
 import GetDataTable from '../../../../modules/templates/get_data_table'
+import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function GetMyBodyInfo({ctx}) {
     //Initial variable
@@ -15,57 +17,91 @@ export default function GetMyBodyInfo({ctx}) {
     const [isLoaded, setIsLoaded] = useState(false)
     const token = getLocal("token_key")
     const [items, setItems] = useState(null)
+
+    // Analyze
     const [itemsBloodPreasure, setItemsBloodPreasure] = useState(null)
     const [summaryBloodPreasure,setSummaryBloodPreasure] = useState(null)
+    const [itemsBloodGlucose, setItemsBloodGlucose] = useState(null)
+    const [summaryBloodGlucose,setSummaryBloodGlucose] = useState(null)
+    const [summaryCalorieAll, setSummaryCalorieAll] = useState(null)
+    const [summaryGout, setSummaryGout] = useState(null)
+    const [itemsGout, setGeneralGout] = useState(null)
     
     const fetchBodyInfo = () => {
-        fetch(`http://127.0.0.1:8000/api/v1/user/body_info`, {
+        return fetch(`http://127.0.0.1:8000/api/v1/user/body_info`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
-        .then(res => {
-            return res.json().then(result => ({status:res.status, result:result}))
-        }).then(({status, result}) => {
+        .then(res => res.json().then(result => ({status: res.status, result: result})))
+        .then(({status, result}) => {
             setIsLoaded(true)
-
-            if(status == 200){
-                setItems(result.data) 
+    
+            if (status === 200) {
+                setItems(result.data)
+                return result.data
             } else {
                 setItems(null)
+                throw new Error('Failed to fetch body info')
             }
-        }).catch(error=> {
+        })
+        .catch(error => {
             Swal.fire({
                 title: 'Error!',
                 text: 'Something went wrong. Call the Admin!',
                 icon: 'error',
-            })
-            if(getLocal(ctx + "_sess") !== undefined){
+            });
+    
+            if (getLocal(ctx + "_sess") !== undefined) {
+                const sessionData = JSON.parse(getLocal(ctx + "_sess"))
                 setIsLoaded(true)
-                setItems(JSON.parse(getLocal(ctx + "_sess")))
+                setItems(sessionData)
+                return sessionData
             } else {
                 setIsLoaded(true)
                 setError(error)
+                throw error
             }
         })
     }
 
-    const fetchAnalyze = async () => {
+    const fetchAnalyze = async (blood_pressure, blood_glucose, calorie, height, weight, gout) => {
+        const formatDate = (date) => {
+            const d = new Date(date)
+            const year = d.getFullYear()
+            const month = String(d.getMonth() + 1).padStart(2, '0')
+            const day = String(d.getDate()).padStart(2, '0')
+            return `${year}-${month}-${day}`
+        };
+        
+        const dateNow = formatDate(new Date())
+
         try {
             const data = {
-                blood_pressure: "126/90"
+                blood_pressure: blood_pressure,
+                blood_glucose: blood_glucose,
+                calorie:calorie,
+                height:height,
+                weight:weight,
+                date:dateNow,
+                gout:gout
             }
             let response = await Axios.post("http://127.0.0.1:9000/api/v1/analyze/consume_data/consume_body_relation", JSON.stringify(data), {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'X-Custom-Header': '2d98f524-de02-11ed-b5ea-0242ac120002'
+                    'X-Custom-Header': '157c5f24-8f7f-11ee-b9d1-0242ac120002'
                 }
             })
             
             if(response.status == 200){
-                setItemsBloodPreasure(response.data.general_analyze_sodium)
+                setItemsBloodPreasure(response.data.general_analyze_blood_preasure)
                 setSummaryBloodPreasure(response.data.summary_analyze_blood_preasure)
+                setItemsBloodGlucose(response.data.general_analyze_blood_glucose)
+                setSummaryBloodGlucose(response.data.summary_analyze_blood_glucose)
+                setSummaryCalorieAll(response.data.summary_all_calorie)
+                setSummaryGout(response.data.summary_analyze_gout)
+                setGeneralGout(response.data.general_analyze_gout)
             } else {
                 Swal.fire({
                     icon: "error",
@@ -84,7 +120,19 @@ export default function GetMyBodyInfo({ctx}) {
 
     useEffect(() => {
         fetchBodyInfo()
-        fetchAnalyze()
+            .then(bodyInfo => {
+                const blood_pressure = bodyInfo.blood_pressure
+                const blood_glucose = bodyInfo.blood_glucose
+                const calorieDaily = bodyInfo.result
+                const height = bodyInfo.height
+                const weight = bodyInfo.weight
+                const gout = bodyInfo.gout
+
+                return fetchAnalyze(blood_pressure, blood_glucose, calorieDaily, height, weight, gout)
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }, []);
     
     if (error) {
@@ -121,7 +169,54 @@ export default function GetMyBodyInfo({ctx}) {
                 sortable: true 
             },
         ];
-    
+        const columnsBloodGlucose = [
+            { name: 'Consume Name', selector: row => ucFirstWord(row.consume_name), sortable: true },
+            { name: 'Calorie', selector: row => `${row.calorie} Cal`, sortable: true },
+            { name: 'Sugar / 100 g', selector: row => `${row.sugar} g`, sortable: true },
+            { name: 'Sugar Status', selector: row => 
+                <div className={
+                    row.sugar_status == 'Very Low' ? 'bgd-primary rounded-pill text-center text-white py-2 px-3' :
+                    row.sugar_status == 'Low' ? 'bgd-success rounded-pill text-center text-white py-2 px-3' :
+                    row.sugar_status == 'Moderate' ? 'bgd-warning rounded-pill text-center text-white py-2 px-3' : 
+                    'bgd-danger rounded-pill text-center text-white py-2 px-3'
+                }>{row.sugar_status}</div>, 
+                sortable: true 
+            },
+            { name: 'Carbohydrates / 100 g', selector: row => `${row.carbohydrate} g`, sortable: true },
+            { name: 'Carbohydrates Status', selector: row => 
+                <div className={
+                    row.carbohydrate_status == 'Very Low' ? 'bgd-primary rounded-pill text-center text-white py-2 px-3' :
+                    row.carbohydrate_status == 'Low' ? 'bgd-success rounded-pill text-center text-white py-2 px-3' :
+                    row.carbohydrate_status == 'Moderate' ? 'bgd-warning rounded-pill text-center text-white py-2 px-3' : 
+                    'bgd-danger rounded-pill text-center text-white py-2 px-3'
+                }>{row.carbohydrate_status}</div>, 
+                sortable: true 
+            },
+            { name: 'Dietary Fiber / 100 g', selector: row => `${row.dietary_fiber} g`, sortable: true },
+            { name: 'Dietary Fiber Status', selector: row => 
+                <div className={
+                    row.dietary_fiber_status == 'Very Low' ? 'bgd-primary rounded-pill text-center text-white py-2 px-3' :
+                    row.dietary_fiber_status == 'Low' ? 'bgd-success rounded-pill text-center text-white py-2 px-3' :
+                    row.dietary_fiber_status == 'Moderate' ? 'bgd-warning rounded-pill text-center text-white py-2 px-3' : 
+                    'bgd-danger rounded-pill text-center text-white py-2 px-3'
+                }>{row.dietary_fiber_status}</div>, 
+                sortable: true 
+            },
+        ];
+        const columnsGout = [
+            { name: 'Consume Name', selector: row => ucFirstWord(row.consume_name), sortable: true },
+            { name: 'Calorie', selector: row => `${row.calorie} Cal`, sortable: true },
+            { name: 'Saturated Fats / 100 g', selector: row => `${row.saturated_fats} g`, sortable: true },
+            { name: 'Status', selector: row => 
+                <div className={
+                    row.saturated_fats_status == 'Very Low' ? 'bgd-primary rounded-pill text-center text-white py-2 px-3' :
+                    row.saturated_fats_status == 'Low' ? 'bgd-success rounded-pill text-center text-white py-2 px-3' :
+                    row.saturated_fats_status == 'Moderate' ? 'bgd-warning rounded-pill text-center text-white py-2 px-3' : 
+                    'bgd-danger rounded-pill text-center text-white py-2 px-3'
+                }>{row.saturated_fats_status}</div>, 
+                sortable: true 
+            },
+        ];
 
         if(items){
             // BMI Status (Source : CDC)
@@ -182,6 +277,16 @@ export default function GetMyBodyInfo({ctx}) {
                 </div>
                 <div className='row text-center px-3'>
                     <div className='col-lg-12'>
+                        <button className={'box-reminder warning'} title='Configure the setting'>
+                            <div style={{width:"40px"}} className="pt-2">
+                                <FontAwesomeIcon icon={faTriangleExclamation} style={{fontSize:"calc(var(--textJumbo)*1.5)"}}/>
+                            </div>
+                            <div className='w-100 ms-3'>
+                                <p>{summaryCalorieAll}</p>
+                            </div>
+                        </button>
+                    </div>
+                    <div className='col-lg-12'>
                         <div className='shadow rounded py-3 px-4 mb-4' style={{minHeight:"36vh"}}>
                             <div className='row w-100'>
                                 <div className='col-lg-4'>
@@ -224,49 +329,85 @@ export default function GetMyBodyInfo({ctx}) {
                         </div>
                     </div>
                     <div className='col-lg-12'>
-                        <div className='shadow rounded py-3 px-4 mb-4' style={{height:"36vh"}}>
+                        <div className='shadow rounded py-3 px-4 mb-4' style={{minHeight:"36vh"}}>
                             <div className='row w-100'>
                                 <div className='col-lg-4'>
                                     <h4 className='mb-0'>Glucose</h4>
                                     {
                                         items.blood_glucose > 0 ?
-                                            <GetRadialChart custom={
+                                            <>
+                                                <GetRadialChart custom={
+                                                    {
+                                                        type:'half',
+                                                        extra_desc: '',
+                                                        value: items.blood_glucose+' mg/dL'
+                                                    }
+                                                } val={(items.blood_glucose - 70) / (126 - 70) * 100} label={glucose_status}/>
                                                 {
-                                                    type:'half',
-                                                    extra_desc: '',
-                                                    value: items.blood_glucose+' mg/dL'
+                                                    !summaryBloodGlucose ? 
+                                                        <span className='text-secondary text-center fst-italic'>- No Summary -</span>
+                                                    :
+                                                        <>
+                                                            <br></br>
+                                                            <h5>Summary</h5>
+                                                            <p>{summaryBloodGlucose}</p>
+                                                        </>
                                                 }
-                                            } val={(items.blood_glucose - 70) / (126 - 70) * 100} label={glucose_status}/>
+                                            </>
                                         :   
                                             <p className='text-secondary text-center fst-italic'>- No Data Found -</p>
                                     }
                                 </div>
                                 <div className='col-lg-8'>
                                     <h4 className='mb-0'>Analyze</h4>
+                                    {
+                                        itemsBloodGlucose ?
+                                            <GetDataTable data={itemsBloodGlucose} columns={columnsBloodGlucose} />
+                                        : 
+                                            <p className='text-secondary text-center fst-italic'>- No Data Found -</p>
+                                    }
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className='col-lg-12'>
-                        <div className='shadow rounded py-3 px-4 mb-4' style={{height:"36vh"}}>
+                        <div className='shadow rounded py-3 px-4 mb-4'>
                             <div className='row w-100'>
                                 <div className='col-lg-4'>
                                     <h4 className='mb-0'>Gout</h4>
                                     {
                                         items.gout > 0 ?
+                                        <>
                                             <GetRadialChart custom={
-                                                {
-                                                    type:'half',
-                                                    extra_desc: '',
-                                                    value: items.gout+' mg/dL'
-                                                }
-                                            } val={(items.gout - bottom_gout) / (top_gout - bottom_gout) * 100} label={gout_status}/>
+                                                    {
+                                                        type:'half',
+                                                        extra_desc: '',
+                                                        value: items.gout+' mg/dL'
+                                                    }
+                                                } val={(items.gout - bottom_gout) / (top_gout - bottom_gout) * 100} label={gout_status}/>
+                                            {
+                                                !summaryGout ? 
+                                                    <span className='text-secondary text-center fst-italic'>- No Summary -</span>
+                                                :
+                                                    <>
+                                                        <br></br>
+                                                        <h5>Summary</h5>
+                                                        <p>{summaryGout}</p>
+                                                    </>
+                                            }
+                                        </>
                                         :   
                                             <p className='text-secondary text-center fst-italic'>- No Data Found -</p>
                                     }
                                 </div>
                                 <div className='col-lg-8'>
                                     <h4 className='mb-0'>Analyze</h4>
+                                    {
+                                        itemsGout ?
+                                            <GetDataTable data={itemsGout} columns={columnsGout} />
+                                        : 
+                                            <p className='text-secondary text-center fst-italic'>- No Data Found -</p>
+                                    }
                                 </div>
                             </div>
                         </div>
