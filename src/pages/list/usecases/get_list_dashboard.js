@@ -1,11 +1,12 @@
 "use client"
-import React from 'react'
+import React, { useRef } from 'react'
 import { getLocal } from '../../../modules/storages/local'
 import { useState, useEffect } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import GetListStarted from './get_list_started'
 import { faBowlRice, faCake, faMugSaucer, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { convertDatetime } from '../../../modules/helpers/converter'
+import ManageList from './manage_list'
 
 export default function GetListDashboard({ctx}) {
     //Initial variable
@@ -14,6 +15,16 @@ export default function GetListDashboard({ctx}) {
     const [items, setItems] = useState(null)
     const token = getLocal("token_key")
     const [resMsgAll, setResMsgAll] = useState([])
+
+
+    const [listData, setListData] = useState(null)
+
+    // Ref
+    const listDataRef = useRef(null)
+
+    const handleListData = (id) => {
+        setListData(id)
+    }
     
     useEffect(() => {
         fetch(`http://127.0.0.1:8000/api/v1/list/limit/20/order/desc`, {
@@ -61,7 +72,7 @@ export default function GetListDashboard({ctx}) {
                                 items.map((dt, idx) => {
                                     return(
                                         <div className='col-lg-6 col-md-6 col-sm-12 py-2 px-3'>
-                                            <button className='btn container p-3 text-start shadow' data-bs-toggle="modal" data-bs-target={"#listConsumeModal"}>
+                                            <button className='btn container p-3 text-start shadow' data-bs-toggle="modal" data-bs-target={"#listConsumeModal"} onClick={(e) => handleListData(dt.id)}>
                                                 <div className='row'>
                                                     <div className='col'>
                                                         <h4 className='mb-0' style={{fontSize:"var(--textJumbo)"}}>{dt.list_name}</h4>
@@ -125,23 +136,11 @@ export default function GetListDashboard({ctx}) {
                                     )
                                 })
                             }
-                            <div className="modal fade" id={"listConsumeModal"} aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div className="modal-dialog modal-xl">
-                                    <div className="modal-content">
-                                        <div className="modal-header">
-                                            <h5 className="modal-title" id="exampleModalLabel">List </h5>
-                                            <button type="button" className="btn_close_modal" data-bs-dismiss="modal" aria-label="Close"><FontAwesomeIcon icon={faXmark}/></button>
-                                        </div>
-                                        <div className="modal-body text-center p-4">
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </>
                     : 
                         <GetListStarted ctx="list_started"/>
                 }
+                {items && <ManageList id={listData} ref={listDataRef}/>}
             </div>
         )
     }

@@ -28,7 +28,10 @@ export default function GetPieChart({items, filter_name}){
     chart = {
         series: getSeries(data),
         options: {
-            labels: getCategory(data)
+            labels: getCategory(data),
+            legend: {
+                position: 'bottom'
+            }
         }
     };
 
