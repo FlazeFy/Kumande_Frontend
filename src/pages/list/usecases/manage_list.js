@@ -238,6 +238,55 @@ const ManageList = forwardRef((props, ref) => {
         }
     }
 
+    const handleRemoveConsume = async (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This will reload the analysis",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, Delete it!",
+            cancelButtonText: "No, Cancel!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const response = await Axios.delete(`http://127.0.0.1:8000/api/v1/list/deleteRel/${id}`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    if(response.status != 200){
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Something wrong happen. Call the Admin!',
+                            icon: 'error',
+                        })  
+                    } else {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: response.data.message,
+                            icon: 'success',
+                        })  
+                        fetchDetail()
+                    }
+                } catch (error) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Something wrong happen. Call the Admin!',
+                        icon: 'error',
+                    })  
+                }
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire({
+                    title: "Cancelled",
+                    text: "Consume remove dismissed",
+                    icon: "error"
+                })
+            }
+        })
+    }
+
     // Add
     const toogleAddConsume = () => {
         getConsumeList()
@@ -345,7 +394,7 @@ const ManageList = forwardRef((props, ref) => {
                                                                         <td>{dt.calorie} Cal</td>
                                                                         <td><span className='btn btn-success rounded-pill py-0 px-2 me-1' style={{fontSize:"var(--textMD)"}}>{dt.consume_from}</span>{dt.provide}</td>
                                                                         <td>Rp. {dt.average_price.toLocaleString()},00</td>
-                                                                        <td><a className='btn btn-danger'><FontAwesomeIcon icon={faTrash}/></a></td>
+                                                                        <td><a className='btn btn-danger' onClick={(e)=>handleRemoveConsume(dt.id)}><FontAwesomeIcon icon={faTrash}/></a></td>
                                                                     </tr>
                                                                 )
                                                             }))
@@ -381,11 +430,11 @@ const ManageList = forwardRef((props, ref) => {
                                                                     <td colSpan={2}>
                                                                         <div className="d-flex justify-content-between">
                                                                             <span>Total Calorie:</span>
-                                                                            <b>{total_cal} Cal</b>
+                                                                            <b>{total_cal.toFixed(2)} Cal</b>
                                                                         </div>
                                                                         <div className="d-flex justify-content-between">
                                                                             <span>Average Calorie:</span>
-                                                                            <b>{total_cal / items.consume.length} Cal</b>
+                                                                            <b>{(total_cal / items.consume.length).toFixed(2)} Cal</b>
                                                                         </div>
                                                                     </td>
                                                                     <td colSpan={3}>
@@ -428,7 +477,7 @@ const ManageList = forwardRef((props, ref) => {
                                                             <h5>Comparison to All Consume</h5>
                                                             <div className="d-flex justify-content-between">
                                                                 <span>Average Calorie (<b>List</b> / Whole) :</span>
-                                                                <span><b>{total_cal} Cal</b> / {items.whole_avg_calorie} Cal</span>
+                                                                <span><b>{total_cal.toFixed(2)} Cal</b> / {items.whole_avg_calorie.toFixed(2)} Cal</span>
                                                             </div>
                                                             <div className="d-flex justify-content-between">
                                                                 <span>Average Price (<b>List</b> / Whole) :</span>
