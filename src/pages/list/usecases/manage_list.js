@@ -3,10 +3,11 @@ import React, { forwardRef, useRef, useImperativeHandle } from 'react'
 import { useState, useEffect } from "react"
 import { getLocal } from '../../../modules/storages/local'
 import Swal from 'sweetalert2'
+import Axios from 'axios'
 
 //Font awesome classicon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons"
+import { faCheck, faEdit, faPlus, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons"
 import GetPieChart from '../../../components/charts/pie_chart'
 
 const ManageList = forwardRef((props, ref) => {
@@ -18,8 +19,18 @@ const ManageList = forwardRef((props, ref) => {
     // Form
     const [listName, setListName] = useState("")
     const [listDesc, setListDesc] = useState("")
+    const [itemConsumeName, setItemsConsumeName] = useState([])
     const [itemsConsumePieCal, setItemsConsumePieCal] = useState([])
     const [itemsConsumePiePrice, setItemsConsumePiePrice] = useState([])
+    const [addConsumeSlug, setAddConsumeSlug] = useState(null)
+    const [addConsumeCal, setAddConsumeCal] = useState(0)
+    const [addConsumeProvide, setAddConsumeProvide] = useState(null)
+    const [addConsumeFrom, setAddConsumeFrom] = useState(null)
+    const [addConsumeAvgPrice, setAddConsumeAvgPrice] = useState(null)
+    const [allowSubmitAddConsume, setAllowSubmitAddConsume] = useState(false)
+
+    // Toogle
+    const [showInputRow, setShowInputRow] = useState(false)
 
     // Ref
     const listNameRef = useRef(null)
@@ -105,6 +116,140 @@ const ManageList = forwardRef((props, ref) => {
         })
     }
 
+    const getConsumeList = () => {
+        const ctx =1
+        fetch(`http://127.0.0.1:8000/api/v1/consume/list/select`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then(res => res.json())
+            .then(
+            (result) => {
+                setIsLoaded(true)
+                setItemsConsumeName(result.data)
+            },
+            (error) => {
+                if(getLocal(ctx + "_sess") !== undefined){
+                    setIsLoaded(true)
+                    setItems(JSON.parse(getLocal(ctx + "_sess")))
+                } else {
+                    setIsLoaded(true)
+                }
+            }
+        )
+    }
+
+    const checkConsumeName = (slug) => {
+        fetch(`http://127.0.0.1:8000/api/v1/list/check/${slug}/${props.id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then(res => res.json().then(result => ({ status: res.status, result: result })))
+        .then(({ status, result }) => {
+            if (status == 200) { 
+                setAddConsumeSlug(slug)
+                setAddConsumeCal(result.data.calorie)
+                setAddConsumeFrom(result.data.consume_from)
+                setAddConsumeProvide(result.data.provide)
+                setAddConsumeAvgPrice(result.data.average_price)
+                setAllowSubmitAddConsume(true)
+
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Consume found',
+                    icon: 'success',
+                }) 
+            } else if(status == 409) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: result.message,
+                    icon: 'error',
+                }) 
+            } else {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Something wrong happened. Call the Admin!',
+                    icon: 'error',
+                }) 
+            }
+
+            if(status != 200){
+                cleanAddConsumeForm()
+            }
+        })
+        .catch(error => {                
+            Swal.fire({
+                title: 'Error!',
+                text: 'Something wrong happened. Call the Admin!',
+                icon: 'error',
+            }) 
+        })
+    }
+
+    const cleanAddConsumeForm = () => {
+        setAllowSubmitAddConsume(false)
+        setAddConsumeCal(0)
+        setAddConsumeSlug(null)
+        setAddConsumeFrom(null)
+        setAddConsumeProvide(null)
+        setAddConsumeAvgPrice(null)
+    }
+
+    // Services
+    const handleAddConsume = async (slug, listId) => {
+        try {
+            let data = {
+                consume_slug: slug,
+                list_id: listId,
+            }
+
+            const response = await Axios.post("http://127.0.0.1:8000/api/v1/list/createRel", JSON.stringify(data), {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+            if(response.status != 200){
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Something wrong happen. Call the Admin!',
+                    icon: 'error',
+                })  
+            } else {
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Consume saved',
+                    icon: 'success',
+                })  
+                setShowInputRow()
+                cleanAddConsumeForm()
+                fetchDetail()
+
+            }
+        } catch (error) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Something wrong happen. Call the Admin!',
+                icon: 'error',
+            })  
+        }
+    }
+
+    // Add
+    const toogleAddConsume = () => {
+        getConsumeList()
+        setShowInputRow(true)
+    };
+
+    // Cancel
+    const closeAddConsume = () => {
+        setShowInputRow(false)
+        cleanAddConsumeForm()
+    }
+
     useImperativeHandle(ref, () => ({
         fetchDetail
     }))
@@ -119,7 +264,7 @@ const ManageList = forwardRef((props, ref) => {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="exampleModalLabel">List Detail</h5>
-                        <button type="button" className="btn_close_modal" data-bs-dismiss="modal" aria-label="Close">
+                        <button type="button" className="btn_close_modal" data-bs-dismiss="modal" aria-label="Close" onClick={cleanAddConsumeForm}>
                             <FontAwesomeIcon icon={faXmark} />
                         </button>
                     </div>
@@ -141,15 +286,21 @@ const ManageList = forwardRef((props, ref) => {
                                                 <hr></hr>
                                                 <h5 className='mt-4'>Statistic Calorie</h5>
                                                 {
-                                                    items.consume && (
+                                                    items.consume ?
                                                         <GetPieChart items={itemsConsumePieCal} filter_name={null}/>
-                                                    )
+                                                    :
+                                                        <>
+                                                            <a className='fst-italic text-secondary'>- No Data -</a>
+                                                        </>
                                                 }
                                                  <h5 className='mt-4'>Statistic Price</h5>
                                                 {
-                                                    items.consume && (
+                                                    items.consume ?
                                                         <GetPieChart items={itemsConsumePiePrice} filter_name={null}/>
-                                                    )
+                                                    :
+                                                        <>
+                                                            <a className='fst-italic text-secondary'>- No Data -</a>
+                                                        </>
                                                 }
                                             </div>
                                             <div className='col-7'>
@@ -181,7 +332,7 @@ const ManageList = forwardRef((props, ref) => {
                                                     </thead>
                                                     <tbody style={{fontSize:"var(--textMD)"}} className="text-start">
                                                         {
-                                                            items.consume.map((dt, idx) => {
+                                                            items.consume && (items.consume.map((dt, idx) => {
                                                                 total_cal = total_cal + dt.calorie
                                                                 total_price = total_price + dt.average_price
                                                                 if(dt.average_price > 0){
@@ -197,7 +348,32 @@ const ManageList = forwardRef((props, ref) => {
                                                                         <td><a className='btn btn-danger'><FontAwesomeIcon icon={faTrash}/></a></td>
                                                                     </tr>
                                                                 )
-                                                            })
+                                                            }))
+                                                        }
+                                                        {
+                                                            showInputRow && (
+                                                                <tr className='tr-form'>
+                                                                    <td className='p-0'>
+                                                                        <div className="form-floating">
+                                                                            <select className="form-select m-0 ps-2" onChange={(e)=>checkConsumeName(e.target.value)} aria-label="Select consume">
+                                                                                <option>---</option>
+                                                                                {
+                                                                                    itemConsumeName.map((dt, idx) =>(
+                                                                                        <option key={idx} value={dt.slug_name}>
+                                                                                            {dt.consume_name}
+                                                                                        </option>
+                                                                                    ))
+                                                                                }
+                                                                            </select>
+                                                                            <label htmlFor="selectDay">Select Consume</label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>{addConsumeCal && (<span>{addConsumeCal} Cal</span>)}</td>
+                                                                    <td>{addConsumeFrom && addConsumeProvide && (<span><span className='btn btn-success rounded-pill py-0 px-2 me-1' style={{fontSize:"var(--textMD)"}}>{addConsumeFrom}</span> {addConsumeProvide}</span>)}</td>
+                                                                    <td>{addConsumeAvgPrice > 0 ? <span>Rp. {addConsumeAvgPrice.toLocaleString()} ,00</span> : addConsumeAvgPrice == 0 ? <span className='btn btn-success rounded-pill py-0 px-2 me-1'style={{fontSize:"var(--textMD)"}}>Free</span> : <></>}</td>
+                                                                    <td>{allowSubmitAddConsume && (<a className='btn btn-success' onClick={(e)=>handleAddConsume(addConsumeSlug,props.id)}><FontAwesomeIcon icon={faCheck}/></a>)}</td>
+                                                                </tr>
+                                                            )
                                                         }
                                                         {
                                                             items.consume && (
@@ -225,6 +401,24 @@ const ManageList = forwardRef((props, ref) => {
                                                                 </tr>
                                                             )
                                                         }
+                                                        <tr>
+                                                            {
+                                                                showInputRow ?
+                                                                    <>
+                                                                        <td colSpan={4} className="p-0">
+                                                                            <button className='btn btn-success w-100' style={{borderRadius:"0"}} onClick={toogleAddConsume}><FontAwesomeIcon icon={faPlus}/> Add</button>
+                                                                        </td>
+                                                                        <td colSpan={1} className="p-0">
+                                                                            <button className='btn btn-danger w-100' style={{borderRadius:"0"}} onClick={closeAddConsume}><FontAwesomeIcon icon={faXmark}/></button>
+                                                                        </td>
+                                                                    </>
+                                                                :
+                                                                    <td colSpan={5} className="p-0">
+                                                                        <button className='btn btn-success w-100' style={{borderRadius:"0"}} onClick={toogleAddConsume}><FontAwesomeIcon icon={faPlus}/> Add</button>
+                                                                    </td>
+                                                            }
+                                                            
+                                                        </tr>
                                                     </tbody>
                                                 </table>
                                                 <hr></hr>
