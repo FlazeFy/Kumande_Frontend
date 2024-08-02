@@ -27,6 +27,10 @@ export default function GetListDashboard({ctx}) {
     }
     
     useEffect(() => {
+        fetchData()
+    },[])
+
+    const fetchData = async () => {
         fetch(`http://127.0.0.1:8000/api/v1/list/limit/20/order/desc`, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -51,7 +55,7 @@ export default function GetListDashboard({ctx}) {
                 setError(error)
             }
         })
-    },[])
+    }
 
 
     if (error) {
@@ -140,7 +144,7 @@ export default function GetListDashboard({ctx}) {
                     : 
                         <GetListStarted ctx="list_started"/>
                 }
-                {items && <ManageList id={listData} ref={listDataRef}/>}
+                {items && <ManageList id={listData} ref={listDataRef} fetchData={fetchData}/>}
             </div>
         )
     }

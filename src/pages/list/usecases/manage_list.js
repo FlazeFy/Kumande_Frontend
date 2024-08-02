@@ -7,8 +7,9 @@ import Axios from 'axios'
 
 //Font awesome classicon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faEdit, faPlus, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons"
+import { faCheck, faEdit, faFloppyDisk, faPlus, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons"
 import GetPieChart from '../../../components/charts/pie_chart'
+import { async } from '@firebase/util'
 
 const ManageList = forwardRef((props, ref) => {
     const [isLoaded, setIsLoaded] = useState(false)
@@ -224,7 +225,7 @@ const ManageList = forwardRef((props, ref) => {
                     text: 'Consume saved',
                     icon: 'success',
                 })  
-                setShowInputRow()
+                setShowInputRow(false)
                 cleanAddConsumeForm()
                 fetchDetail()
 
@@ -287,6 +288,46 @@ const ManageList = forwardRef((props, ref) => {
         })
     }
 
+    const handleUpdateList = async () => {
+        try {
+            const data = {
+                list_name:listName,
+                list_desc:listDesc
+            }
+
+            const response = await Axios.put(`http://127.0.0.1:8000/api/v1/list/update/data/${props.id}`, JSON.stringify(data), {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+            if(response.status != 200){
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Something wrong happen. Call the Admin!',
+                    icon: 'error',
+                })  
+            } else {
+                Swal.fire({
+                    title: 'Success!',
+                    text: response.data.message,
+                    icon: 'success',
+                })  
+                setShowInputRow(false)
+                cleanAddConsumeForm()
+                props.fetchData()
+                fetchDetail()
+            }
+        } catch (error) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Something wrong happen. Call the Admin!',
+                icon: 'error',
+            })  
+        }
+    }
+
     // Add
     const toogleAddConsume = () => {
         getConsumeList()
@@ -325,12 +366,16 @@ const ManageList = forwardRef((props, ref) => {
                                         <div className='row'>
                                             <div className='col-5'>
                                                 <div className="form-floating mb-3">
-                                                    <input type="text" className="form-control" ref={listNameRef} value={listName}></input>
+                                                    <input type="text" className="form-control" ref={listNameRef} value={listName} onChange={(e)=>setListName(e.target.value)}></input>
                                                     <label htmlFor="floatingInput">List Name</label>
                                                 </div>
                                                 <div className="form-floating mb-3">
-                                                    <textarea className="form-control" style={{minHeight:"100px"}} ref={listDescRef} value={listDesc} placeholder="Leave a comment here" id="floatingTextarea">{listDesc}</textarea>
+                                                    <textarea className="form-control" style={{minHeight:"100px"}} ref={listDescRef} value={listDesc} onChange={(e)=>setListDesc(e.target.value)} placeholder="Leave a comment here" id="floatingTextarea">{listDesc}</textarea>
                                                     <label htmlFor="floatingTextarea">Description</label>
+                                                </div>
+                                                <div className='d-flex justify-content-between'>
+                                                    <span></span>
+                                                    <button className='btn btn-success' onClick={handleUpdateList}><FontAwesomeIcon icon={faFloppyDisk}/> Save Changes</button>
                                                 </div>
                                                 <hr></hr>
                                                 <h5 className='mt-4'>Statistic Calorie</h5>
