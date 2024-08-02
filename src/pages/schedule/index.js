@@ -1,7 +1,7 @@
 import * as React from "react"
-import GetNavbar from "../../components/bars/navbar"
-import GetNavbarToggle from "../../components/bars/navbartoggle"
+import ComponentLeftNavbarToggle from "../../components/bars/navbartoggle"
 import { getLocal, storeLocal } from "../../modules/storages/local"
+import ComponentLeftNavbar from "../../organisms/left_navbar"
 import GetCalendarType from "./usecases/get_calendar_type"
 import GetDailyCalendar from "./usecases/get_daily_calendar"
 import GetMySchedule from "./usecases/get_my_schedule"
@@ -14,9 +14,9 @@ const SchedulePage = () => {
   return (
     <main>
       <div className="wrapper d-flex align-items-stretch">
-        <GetNavbar active="schedule"/>
+        <ComponentLeftNavbar active="schedule"/>
         <div id="content" className="p-4 p-md-5">
-          <GetNavbarToggle/>
+          <ComponentLeftNavbarToggle/>
           <div id="content-body" className='d-block mx-auto' style={{width:"1080px"}}>
             <GetCalendarType/>
             <GetDailyCalendar ctx={"daily_"+getLocal("calendar_type_sess")}/>

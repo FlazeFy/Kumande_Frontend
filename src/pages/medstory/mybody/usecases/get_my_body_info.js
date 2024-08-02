@@ -10,6 +10,7 @@ import Axios from 'axios'
 import GetDataTable from '../../../../modules/templates/get_data_table'
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import ComponentTextMessageNoData from '../../../../atoms/text_message_no_data'
 
 export default function GetMyBodyInfo({ctx}) {
     //Initial variable
@@ -313,7 +314,7 @@ export default function GetMyBodyInfo({ctx}) {
                                                 }
                                             </>
                                         :   
-                                        <p className='text-secondary text-center fst-italic'>- No Data Found -</p>
+                                        <ComponentTextMessageNoData message="No Data Found"/>
                                     }
                                 </div>
                                 <div className='col-lg-8'>
@@ -322,7 +323,7 @@ export default function GetMyBodyInfo({ctx}) {
                                         itemsBloodPreasure ?
                                             <GetDataTable data={itemsBloodPreasure} columns={columnsBloodPreasure} />
                                         : 
-                                            <p className='text-secondary text-center fst-italic'>- No Data Found -</p>
+                                            <ComponentTextMessageNoData message="No Data Found"/>
                                     }
                                 </div>
                             </div>
@@ -355,7 +356,7 @@ export default function GetMyBodyInfo({ctx}) {
                                                 }
                                             </>
                                         :   
-                                            <p className='text-secondary text-center fst-italic'>- No Data Found -</p>
+                                            <ComponentTextMessageNoData message="No Data Found"/>
                                     }
                                 </div>
                                 <div className='col-lg-8'>
@@ -364,7 +365,7 @@ export default function GetMyBodyInfo({ctx}) {
                                         itemsBloodGlucose ?
                                             <GetDataTable data={itemsBloodGlucose} columns={columnsBloodGlucose} />
                                         : 
-                                            <p className='text-secondary text-center fst-italic'>- No Data Found -</p>
+                                            <ComponentTextMessageNoData message="No Data Found"/>
                                     }
                                 </div>
                             </div>
@@ -397,7 +398,7 @@ export default function GetMyBodyInfo({ctx}) {
                                             }
                                         </>
                                         :   
-                                            <p className='text-secondary text-center fst-italic'>- No Data Found -</p>
+                                            <ComponentTextMessageNoData message="No Data Found"/>
                                     }
                                 </div>
                                 <div className='col-lg-8'>
@@ -406,7 +407,7 @@ export default function GetMyBodyInfo({ctx}) {
                                         itemsGout ?
                                             <GetDataTable data={itemsGout} columns={columnsGout} />
                                         : 
-                                            <p className='text-secondary text-center fst-italic'>- No Data Found -</p>
+                                            <ComponentTextMessageNoData message="No Data Found"/>
                                     }
                                 </div>
                             </div>
@@ -427,7 +428,7 @@ export default function GetMyBodyInfo({ctx}) {
                                                 }
                                             } val={(items.cholesterol - 120) / (240 - 120) * 100} label={cholesterol_status}/>
                                         :   
-                                            <p className='text-secondary text-center fst-italic'>- No Data Found -</p>
+                                            <ComponentTextMessageNoData message="No Data Found"/>
                                     }
                                 </div>
                                 <div className='col-lg-8'>
@@ -451,7 +452,7 @@ export default function GetMyBodyInfo({ctx}) {
                                                 }
                                             } val={(items.bmi - 18.5) / (35.0 - 18.5) * 100} label={bmi_status}/>
                                         :   
-                                            <p className='text-secondary text-center fst-italic'>- No Data Found -</p>
+                                            <ComponentTextMessageNoData message="No Data Found"/>
                                     }
                                     <p className='mb-0 text-secondary' style={{fontSize:"var(--textMD)"}}>Last Updated at {items ? convertDatetime(items.calorie_updated,'calendar'):''}</p>
                                 </div>

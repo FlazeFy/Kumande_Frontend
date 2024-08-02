@@ -1,8 +1,8 @@
 import * as React from "react"
-import GetNavbar from "../../components/bars/navbar"
-import GetNavbarToggle from "../../components/bars/navbartoggle"
+import ComponentLeftNavbarToggle from "../../components/bars/navbartoggle"
 import { getTodayDate } from "../../modules/helpers/generator"
 import { getLocal } from "../../modules/storages/local"
+import ComponentLeftNavbar from "../../organisms/left_navbar"
 import GetMostConsumeFrom from "./usecases/get_most_consume_from"
 import GetMostConsumeMainIng from "./usecases/get_most_consume_main_ing"
 import GetMostConsumeProvide from "./usecases/get_most_consume_provide"
@@ -20,9 +20,9 @@ const StatsPage = () => {
     return (
         <main>
             <div className="wrapper d-flex align-items-stretch">
-                <GetNavbar active="dashboard"/>
+                <ComponentLeftNavbar active="dashboard"/>
                 <div id="content" className="p-4 p-md-5">
-                    <GetNavbarToggle/>
+                    <ComponentLeftNavbarToggle/>
                     <div id="content-body">
                         <GetStatsType/>
                         {

@@ -7,6 +7,7 @@ import GetListStarted from './get_list_started'
 import { faBowlRice, faCake, faMugSaucer, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { convertDatetime } from '../../../modules/helpers/converter'
 import ManageList from './manage_list'
+import ComponentTextMessageNoData from '../../../atoms/text_message_no_data'
 
 export default function GetListDashboard({ctx}) {
     //Initial variable
@@ -88,7 +89,7 @@ export default function GetListDashboard({ctx}) {
                                                             dt.list_desc ?
                                                                 <p>{dt.list_desc}</p>
                                                             :
-                                                                <a className='fst-italic text-secondary'>- No Description Provided -</a>
+                                                                <ComponentTextMessageNoData message="No Description Provided"/>
                                                         }
                                                     </div>
                                                 </div>

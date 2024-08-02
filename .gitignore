@@ -3,3 +3,4 @@ node_modules/
 public
 src/secret/
 src/modules/firebase/init.js
+src/design_token/secret/kumande-64a66-firebase-adminsdk-maclr-8a747dcbcc.json

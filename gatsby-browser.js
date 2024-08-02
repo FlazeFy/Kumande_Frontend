@@ -1,10 +1,10 @@
 // All Page CSS
-import "./src/styles/global.css"
-import "./src/styles/button.css"
-import "./src/styles/typography.css"
-import "./src/styles/container.css"
-import "./src/styles/table.css"
-import "./src/styles/modal.css"
+import "./src/design_token/styles/global.css"
+import "./src/design_token/styles/button.css"
+import "./src/design_token/styles/typography.css"
+import "./src/design_token/styles/container.css"
+import "./src/design_token/styles/table.css"
+import "./src/design_token/styles/modal.css"
 
 // Component CSS
 import "./src/components/bars/bars.css"

@@ -8,6 +8,7 @@ import Swal from 'sweetalert2'
 import GetConsumeBox from '../../../../components/containers/consume_box'
 import { ucFirstWord } from '../../../../modules/helpers/converter'
 import { getMonthName } from '../../../../modules/helpers/generator'
+import ComponentTextMessageNoData from '../../../../atoms/text_message_no_data'
 
 export default function GetSimilarConsume({ctx, consume_from, consume_type, provide, main_ing, month, year, slug}) {
     //Initial variable
@@ -105,7 +106,7 @@ export default function GetSimilarConsume({ctx, consume_from, consume_type, prov
                                 }
                             })
                         :
-                            <p className='text-secondary text-center fst-italic'>- No Data Found -</p>
+                            <ComponentTextMessageNoData message="No Data Found"/>
                     }
                 </div>
                 <h5>Similar Consume Type <a className='btn btn-primary rounded-pill py-1 ms-1' style={{fontSize:"var(--textMD)"}}>{ucFirstWord(consume_type)}</a></h5>
@@ -122,7 +123,7 @@ export default function GetSimilarConsume({ctx, consume_from, consume_type, prov
                                 }
                             })
                         :
-                            <p className='text-secondary text-center fst-italic'>- No Data Found -</p>
+                            <ComponentTextMessageNoData message="No Data Found"/>
                     }
                 </div>
                 <h5>Similar Provide <a className='btn btn-primary rounded-pill py-1 ms-1' style={{fontSize:"var(--textMD)"}}>{ucFirstWord(provide)}</a></h5>
@@ -139,7 +140,7 @@ export default function GetSimilarConsume({ctx, consume_from, consume_type, prov
                                 }
                             })
                         :
-                            <p className='text-secondary text-center fst-italic'>- No Data Found -</p>
+                            <ComponentTextMessageNoData message="No Data Found"/>
                     }
                 </div>
                 <h5>Similar Main Ingredient <a className='btn btn-primary rounded-pill py-1 ms-1' style={{fontSize:"var(--textMD)"}}>{ucFirstWord(main_ing)}</a></h5>
@@ -156,7 +157,7 @@ export default function GetSimilarConsume({ctx, consume_from, consume_type, prov
                                 }
                             })
                         :
-                            <p className='text-secondary text-center fst-italic'>- No Data Found -</p>
+                            <ComponentTextMessageNoData message="No Data Found"/>
                     }
                 </div>
                 <h5>Similar Date Created In<a className='btn btn-primary rounded-pill py-1 ms-1' style={{fontSize:"var(--textMD)"}}>{getMonthName(month)} {year}</a></h5>
@@ -173,7 +174,7 @@ export default function GetSimilarConsume({ctx, consume_from, consume_type, prov
                                 }
                             })
                         :
-                            <p className='text-secondary text-center fst-italic'>- No Data Found -</p>
+                            <ComponentTextMessageNoData message="No Data Found"/>
                     }
                 </div>
             </div>

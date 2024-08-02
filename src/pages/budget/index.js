@@ -1,15 +1,15 @@
 import * as React from "react"
-import GetNavbar from "../../components/bars/navbar"
-import GetNavbarToggle from "../../components/bars/navbartoggle"
+import ComponentLeftNavbarToggle from "../../components/bars/navbartoggle"
+import ComponentLeftNavbar from "../../organisms/left_navbar"
 import GetBudgetDashboard from "./usecases/get_budget_dashboard"
 
 const BudgetPage = () => {
   return (
     <main>
       <div className="wrapper d-flex align-items-stretch">
-        <GetNavbar active="budget"/>
+        <ComponentLeftNavbar active="budget"/>
         <div id="content" className="p-4 p-md-5">
-          <GetNavbarToggle/>
+          <ComponentLeftNavbarToggle/>
           <div id="content-body">
             <GetBudgetDashboard ctx="budget_dashboard"/>
           </div>

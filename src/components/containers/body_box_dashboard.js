@@ -1,5 +1,6 @@
 "use client"
 import React from 'react'
+import ComponentTextMessageNoData from '../../atoms/text_message_no_data'
 import { ucFirstWord } from '../../modules/helpers/converter'
 
 export default function GetBodyBoxDashboard({item, target}) {
@@ -9,7 +10,7 @@ export default function GetBodyBoxDashboard({item, target}) {
             <div className='d-flex justify-content-between text-white mb-3 shadow' style={{borderRadius:"var(--roundedSM)"}}>
                 <div className={item['max_'+target] != item['min_'+target] ? 'col-6 bgd-success p-2' : item['min_'+target] == null ? 'col-12 bgd-secondary p-2' :'col-12 bgd-success p-2'} 
                     style={{borderRadius: item['max_'+target] != item['min_'+target] ? "var(--roundedSM) 0 0 var(--roundedSM)":'var(--roundedSM)'}}>
-                    <h6 className='mb-0'>{item['min_'+target] ?? <p style={{fontSize:"var(--textSM)"}} className="my-2 fst-italic">- No Data Found -</p>} 
+                    <h6 className='mb-0'>{item['min_'+target] ?? <ComponentTextMessageNoData message="No Data Found"/>} 
                         {
                             item['min_'+target] != null ?   
                                 <>

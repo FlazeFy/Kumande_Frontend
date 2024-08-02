@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBowlRice, faCake, faCheckCircle, faFloppyDisk, faMugSaucer, faTrash, faTriangleExclamation, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { convertDatetime, ucFirstChar } from '../../../../modules/helpers/converter'
 import PostAllergic from './post_allergic'
+import ComponentTextMessageNoData from '../../../../atoms/text_message_no_data'
 
 export default function GetAllergic({ctx}) {
     //Initial variable
@@ -205,7 +206,7 @@ export default function GetAllergic({ctx}) {
                                                     dt.allergic_desc ?
                                                         <p className='mb-1'>{dt.allergic_desc}</p>
                                                     :
-                                                        <a className='fst-italic text-secondary mb-1'>- No Description Provided -</a>
+                                                        <ComponentTextMessageNoData message="No Description Provided"/>
                                                 }
                                                 <hr className='my-2'></hr>
                                                 <div className='context'>
@@ -238,7 +239,7 @@ export default function GetAllergic({ctx}) {
                                 )
                             })
                         :
-                            <p className='text-secondary text-center fst-italic'>- No Data Found -</p>
+                            <ComponentTextMessageNoData message="No Data Found"/>
                     }
                     {
                         itemsAllergic ?

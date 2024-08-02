@@ -1,11 +1,11 @@
 import * as React from "react"
 import { useState, useEffect } from "react"
-import GetNavbar from "../../../components/bars/navbar"
-import GetNavbarToggle from "../../../components/bars/navbartoggle"
+import ComponentLeftNavbarToggle from "../../../components/bars/navbartoggle"
 import { getLocal } from "../../../modules/storages/local"
 import Swal from 'sweetalert2'
 import GetConsumeBox from "../../../components/containers/consume_box"
 import GetSimilarConsume from "./usecases/get_similar_consume"
+import ComponentLeftNavbar from "../../../organisms/left_navbar"
 
 export default function ConsumeDetail({ params }) {
   //Initial variable
@@ -64,9 +64,9 @@ export default function ConsumeDetail({ params }) {
     return (
       <main>
         <div className="wrapper d-flex align-items-stretch">
-          <GetNavbar active="history"/>
+          <ComponentLeftNavbar active="history"/>
           <div id="content" className="p-4 p-md-5">
-            <GetNavbarToggle/>
+            <ComponentLeftNavbarToggle/>
             <div id="content-body">
               <GetConsumeBox fetchConsume={fetchConsume} ctx="consume_detail" items={item} type="detail"/>
               <GetSimilarConsume ctx={`similar_consume`} provide={item.consume_detail[0].provide} main_ing={item.consume_detail[0].main_ing} 

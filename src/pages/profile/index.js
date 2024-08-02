@@ -1,6 +1,6 @@
 import * as React from "react"
-import GetNavbar from "../../components/bars/navbar"
-import GetNavbarToggle from "../../components/bars/navbartoggle"
+import ComponentLeftNavbarToggle from "../../components/bars/navbartoggle"
+import ComponentLeftNavbar from "../../organisms/left_navbar"
 import GetBodyData from "./usecases/get_body_data"
 import GetConsumeData from "./usecases/get_consume_data"
 import GetMyProfile from "./usecases/get_my_profile"
@@ -10,9 +10,9 @@ const ProfilePage = () => {
   return (
     <main>
       <div className="wrapper d-flex align-items-stretch">
-        <GetNavbar active="profile"/>
+        <ComponentLeftNavbar active="profile"/>
         <div id="content" className="p-4 p-md-5">
-          <GetNavbarToggle/>
+          <ComponentLeftNavbarToggle/>
           <div id="content-body">
             <div className="d-block mx-auto" style={{maxWidth:"1080px"}}>
               <div className="row">

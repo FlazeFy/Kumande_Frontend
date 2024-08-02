@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from "react"
 import Swal from 'sweetalert2'
+import ComponentTextMessageNoData from '../../../atoms/text_message_no_data'
 
 // Component
 import GetPieChart from '../../../components/charts/pie_chart'
@@ -74,7 +75,7 @@ export default function GetMostConsumeMainIng({ctx}) {
                     items ?
                         <GetPieChart items={items} filter_name={null}/>  
                     :
-                        <p className='text-secondary text-center fst-italic'>- No Data Found -</p>
+                        <ComponentTextMessageNoData message="No Data Found"/>
                 } 
             </div>
         )
