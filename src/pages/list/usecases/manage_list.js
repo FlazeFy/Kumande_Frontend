@@ -9,7 +9,6 @@ import Axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faEdit, faFloppyDisk, faPlus, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons"
 import GetPieChart from '../../../components/charts/pie_chart'
-import { async } from '@firebase/util'
 import ComponentTextMessageNoData from '../../../atoms/text_message_no_data'
 
 const ManageList = forwardRef((props, ref) => {
@@ -229,7 +228,7 @@ const ManageList = forwardRef((props, ref) => {
                 setShowInputRow(false)
                 cleanAddConsumeForm()
                 fetchDetail()
-
+                props.fetchData()
             }
         } catch (error) {
             Swal.fire({
@@ -271,6 +270,7 @@ const ManageList = forwardRef((props, ref) => {
                             icon: 'success',
                         })  
                         fetchDetail()
+                        props.fetchData()
                     }
                 } catch (error) {
                     Swal.fire({
@@ -329,6 +329,61 @@ const ManageList = forwardRef((props, ref) => {
         }
     }
 
+    const handleDeleteList = async () => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This will also remove consume attached",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, Delete it!",
+            cancelButtonText: "No, Cancel!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const response = await Axios.delete(`http://127.0.0.1:8000/api/v1/list/delete/${props.id}`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    if(response.status != 200){
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Something wrong happen. Call the Admin!',
+                            icon: 'error',
+                        })  
+                    } else {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: response.data.message,
+                            icon: 'success',
+                            willClose: () => {
+                                window.location.reload()
+                            },
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.reload()
+                            }
+                        })
+                    }
+                } catch (error) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Something wrong happen. Call the Admin!',
+                        icon: 'error',
+                    })  
+                }
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire({
+                    title: "Cancelled",
+                    text: "List remove dismissed",
+                    icon: "error"
+                })
+            }
+        })
+    }
+
     // Add
     const toogleAddConsume = () => {
         getConsumeList()
@@ -375,7 +430,7 @@ const ManageList = forwardRef((props, ref) => {
                                                     <label htmlFor="floatingTextarea">Description</label>
                                                 </div>
                                                 <div className='d-flex justify-content-between'>
-                                                    <span></span>
+                                                    <button className='btn btn-danger' onClick={handleDeleteList}><FontAwesomeIcon icon={faTrash}/> Delete List</button>
                                                     <button className='btn btn-success' onClick={handleUpdateList}><FontAwesomeIcon icon={faFloppyDisk}/> Save Changes</button>
                                                 </div>
                                                 <hr></hr>
