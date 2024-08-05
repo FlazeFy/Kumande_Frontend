@@ -407,7 +407,7 @@ const ManageList = forwardRef((props, ref) => {
                                                             )
                                                         })
                                                     :   
-                                                        <a className='fst-italic text-secondary'>- No Tag Provided -</a>
+                                                        <ComponentTextMessageNoData message="No tag provided"/>
                                                 }
                                                 <hr></hr>
                                                 <h5>List Consume</h5>

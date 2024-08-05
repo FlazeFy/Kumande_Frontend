@@ -9,6 +9,7 @@ import GetBreakLine from '../others/breakline'
 import { convertDatetime } from '../../modules/helpers/converter'
 import ManagePayment from '../../pages/consume/[slug]/usecases/manage_payment'
 import { isMobile } from '../../modules/helpers/validator'
+import ComponentTextMessageNoData from '../../atoms/text_message_no_data'
 
 export default function GetConsumeBox({items, type, func, fetchConsume}) {
     // Initial Variable
@@ -146,7 +147,7 @@ export default function GetConsumeBox({items, type, func, fetchConsume}) {
                                                 )
                                             })
                                         :
-                                            <p className='text-secondary fst-italic'>- No Tag Found -</p>
+                                            <ComponentTextMessageNoData message="No Tag found"/>
                                     }
                                 </div>
                             )

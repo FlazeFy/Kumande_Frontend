@@ -5,8 +5,10 @@ import React from 'react'
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBowlRice, faCake, faMugSaucer } from "@fortawesome/free-solid-svg-icons"
-import { ucFirstChar } from '../../modules/helpers/converter'
-import { isMobile } from '../../modules/helpers/validator'
+import { ucFirstChar } from '../modules/helpers/converter'
+import { isMobile } from '../modules/helpers/validator'
+import ComponentText from '../atoms/text'
+import ComponentTextMessageNoData from '../atoms/text_message_no_data'
 
 export default function GetScheduleBox({items,time}) {
     let total = 0 
@@ -25,7 +27,8 @@ export default function GetScheduleBox({items,time}) {
                     </div>
             }
             <div>
-                <h5 className='text-primary'>
+                <ComponentText text_type="sub_heading" body={
+                    <>
                     {
                         is_mobile ?
                             <img className='img-icon-md' src={'/icons/'+ucFirstChar(time)+'.png'}/>
@@ -33,7 +36,8 @@ export default function GetScheduleBox({items,time}) {
                             <></>
                     }
                     {ucFirstChar(time)}
-                </h5>
+                    </>
+                }/>
                 {
                     items.map((data, i, idx) => {
                         if(data['schedule_time'][0]['category'] == ucFirstChar(time)){
@@ -58,7 +62,7 @@ export default function GetScheduleBox({items,time}) {
                 }
                 {
                     total === 0 ?
-                        <a className='text-secondary'>No Schedule for today</a>
+                        <ComponentTextMessageNoData message="No Schedule for today"/>
                     : 
                         <></>
                 }

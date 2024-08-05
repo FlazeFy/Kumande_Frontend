@@ -103,7 +103,7 @@ export default function GetListDashboard({ctx}) {
                                                             )
                                                         })
                                                     :   
-                                                        <a className='fst-italic text-secondary'>- No Tag Provided -</a>
+                                                        <ComponentTextMessageNoData message="No tag provided"/>
                                                 }
                                                 <hr></hr>
                                                 <h6>List Consume</h6>

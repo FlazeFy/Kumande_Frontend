@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useRef } from 'react'
 import { useState, useEffect } from "react"
 import Swal from 'sweetalert2'
+import ComponentTextMessageNoData from '../../../atoms/text_message_no_data'
 
 // Component
 import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
@@ -107,7 +108,7 @@ export default function GetMyTag({ctx}) {
                             :
                                 <tr key={1}>
                                     <td colSpan={4}>
-                                        <a className='fst-italic text-secondary mb-1'>- No Tag Founded -</a>
+                                        <ComponentTextMessageNoData message="No Tag found"/>
                                     </td>
                                 </tr>
                         }

@@ -10,9 +10,10 @@ import { ucFirstWord } from '../../../modules/helpers/converter'
 import { getLocal, storeLocal } from '../../../modules/storages/local'
 
 // Components
-import GetScheduleBox from '../../../components/containers/schedule_box'
+import GetScheduleBox from '../../../molecules/container_schedule'
 import { getTodayDate } from '../../../modules/helpers/generator'
 import { isMobile } from '../../../modules/helpers/validator'
+import ComponentText from '../../../atoms/text'
 
 export default function GetTodaySchedule({ctx}) {
     //Initial variable
@@ -123,7 +124,7 @@ export default function GetTodaySchedule({ctx}) {
     } else {
         return (
             <div className='container-fluid p-0' style={{background:"var(--primaryColor)"}}>
-                <h3 className='m-2 text-white'>{ucFirstWord(ctx)}</h3>
+                <ComponentText text_type="main_heading" body={<span className='text-white m-2'>{ucFirstWord(ctx)}</span>} />
                 <div className='row'>
                     <div className={`col-lg-4 col-md-4 col-sm-6 ${is_mobile ? '' : 'pe-0'}`}>
                         <GetScheduleBox time="breakfast" items={items} />

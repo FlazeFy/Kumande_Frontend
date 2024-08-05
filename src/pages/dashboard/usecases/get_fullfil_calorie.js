@@ -1,10 +1,12 @@
 "use client"
 import React from 'react'
 import { useState, useEffect } from "react"
-import { ucFirstWord } from '../../../modules/helpers/converter'
 import { getTodayDate } from '../../../modules/helpers/generator'
-
+import Swal from 'sweetalert2'
 import { getLocal } from '../../../modules/storages/local'
+
+// Molecules
+import ComponentButtonContentImg from '../../../molecules/button_content_img'
 
 export default function GetFullfilCalorie({ctx}) {
     //Initial variable
@@ -27,6 +29,11 @@ export default function GetFullfilCalorie({ctx}) {
                 setItem(result.data)        
             },
             (error) => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                })
                 if(getLocal(ctx + "_sess") !== undefined){
                     setIsLoaded(true)
                     setItem(JSON.parse(getLocal(ctx + "_sess")))
@@ -47,17 +54,9 @@ export default function GetFullfilCalorie({ctx}) {
             </div>
         )
     } else {
-        return (
-            <div className='container p-2 d-flex justify-content-start text-white' style={{backgroundImage: "linear-gradient(to right, var(--primaryColor) , var(--primaryLightBG))"}}>
-                <div>
-                    <img className='img-icon-lg' src={'/icons/Calorie.png'}/>
-                </div>
-                <div className='pt-2 ps-3'>
-                    <h5>{ucFirstWord(ctx)}</h5>
-                    <h4><b>{item[0]['total']}</b> / {item[0]['target']}</h4>
-                </div>
-            </div>
-        )
+        return <ComponentButtonContentImg button_title="Today Calories" icon_url='/icons/Calorie.png' button_content={
+            <h4><b>{item[0]['total']}</b> / {item[0]['target']}</h4>
+        }/>
     }
 }
   

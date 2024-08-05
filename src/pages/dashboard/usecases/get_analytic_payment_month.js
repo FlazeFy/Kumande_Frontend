@@ -1,11 +1,13 @@
 "use client"
 import React from 'react'
 import { useState, useEffect } from "react"
-import { numberToPrice, ucFirstWord } from '../../../modules/helpers/converter'
+import { ucFirstWord } from '../../../modules/helpers/converter'
 import { getTodayDate } from '../../../modules/helpers/generator'
 import { isMobile } from '../../../modules/helpers/validator'
-
+import Swal from 'sweetalert2'
 import { getLocal } from '../../../modules/storages/local'
+import ComponentButtonPrice from '../../../molecules/button_price'
+import ComponentText from '../../../atoms/text'
 
 export default function GetAnalyticPaymentMonth({ctx}) {
     //Initial variable
@@ -30,6 +32,11 @@ export default function GetAnalyticPaymentMonth({ctx}) {
                 setItem(result.data)        
             },
             (error) => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                })
                 if(getLocal(ctx + "_sess") !== undefined){
                     setIsLoaded(true)
                     setItem(JSON.parse(getLocal(ctx + "_sess")))
@@ -52,43 +59,19 @@ export default function GetAnalyticPaymentMonth({ctx}) {
     } else {
         return (
             <div className='container-fluid p-0' style={{background:"var(--primaryColor)"}}>
-                <h3 className='m-2 text-white'>{ucFirstWord(ctx)}</h3>
+                <ComponentText text_type="main_heading" body={<span className='text-white m-2'>{ucFirstWord(ctx)}</span>} />
                 <div className='row'>
                     <div className={`col-lg-3 col-md-3 col-sm-6 col-6 pe-0`}>
-                        <div className='container bg-white p-2 d-flex justify-content-start'>
-                            <div style={{color:"var(--warningBG)"}}>
-                                <h5 className='mb-0'>Total</h5>
-                                <h2 className='mb-0'>Rp. {numberToPrice(item[0]['total'])}</h2>
-                                <a className='text-secondary' style={{fontSize:"var(--textMD)", fontWeight:"500"}}>this month</a>
-                            </div>
-                        </div>
+                        <ComponentButtonPrice styles={"var(--warningBG)"} button_title="Total" button_price={item[0]['total']} button_caption="this month"/>
                     </div>
                     <div className={`col-lg-3 col-md-3 col-sm-6 col-6 ${is_mobile ? 'ps-0' : 'px-0'}`}>
-                        <div className='container bg-white p-2 d-flex justify-content-start'>
-                            <div style={{color:"var(--successBG)"}}>
-                                <h5 className='mb-0'>Average</h5>
-                                <h2 className='mb-0'>Rp. {numberToPrice(item[0]['average'])}</h2>
-                                <a className='text-secondary' style={{fontSize:"var(--textMD)", fontWeight:"500"}}>/ day</a>
-                            </div>
-                        </div>
+                        <ComponentButtonPrice styles={"var(--successBG)"} button_title="Average" button_price={item[0]['average']} button_caption="/ day"/>
                     </div>
                     <div className={`col-lg-3 col-md-3 col-sm-6 col-6 ${is_mobile ? 'pe-0' : 'px-0'}`}>
-                        <div className='container bg-white p-2 d-flex justify-content-start'>
-                            <div style={{color:"var(--dangerBG)"}}>
-                                <h5 className='mb-0'>Max</h5>
-                                <h2 className='mb-0'>Rp. {numberToPrice(item[0]['max'])}</h2>
-                                <a className='text-secondary' style={{fontSize:"var(--textMD)", fontWeight:"500"}}>/ day</a>
-                            </div>
-                        </div>
+                        <ComponentButtonPrice styles={"var(--dangerBG)"} button_title="Max" button_price={item[0]['max']} button_caption="/ day"/>
                     </div>
                     <div className={`col-lg-3 col-md-3 col-sm-6 col-6 ps-0`}>
-                        <div className='container bg-white p-2 d-flex justify-content-start'>
-                            <div style={{color:"var(--infoBG)"}}>
-                                <h5 className='mb-0'>Min</h5>
-                                <h2 className='mb-0'>Rp. {numberToPrice(item[0]['min'])}</h2>
-                                <a className='text-secondary' style={{fontSize:"var(--textMD)", fontWeight:"500"}}>/ day</a>
-                            </div>
-                        </div>
+                        <ComponentButtonPrice styles={"var(--infoBG)"} button_title="Min" button_price={item[0]['min']} button_caption="/ day"/>
                     </div>
                 </div>
             </div>
