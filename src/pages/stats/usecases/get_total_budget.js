@@ -1,6 +1,5 @@
 import React from 'react'
 import { useState, useEffect } from "react"
-import GetLineChart from '../../../components/charts/line_chart'
 
 // Component
 import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
@@ -8,6 +7,7 @@ import { getTodayDate } from '../../../modules/helpers/generator'
 
 // Modules
 import { getLocal, storeLocal } from '../../../modules/storages/local'
+import ComponentLineChart from '../../../molecules/line_chart'
 
 export default function GetTotalBudget({ctx, filter_name}) {
     //Initial variable
@@ -61,7 +61,7 @@ export default function GetTotalBudget({ctx, filter_name}) {
         return (
             <div className='container shadow p-3'> 
                 <h2>{getCleanTitleFromCtx(ctx)}</h2>
-                <GetLineChart items={items} filter_name={null}/>
+                <ComponentLineChart items={items} filter_name={null}/>
             </div>
         )
     }

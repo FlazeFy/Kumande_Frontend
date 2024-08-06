@@ -2,9 +2,9 @@ import React from 'react';
 import Chart from 'react-apexcharts';
 import PageBar from '../navbar/page_bar'
 import GetOrdering from '../controls/ordering'
-import GetLimit from '../controls/limit'
+import GetLimit from '../components/controls/limit'
 
-export default function GetColumnChart({items, builder, maxPage, currentPage, ctx}) {
+export default function ComponentColumnChart({items, builder, maxPage, currentPage, ctx}) {
     //Initial variable
     var chart = [];
 

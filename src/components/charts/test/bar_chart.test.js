@@ -1,5 +1,5 @@
 import React from 'react'
-import GetBarChart from '../bar_chart'
+import ComponentBarChart from '../bar_chart'
 import '../../../modules/templates/apexchart.js'
 import { render } from '@testing-library/react'
 
@@ -27,7 +27,7 @@ describe('Bar Chart Component Testing', () => {
       }
     ]
 
-    render(<GetBarChart items={items} filter_name={null} />)
+    render(<ComponentBarChart items={items} filter_name={null} />)
     templateApexChart(type, items)
   })
 })

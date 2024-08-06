@@ -1,16 +1,18 @@
 "use client"
 import React from 'react'
-import GoogleMapReact from 'google-map-react'
 
 //Font awesome classicon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBowlRice, faCake, faCalendar, faEdit, faHeart, faLocationDot,  faMugSaucer } from "@fortawesome/free-solid-svg-icons"
+import { faCalendar, faEdit, faHeart, faLocationDot } from "@fortawesome/free-solid-svg-icons"
 import ComponentBreakLine from '../../atoms/breakline'
 import { convertDatetime } from '../../modules/helpers/converter'
 import ManagePayment from '../../pages/consume/[slug]/usecases/manage_payment'
 import { isMobile } from '../../modules/helpers/validator'
 import ComponentTextMessageNoData from '../../atoms/text_message_no_data'
 import ComponentTextIcon from '../../atoms/text_icon'
+import ComponentContainerMaps from '../../molecules/container_maps'
+import ComponentButton from '../../atoms/button'
+import ComponentText from '../../atoms/text'
 
 export default function GetConsumeBox({items, type, func, fetchConsume}) {
     // Initial Variable
@@ -24,21 +26,6 @@ export default function GetConsumeBox({items, type, func, fetchConsume}) {
         }
     }
 
-    const Marker = ({text}) => (
-        <div className='position-relative'>
-            <img src="https://maps.google.com/mapfiles/ms/icons/blue-dot.png" alt="Marker" />
-            <h6 className='text-white text-center position-absolute' style={{width:"100px", left:"-30px"}}>{text}</h6>
-        </div>
-    );
-
-    const defaultProps = {
-        center: {
-          lat: items['consume_detail'][0]['provide_lat'],
-          lng: items['consume_detail'][0]['provide_long']
-        },
-        zoom: 12
-    };
-
     const handleClick = () => {
         if (type !== 'detail') {
             window.location.href = '/consume/' + items.slug_name
@@ -51,10 +38,7 @@ export default function GetConsumeBox({items, type, func, fetchConsume}) {
                 <div className='d-flex justify-content-between mb-2'>
                     <div>
                         {
-                            items['is_favorite'] == 1 ?
-                                <FontAwesomeIcon icon={faHeart} className='me-2 text-danger' size='lg' title='Favorite'/>
-                            : 
-                                <></>
+                            items['is_favorite'] == 1 && <FontAwesomeIcon icon={faHeart} className='me-2 text-danger' size='lg' title='Favorite'/>
                         }
                         <ComponentTextIcon text_style={{fontWeight:500,fontSize:"var(--textXLG)"}} text_type={items.consume_type} body={items.consume_name}/>
                     </div>
@@ -82,24 +66,16 @@ export default function GetConsumeBox({items, type, func, fetchConsume}) {
                 }
                 <div className='row'>
                     <div className='col'>
-                        <h6>Detail</h6>
+                        <ComponentText text_type="mini_sub_heading" body="Detail"/>
                         <div className='d-flex justify-content-start'>
-                            <a className='btn btn-success rounded-pill px-3 py-1 me-1'>
-                                {!is_mobile ? items['consume_detail'][0]['provide'] : <><FontAwesomeIcon icon={faLocationDot}/> Maps</>}
-                            </a>
-                            <a className='btn btn-warning rounded-pill px-3 py-1 me-1'>
-                                {items['consume_detail'][0]['calorie']} Cal
-                            </a>
-                            <a className='btn btn-danger rounded-pill px-3 py-1 me-1'>
-                                {items['consume_detail'][0]['main_ing']}
-                            </a>
+                            <ComponentButton button_type="provide" button_name={items['consume_detail'][0]['provide']}/>
+                            <ComponentButton button_type="calorie" button_name={items['consume_detail'][0]['calorie']}/>
+                            <ComponentButton button_type="main_ing" button_name={items['consume_detail'][0]['main_ing']}/>
                             {
-                                typeof items['consume_detail'][0]['provide_lat'] !== "undefined" ?
+                                typeof items['consume_detail'][0]['provide_lat'] !== "undefined" &&
                                     <a className='btn btn-primary rounded-pill px-3 py-1' style={{fontSize:"var(--textMD)"}} href={`https://www.google.com/maps/place/${items['consume_detail'][0]['provide_lat']},${items['consume_detail'][0]['provide_long']}`}>
                                         <FontAwesomeIcon icon={faLocationDot}/> See On Maps
                                     </a>
-                                :
-                                    <></>
                             }
                         </div>
                         <h6 className='mt-2'>
@@ -131,9 +107,7 @@ export default function GetConsumeBox({items, type, func, fetchConsume}) {
                                     {
                                         items['consume_tag'] ?
                                             items['consume_tag'].map((tag, idx) => {
-                                                return(
-                                                    <a className='btn btn-primary rounded-pill px-3 py-1 me-1'>{tag['tag_name']}</a>
-                                                )
+                                                return <ComponentButton button_type="tag" button_name={tag['tag_name']}/>
                                             })
                                         :
                                             <ComponentTextMessageNoData message="No Tag found"/>
@@ -143,26 +117,14 @@ export default function GetConsumeBox({items, type, func, fetchConsume}) {
                         }
                     </div>
                     {
-                        type == 'detail' && typeof items['consume_detail'][0]['provide_lat'] !== "undefined"?
+                        type == 'detail' && typeof items['consume_detail'][0]['provide_lat'] !== "undefined" &&
                             <div className='col'>
-                                <h6>Maps</h6>
-                                <div style={{ height: '400px', width: '100%'}}>
-                                    <GoogleMapReact 
-                                        bootstrapURLKeys={{ key: "AIzaSyDXu2ivsJ8Hj6Qg1punir1LR2kY9Q_MSq8" }}
-                                        defaultCenter={defaultProps.center}
-                                        defaultZoom={defaultProps.zoom}
-                                    >
-                                    <Marker
-                                        key={items['consume_detail'][0]['provide']}
-                                        lat={items['consume_detail'][0]['provide_lat']}
-                                        lng={items['consume_detail'][0]['provide_long']}
-                                        text={items['consume_detail'][0]['provide']}
-                                    />
-                                    </GoogleMapReact>
-                                </div>
+                                <ComponentContainerMaps 
+                                    container_title="Maps"
+                                    location_lat={items['consume_detail'][0]['provide_lat']} 
+                                    location_lang={items['consume_detail'][0]['provide_long']} 
+                                    location_name={items['consume_detail'][0]['provide']}/>
                             </div>
-                        : 
-                            <></>
                     }
                 </div>
                 {
@@ -171,7 +133,7 @@ export default function GetConsumeBox({items, type, func, fetchConsume}) {
                             <hr></hr>
                             <div className='row mt-2'>
                                 <div className='col'>
-                                    <h6 className='mt-2'>Payment</h6>
+                                    <ComponentText text_type="mini_sub_heading" body="Payment"/>
                                     {
                                         items['payment'].length > 0 ?
                                             <table className='table'>
@@ -220,7 +182,7 @@ export default function GetConsumeBox({items, type, func, fetchConsume}) {
                                         }
                                 </div>
                                 <div className='col'>
-                                    <h6 className='mt-2'>Schedule</h6>
+                                    <ComponentText text_type="mini_sub_heading" body="Schedule"/>
                                     {
                                         items['schedule'].length > 0 ?
                                             <table className='table'>

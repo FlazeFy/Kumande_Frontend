@@ -5,14 +5,13 @@ import { getLocal } from '../../../modules/storages/local'
 
 //Font awesome classicon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAdd, faBowlRice, faCake, faMugSaucer } from "@fortawesome/free-solid-svg-icons"
+import { faAdd } from "@fortawesome/free-solid-svg-icons"
 import ComponentTextIcon from '../../../atoms/text_icon'
 
 export default function GetListStarted({ ctx }) {
     // Initial state variables
     const [error, setError] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)
-    const [item, setItem] = useState([])
     const [chunkedItems, setChunkedItems] = useState([])
     const token = getLocal("token_key")
 
@@ -68,7 +67,7 @@ export default function GetListStarted({ ctx }) {
                                     <div className="inner">
                                         {
                                             chunk.map((dt, idx) => (
-                                                <ComponentTextIcon text_type={dt.consume_type} body={dt.consume_name}/>
+                                                <ComponentTextIcon text_style={{whiteSpace:"nowrap"}} text_type={dt.consume_type} body={dt.consume_name}/>
                                             ))
                                         }
                                     </div>

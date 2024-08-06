@@ -2,8 +2,8 @@
 import React from 'react'
 import { useState, useEffect } from "react"
 import { getLocal } from '../../../../modules/storages/local'
-import GetRadialChart from '../../../../components/charts/radial_chart'
-import { convertDatetime, ucFirstChar, ucFirstWord } from '../../../../modules/helpers/converter'
+import ComponentRadialChart from '../../../../molecules/radial_chart'
+import { convertDatetime, ucFirstWord } from '../../../../modules/helpers/converter'
 import GetManageBody from './get_manage_body'
 import Swal from 'sweetalert2'
 import Axios from 'axios'
@@ -296,7 +296,7 @@ export default function GetMyBodyInfo({ctx}) {
                                     {
                                         items ?
                                             <>
-                                                <GetRadialChart custom={
+                                                <ComponentRadialChart custom={
                                                     {
                                                         type:'half',
                                                         extra_desc: '',
@@ -338,7 +338,7 @@ export default function GetMyBodyInfo({ctx}) {
                                     {
                                         items.blood_glucose > 0 ?
                                             <>
-                                                <GetRadialChart custom={
+                                                <ComponentRadialChart custom={
                                                     {
                                                         type:'half',
                                                         extra_desc: '',
@@ -380,7 +380,7 @@ export default function GetMyBodyInfo({ctx}) {
                                     {
                                         items.gout > 0 ?
                                         <>
-                                            <GetRadialChart custom={
+                                            <ComponentRadialChart custom={
                                                     {
                                                         type:'half',
                                                         extra_desc: '',
@@ -421,7 +421,7 @@ export default function GetMyBodyInfo({ctx}) {
                                     <h4 className='mb-0'>Cholesterol</h4>
                                     {
                                         items.cholesterol > 0 ?
-                                            <GetRadialChart custom={
+                                            <ComponentRadialChart custom={
                                                 {
                                                     type:'half',
                                                     extra_desc: '',
@@ -445,7 +445,7 @@ export default function GetMyBodyInfo({ctx}) {
                                     <h4 className='mb-0'>Body Mass Index (BMI)</h4>
                                     {
                                         items.bmi ?
-                                        <   GetRadialChart custom={
+                                        <   ComponentRadialChart custom={
                                                 {
                                                     type:'half',
                                                     extra_desc: '',

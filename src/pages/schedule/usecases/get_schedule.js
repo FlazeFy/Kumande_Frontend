@@ -12,6 +12,7 @@ import { getLocal } from '../../../modules/storages/local'
 //Font awesome classicon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBowlRice, faCake,  faHeart, faMugSaucer} from "@fortawesome/free-solid-svg-icons"
+import ComponentTextIcon from '../../../atoms/text_icon'
 
 export default function GetSchedule({ctx, day, category}) {
     //Initial variable
@@ -124,20 +125,7 @@ export default function GetSchedule({ctx, day, category}) {
                                         ) : (
                                             <></>
                                         )}
-                                        <a style={{ fontWeight: '500', fontSize: 'var(--textLG)'}}>
-                                            {
-                                                elmt.consume_type == 'Food' ? (
-                                                    <FontAwesomeIcon icon={faBowlRice} className='me-2'/>
-                                                ) : elmt.consume_type == 'Drink' ? (
-                                                    <FontAwesomeIcon icon={faMugSaucer} className='me-2'/>
-                                                ) : elmt.consume_type == 'Snack' ? (
-                                                    <FontAwesomeIcon icon={faCake} className='me-2'/>
-                                                ) : (
-                                                <></>
-                                                )
-                                            }
-                                            {elmt.schedule_consume}
-                                        </a>
+                                        <ComponentTextIcon text_style={{fontWeight:500,fontSize:"var(--textLG)"}} text_type={elmt.consume_type} body={elmt.schedule_consumee}/>
                                         </div>
                                     </div>
                                 </button>

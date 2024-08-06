@@ -1,10 +1,5 @@
 "use client"
 import React from 'react'
-
-//Font awesome classicon
-import { library } from "@fortawesome/fontawesome-svg-core"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBowlRice, faCake, faMugSaucer } from "@fortawesome/free-solid-svg-icons"
 import { ucFirstChar } from '../modules/helpers/converter'
 import { isMobile } from '../modules/helpers/validator'
 import ComponentText from '../atoms/text'

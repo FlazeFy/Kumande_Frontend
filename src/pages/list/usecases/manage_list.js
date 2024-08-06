@@ -7,8 +7,8 @@ import Axios from 'axios'
 
 //Font awesome classicon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faEdit, faFloppyDisk, faPlus, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons"
-import GetPieChart from '../../../components/charts/pie_chart'
+import { faCheck, faFloppyDisk, faPlus, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons"
+import ComponentPieChart from '../../../molecules/pie_chart'
 import ComponentTextMessageNoData from '../../../atoms/text_message_no_data'
 import ComponentContainerTag from '../../../molecules/container_tag'
 
@@ -438,14 +438,14 @@ const ManageList = forwardRef((props, ref) => {
                                                 <h5 className='mt-4'>Statistic Calorie</h5>
                                                 {
                                                     items.consume ?
-                                                        <GetPieChart items={itemsConsumePieCal} filter_name={null}/>
+                                                        <ComponentPieChart items={itemsConsumePieCal} filter_name={null}/>
                                                     :
                                                         <ComponentTextMessageNoData message="No Data Found"/>
                                                 }
                                                  <h5 className='mt-4'>Statistic Price</h5>
                                                 {
                                                     items.consume ?
-                                                        <GetPieChart items={itemsConsumePiePrice} filter_name={null}/>
+                                                        <ComponentPieChart items={itemsConsumePiePrice} filter_name={null}/>
                                                     :
                                                         <ComponentTextMessageNoData message="No Data Found"/>
                                                 }

@@ -3,7 +3,6 @@ import React from 'react'
 
 // Components
 import GetLabel from '../../components/labels/label'
-import ComponentBreakLine from '../others/breakLine'
 import GetDropDownDctDynamic from '../others/dropdown'
 import GetAllTag from '../others/getAllTag'
 
@@ -14,6 +13,7 @@ import { countHalf } from '../../modules/helpers/math'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons"
+import ComponentBreakLine from '../../atoms/breakline'
 
 export default function GetFormTemplate({type, props}) {
     if (type == "single-line"){

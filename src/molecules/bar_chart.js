@@ -1,8 +1,8 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
-import GetLimit from '../controls/limit'
+import GetLimit from '../components/controls/limit'
 
-export default function GetBarChart({items, filter_name}) {
+export default function ComponentBarChart({items, filter_name}) {
     //Initial variable
     var chart = [];
 

@@ -1,20 +1,15 @@
 import React from 'react'
 import { useState, useEffect } from "react"
-
-// Component
-import { getCleanTitleFromCtx } from '../../modules/helpers/converter'
+import ComponentBreakLine from '../../atoms/breakline'
 
 // Modules
-import { getLocal, storeLocal } from '../../modules/storages/local'
+import { getLocal } from '../../modules/storages/local'
 import GetLabel from '../labels/label'
-import ComponentBreakLine from './breakLine'
 
 export default function GetAllTag({url, cls, func}) {
     //Initial variable
     const [error, setError] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)
-    const [maxPage, setMaxPage] = useState(0)
-    const [currPage, setCurrPage] = useState(0)
     const [items, setItems] = useState([])
     const [selectedTag, setSelectedTag] = useState([])
 
@@ -31,8 +26,6 @@ export default function GetAllTag({url, cls, func}) {
             .then(
             (result) => {
                 setIsLoaded(true)
-                setMaxPage(result.data.last_page)
-                setCurrPage(result.data.current_page)
                 setItems(result.data.data)        
             },
             (error) => {

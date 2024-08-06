@@ -1,7 +1,7 @@
 import * as React from "react"
-import GetMedstorySubNav from "../../../components/bars/medstory_subnav"
 import ComponentLeftNavbarToggle from "../../../components/bars/navbartoggle"
 import ComponentLeftNavbar from "../../../organisms/left_navbar"
+import ComponentMedstorySubNav from "../../../organisms/medstory_subnav"
 import GetAllergic from "./usecases/get_allergic"
 
 const MedstoryPage = () => {
@@ -12,7 +12,7 @@ const MedstoryPage = () => {
         <div id="content" className="p-4 p-md-5">
           <ComponentLeftNavbarToggle/>
           <div id="content-body">
-            <GetMedstorySubNav active={"allergic"}/>
+            <ComponentMedstorySubNav active={"allergic"}/>
             <div className="nav-sub content">
               <GetAllergic ctx={"get_allergic"}/>
             </div>

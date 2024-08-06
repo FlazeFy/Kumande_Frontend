@@ -2,7 +2,7 @@
 import React from 'react'
 import { getLocal } from '../../../modules/storages/local'
 import { useState, useEffect } from "react"
-import GetRadialChart from '../../../components/charts/radial_chart'
+import ComponentRadialChart from '../../../molecules/radial_chart'
 import { numberToPrice } from '../../../modules/helpers/converter'
 
 export default function GetCurrentMonthBudget({ctx}) {
@@ -95,7 +95,7 @@ export default function GetCurrentMonthBudget({ctx}) {
                                                 </>
                                             )}
                                         </p>                                    
-                                        <GetRadialChart val={percentage > 100 ? 100 : percentage} label={percentage > 100 ? 'Overload!' : 'Rp. '+numberToPrice(remain)}/>
+                                        <ComponentRadialChart val={percentage > 100 ? 100 : percentage} label={percentage > 100 ? 'Overload!' : 'Rp. '+numberToPrice(remain)}/>
                                         <hr></hr>
                                         <div className='row'>
                                             <div className='col'>

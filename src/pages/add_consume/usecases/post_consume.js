@@ -11,6 +11,8 @@ import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons"
 import { add_firestore } from '../../../modules/firebase/command'
 import GetExistedConsume from './get_existed_consume'
 import { convertDatetime, numberToPrice } from '../../../modules/helpers/converter'
+import consumeFromTokens from '../../../design_token/variable/consume_from'
+import consumeTypeTokens from '../../../design_token/variable/consume_type'
 
 export default function PostConsume() {
     //Initial variable
@@ -342,12 +344,11 @@ export default function PostConsume() {
                     <div className='col'>
                         <div className="form-floating mb-3">
                             <select className="form-select" id="floatingSelect" ref={consumeFromRef} onChange={(e) => setConsumeFrom(e.target.value)} aria-label="Floating label select example">
-                                <option value="GoFood">GoFood</option>
-                                <option value="GrabFood">GrabFood</option>
-                                <option value="ShopeeFood">ShopeeFood</option>
-                                <option value="Dine-In">Dine-In</option>
-                                <option value="Take Away">Take Away</option>
-                                <option value="Cooking">Cooking</option>
+                                {
+                                    consumeFromTokens.map(dt => (
+                                        <option value={dt}>{dt}</option>
+                                    ))
+                                }
                             </select>
                             <label htmlFor="floatingSelect">From</label>
                         </div>
@@ -355,9 +356,11 @@ export default function PostConsume() {
                     <div className='col'>
                         <div className="form-floating mb-3">
                             <select className="form-select" id="floatingSelect" ref={consumeTypeRef} onChange={(e) => setConsumeType(e.target.value)} aria-label="Floating label select example">
-                                <option value="Food">Food</option>
-                                <option value="Drink">Drink</option>
-                                <option value="Snack">Snack</option>
+                                {
+                                    consumeTypeTokens.map(dt => (
+                                        <option value={dt}>{dt}</option>
+                                    ))
+                                }
                             </select>
                             <label htmlFor="floatingSelect">Type</label>
                         </div>

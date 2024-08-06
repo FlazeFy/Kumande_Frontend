@@ -1,10 +1,10 @@
 import React from 'react'
 import Chart from 'react-apexcharts'
-import ComponentBreakLine from '../../atoms/breakline';
-import { getLocal } from '../../modules/storages/local'
-import GetLimit from '../controls/limit'
+import ComponentBreakLine from '../atoms/breakline';
+import GetLimit from '../components/controls/limit'
+import { getLocal } from '../modules/storages/local';
 
-export default function GetLineChart({items, filter_name}) {
+export default function ComponentLineChart({items, filter_name}) {
     //Initial variable
     var chart = [];
 

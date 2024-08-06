@@ -1,8 +1,7 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
-import GetLimit from '../controls/limit'
 
-export default function GetRadialChart({val, label, custom}) {
+export default function ComponentRadialChart({val, label, custom}) {
     //Initial variable
     var chart = []
     let series = [val]

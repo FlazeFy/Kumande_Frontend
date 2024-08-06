@@ -1,6 +1,5 @@
 "use client"
 import React from 'react'
-import { ucFirstWord } from '../../modules/helpers/converter'
 
 export default function GetContentBox({builder, items, urlImg, title}) {
     return (

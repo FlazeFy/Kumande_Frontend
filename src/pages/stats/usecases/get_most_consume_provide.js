@@ -4,7 +4,7 @@ import Swal from 'sweetalert2'
 import ComponentTextMessageNoData from '../../../atoms/text_message_no_data'
 
 // Component
-import GetPieChart from '../../../components/charts/pie_chart'
+import { ComponentPieChart } from '../../../molecules/pie_chart'
 import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
 
 // Modules
@@ -73,7 +73,7 @@ export default function GetMostConsumeProvide({ctx}) {
                 <h2>{getCleanTitleFromCtx(ctx)}</h2>
                 {
                     items ?
-                        <GetPieChart items={items} filter_name={null}/>  
+                        <ComponentPieChart items={items} filter_name={null}/>  
                     :
                         <ComponentTextMessageNoData message="No Data Found"/>
                 } 
