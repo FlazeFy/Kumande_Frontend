@@ -7,7 +7,7 @@ import { getCleanTitleFromCtx } from '../../modules/helpers/converter'
 // Modules
 import { getLocal, storeLocal } from '../../modules/storages/local'
 import GetLabel from '../labels/label'
-import GetBreakLine from './breakLine'
+import ComponentBreakLine from './breakLine'
 
 export default function GetAllTag({url, cls, func}) {
     //Initial variable
@@ -93,9 +93,9 @@ export default function GetAllTag({url, cls, func}) {
                         );
                     })
                 }
-                <GetBreakLine length={2}/>
+                <ComponentBreakLine length={2}/>
                 <GetLabel title="Selected Tag" type="input"/>
-                <GetBreakLine length={1}/>
+                <ComponentBreakLine length={1}/>
                 <div className="mt-2"/>
                 {selectedTag}
             </>

@@ -9,6 +9,7 @@ import { faBowlRice, faCake, faCheckCircle, faFloppyDisk, faMugSaucer, faTrash, 
 import { convertDatetime, ucFirstChar } from '../../../../modules/helpers/converter'
 import PostAllergic from './post_allergic'
 import ComponentTextMessageNoData from '../../../../atoms/text_message_no_data'
+import ComponentTextIcon from '../../../../atoms/text_icon'
 
 export default function GetAllergic({ctx}) {
     //Initial variable
@@ -213,21 +214,7 @@ export default function GetAllergic({ctx}) {
                                                     {
                                                         dt.detected_on != null ?
                                                             dt.detected_on.map((ctx, cidx)=> {
-                                                                return (
-                                                                    <a className='me-2 btn btn-danger py-1 px-2 text-white mb-2 text-start' style={{color:"var(--primaryColor)", fontWeight:"500", fontSize:"var(--textMD)"}} href={`/consume/${ctx['slug_name']}`}>
-                                                                    {
-                                                                        ctx['consume_type'] == 'Food' ?
-                                                                            <FontAwesomeIcon icon={faBowlRice} className='me-2'/>
-                                                                        : ctx['consume_type'] == 'Drink' ?
-                                                                            <FontAwesomeIcon icon={faMugSaucer} className='me-2'/>
-                                                                        : ctx['consume_type'] == 'Snack' ?
-                                                                            <FontAwesomeIcon icon={faCake} className='me-2'/>
-                                                                        : 
-                                                                            <></>
-                                                                    }
-                                                                    {ctx['consume_name']}
-                                                                    </a>
-                                                                )
+                                                                return <ComponentTextIcon text_type={ctx['consume_type']} body={ctx['consume_name']}/>
                                                             })
                                                         :
                                                             <p className='fst-italic text-success' style={{fontWeight:"600"}}>- All Consume is Safe -</p>

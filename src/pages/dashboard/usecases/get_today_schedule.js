@@ -10,7 +10,7 @@ import { ucFirstWord } from '../../../modules/helpers/converter'
 import { getLocal, storeLocal } from '../../../modules/storages/local'
 
 // Components
-import GetScheduleBox from '../../../molecules/container_schedule'
+import ComponentContainerSchedule from '../../../molecules/container_schedule'
 import { getTodayDate } from '../../../modules/helpers/generator'
 import { isMobile } from '../../../modules/helpers/validator'
 import ComponentText from '../../../atoms/text'
@@ -127,13 +127,13 @@ export default function GetTodaySchedule({ctx}) {
                 <ComponentText text_type="main_heading" body={<span className='text-white m-2'>{ucFirstWord(ctx)}</span>} />
                 <div className='row'>
                     <div className={`col-lg-4 col-md-4 col-sm-6 ${is_mobile ? '' : 'pe-0'}`}>
-                        <GetScheduleBox time="breakfast" items={items} />
+                        <ComponentContainerSchedule time="breakfast" items={items} />
                     </div>
                     <div className={`col-lg-4 col-md-4 col-sm-6 ${is_mobile ? '' : 'px-0'}`}>
-                        <GetScheduleBox time="lunch" items={items} />
+                        <ComponentContainerSchedule time="lunch" items={items} />
                     </div>
                     <div className={`col-lg-4 col-md-4 col-sm-6 ${is_mobile ? '' : 'ps-0'}`}>
-                        <GetScheduleBox time="dinner" items={items} />
+                        <ComponentContainerSchedule time="dinner" items={items} />
                     </div>
                 </div>
             </div>

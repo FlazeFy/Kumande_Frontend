@@ -8,6 +8,7 @@ import { faBowlRice, faCake, faMugSaucer, faXmark } from '@fortawesome/free-soli
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { getLocal } from '../../../modules/storages/local'
 import { convertDatetime, numberToPrice, ucFirstChar } from '../../../modules/helpers/converter'
+import ComponentTextIcon from '../../../atoms/text_icon'
 
 const GetAnalyzeTag = forwardRef((props, ref) => {
     const [isLoaded, setIsLoaded] = useState(false)
@@ -92,19 +93,7 @@ const GetAnalyzeTag = forwardRef((props, ref) => {
                                             The highest-calorie item recorded has <b>{items.max_calorie}</b> calories, while the lowest contains <b>{items.min_calorie}</b> calories.</p>
                                         <p>The most recent usage of this tag occurred on <b>{convertDatetime(items.last_used,'calendar')}</b>, 
                                             with the last consumed item being 
-                                            <a className='btn btn-primary rounded-pill px-2 py-1' href={`/consume/${items.last_used_consume_slug}`}>
-                                                {
-                                                    items.last_used_consume_type == 'Food' ?
-                                                        <FontAwesomeIcon icon={faBowlRice} className='me-1'/>
-                                                    : items.last_used_consume_type == 'Drink' ?
-                                                        <FontAwesomeIcon icon={faMugSaucer} className='me-1'/>
-                                                    : items.last_used_consume_type == 'Snack' ?
-                                                        <FontAwesomeIcon icon={faCake} className='me-1'/>
-                                                    : 
-                                                        <></>
-                                                }
-                                                {ucFirstChar(items.last_used_consume_name)}
-                                            </a>
+                                            <ComponentTextIcon text_type={items.last_used_consume_type} body={items.last_used_consume_name} text_href={`/consume/${items.last_used_consume_slug}`}/>
                                         </p>
                                     </>
                                 :

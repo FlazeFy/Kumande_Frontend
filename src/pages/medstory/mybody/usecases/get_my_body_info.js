@@ -11,6 +11,7 @@ import GetDataTable from '../../../../modules/templates/get_data_table'
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ComponentTextMessageNoData from '../../../../atoms/text_message_no_data'
+import ComponentBreakLine from '../../../../atoms/breakline'
 
 export default function GetMyBodyInfo({ctx}) {
     //Initial variable
@@ -307,7 +308,7 @@ export default function GetMyBodyInfo({ctx}) {
                                                         <span className='text-secondary text-center fst-italic'>- No Summary -</span>
                                                     :
                                                         <>
-                                                            <br></br>
+                                                            <ComponentBreakLine length={1}/>
                                                             <h5>Summary</h5>
                                                             <p>{summaryBloodPreasure}</p>
                                                         </>
@@ -349,7 +350,7 @@ export default function GetMyBodyInfo({ctx}) {
                                                         <span className='text-secondary text-center fst-italic'>- No Summary -</span>
                                                     :
                                                         <>
-                                                            <br></br>
+                                                            <ComponentBreakLine length={1}/>
                                                             <h5>Summary</h5>
                                                             <p>{summaryBloodGlucose}</p>
                                                         </>
@@ -391,7 +392,7 @@ export default function GetMyBodyInfo({ctx}) {
                                                     <span className='text-secondary text-center fst-italic'>- No Summary -</span>
                                                 :
                                                     <>
-                                                        <br></br>
+                                                        <ComponentBreakLine length={1}/>
                                                         <h5>Summary</h5>
                                                         <p>{summaryGout}</p>
                                                     </>

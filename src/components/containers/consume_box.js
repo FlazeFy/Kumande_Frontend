@@ -5,11 +5,12 @@ import GoogleMapReact from 'google-map-react'
 //Font awesome classicon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBowlRice, faCake, faCalendar, faEdit, faHeart, faLocationDot,  faMugSaucer } from "@fortawesome/free-solid-svg-icons"
-import GetBreakLine from '../others/breakline'
+import ComponentBreakLine from '../../atoms/breakline'
 import { convertDatetime } from '../../modules/helpers/converter'
 import ManagePayment from '../../pages/consume/[slug]/usecases/manage_payment'
 import { isMobile } from '../../modules/helpers/validator'
 import ComponentTextMessageNoData from '../../atoms/text_message_no_data'
+import ComponentTextIcon from '../../atoms/text_icon'
 
 export default function GetConsumeBox({items, type, func, fetchConsume}) {
     // Initial Variable
@@ -55,19 +56,7 @@ export default function GetConsumeBox({items, type, func, fetchConsume}) {
                             : 
                                 <></>
                         }
-                        <a style={{color:"var(--primaryColor)", fontWeight:"500", fontSize:"var(--textXLG)"}}>
-                        {
-                            items['consume_type'] == 'Food' ?
-                                <FontAwesomeIcon icon={faBowlRice} className='me-2'/>
-                            : items['consume_type'] == 'Drink' ?
-                                <FontAwesomeIcon icon={faMugSaucer} className='me-2'/>
-                            : items['consume_type'] == 'Snack' ?
-                                <FontAwesomeIcon icon={faCake} className='me-2'/>
-                            : 
-                                <></>
-                        }
-                        {items['consume_name']}
-                        </a>
+                        <ComponentTextIcon text_style={{fontWeight:500,fontSize:"var(--textXLG)"}} text_type={items.consume_type} body={items.consume_name}/>
                     </div>
                     {
                         type != 'detail' && !is_mobile ?
@@ -87,7 +76,7 @@ export default function GetConsumeBox({items, type, func, fetchConsume}) {
                     }
                 </div>
                 <div>{items['consume_comment']}</div>
-                <GetBreakLine length={1}/>
+                <ComponentBreakLine length={1}/>
                 {
                     type == 'detail' ? <hr></hr> : <></>
                 }
@@ -315,23 +304,11 @@ export default function GetConsumeBox({items, type, func, fetchConsume}) {
                             : 
                                 <></>
                         }
-                        <a style={{color:"var(--primaryColor)", fontWeight:"500", fontSize:"var(--textLG)"}}>
-                        {
-                            items.consume_type == 'Food' ?
-                                <FontAwesomeIcon icon={faBowlRice} className='me-2'/>
-                            : items.consume_type == 'Drink' ?
-                                <FontAwesomeIcon icon={faMugSaucer} className='me-2'/>
-                            : items.consume_type == 'Snack' ?
-                                <FontAwesomeIcon icon={faCake} className='me-2'/>
-                            : 
-                                <></>
-                        }
-                        {items.consume_name}
-                        </a>
+                        <ComponentTextIcon text_style={{fontSize:"var(--textLG)"}} text_type={items.consume_type} body={items.consume_name}/>
                     </div>
                 </div>
                 <a style={{fontWeight:"500", fontSize:"var(--textXMD)"}}>Detail</a>
-                <GetBreakLine length={1}/>
+                <ComponentBreakLine length={1}/>
                 <div className='d-inline'>
                     <a className='btn btn-success rounded-pill px-3 py-1 me-1 mb-1' style={{fontSize:"var(--textMD)"}}>
                         {items.consume_detail[0]['provide']}

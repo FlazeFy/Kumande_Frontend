@@ -8,7 +8,7 @@ export default function ComponentText(props){
     } else if(props.text_type == 'main_content'){
 
     } else if(props.text_type == 'sub_content'){
-
+        return <p className="my-0 text-secondary" style={{fontSize:"var(--textLG)"}}>{props.body}</p>
     } else if(props.text_type == 'mini_content'){
         return <p className="my-0 text-secondary" style={{fontSize:"var(--textMD)"}}>{props.body}</p>
     }

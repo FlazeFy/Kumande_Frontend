@@ -15,10 +15,11 @@ import { getAllDay } from '../../../modules/helpers/generator'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBowlRice, faCake, faCalendar, faHeart, faMugSaucer, faPlus, faXmark} from "@fortawesome/free-solid-svg-icons"
 import GetAnimaText from '../../../components/messages/anima_text'
-import GetBreakLine from '../../../components/others/breakline'
+import ComponentBreakLine from '../../../atoms/breakline'
 import { add_firestore } from '../../../modules/firebase/command'
 import GetSchedule from './get_schedule'
 import GetConsumeBox from '../../../components/containers/consume_box'
+import ComponentTextIcon from '../../../atoms/text_icon'
 
 export default function GetMySchedule({ctx}) {
     //Initial variable
@@ -155,16 +156,11 @@ export default function GetMySchedule({ctx}) {
                         <div className='d-flex justify-content-between mb-1'>
                             <div>
                                 {elmt.is_favorite === 1 && <FontAwesomeIcon icon={faHeart} className='me-2 text-danger' size='lg' title='Favorite' />}
-                                <a style={{ color: "var(--primaryColor)", fontWeight: "500", fontSize: "var(--textLG)" }}>
-                                    {elmt['consume_type'] === 'Food' && <FontAwesomeIcon icon={faBowlRice} className='me-2' />}
-                                    {elmt['consume_type'] === 'Drink' && <FontAwesomeIcon icon={faMugSaucer} className='me-2' />}
-                                    {elmt['consume_type'] === 'Snack' && <FontAwesomeIcon icon={faCake} className='me-2' />}
-                                    {elmt['consume_name']}
-                                </a>
+                                <ComponentTextIcon text_type={elmt['consume_type']} body={elmt['consume_name']}/>
                             </div>
                         </div>
                         <a style={{ fontWeight: "500", fontSize: "var(--textXMD)" }}>Detail</a>
-                        <GetBreakLine length={1} />
+                        <ComponentBreakLine length={1} />
                         <div className='d-inline'>
                             <a className='btn btn-success rounded-pill px-3 py-1 me-1 mb-1' style={{ fontSize: "var(--textMD)" }}>
                                 {elmt['consume_detail'][0]['provide']}

@@ -9,8 +9,9 @@ import { ucFirstChar } from '../modules/helpers/converter'
 import { isMobile } from '../modules/helpers/validator'
 import ComponentText from '../atoms/text'
 import ComponentTextMessageNoData from '../atoms/text_message_no_data'
+import ComponentTextIcon from '../atoms/text_icon'
 
-export default function GetScheduleBox({items,time}) {
+export default function ComponentContainerSchedule({items,time}) {
     let total = 0 
     
     // Initial Variable
@@ -42,21 +43,7 @@ export default function GetScheduleBox({items,time}) {
                     items.map((data, i, idx) => {
                         if(data['schedule_time'][0]['category'] == ucFirstChar(time)){
                             total++
-                            return (
-                                <a style={{marginRight:"var(--spaceXSM)"}}>
-                                    {
-                                        data['consume_type'] == 'Food' ?
-                                            <FontAwesomeIcon icon={faBowlRice} className='me-1' style={{color:"var(--primaryColor)"}}/>
-                                        : data['consume_type'] == 'Drink' ?
-                                            <FontAwesomeIcon icon={faMugSaucer} className='me-1' style={{color:"var(--primaryColor)"}}/>
-                                        : data['consume_type'] == 'Snack' ?
-                                            <FontAwesomeIcon icon={faCake} className='me-1' style={{color:"var(--primaryColor)"}}/>
-                                        : 
-                                            <></>
-                                    }
-                                    {ucFirstChar(data['schedule_consume'])}
-                                </a>
-                            )
+                            return <ComponentTextIcon text_type={data['consume_type']} body={data['schedule_consume']}/>
                         }
                     })
                 }

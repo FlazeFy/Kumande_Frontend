@@ -6,6 +6,7 @@ import { getLocal } from '../../../modules/storages/local'
 //Font awesome classicon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAdd, faBowlRice, faCake, faMugSaucer } from "@fortawesome/free-solid-svg-icons"
+import ComponentTextIcon from '../../../atoms/text_icon'
 
 export default function GetListStarted({ ctx }) {
     // Initial state variables
@@ -66,20 +67,8 @@ export default function GetListStarted({ ctx }) {
                                 <div className="loop-slider mx-auto mb-3" key={chunkIndex} style={{ '--duration': '15951ms', '--direction': 'normal' }}>
                                     <div className="inner">
                                         {
-                                            chunk.map((elmt, index) => (
-                                                <div className="btn btn-primary rounded-pill px-3 py-1 me-1" style={{whiteSpace:"nowrap"}} key={index}>
-                                                    {
-                                                        elmt.consume_type == 'Food' ?
-                                                            <FontAwesomeIcon icon={faBowlRice} className='me-2'/>
-                                                        : elmt.consume_type == 'Drink' ?
-                                                            <FontAwesomeIcon icon={faMugSaucer} className='me-2'/>
-                                                        : elmt.consume_type == 'Snack' ?
-                                                            <FontAwesomeIcon icon={faCake} className='me-2'/>
-                                                        : 
-                                                            <></>
-                                                    }
-                                                    {elmt.consume_name}
-                                                </div>
+                                            chunk.map((dt, idx) => (
+                                                <ComponentTextIcon text_type={dt.consume_type} body={dt.consume_name}/>
                                             ))
                                         }
                                     </div>

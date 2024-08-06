@@ -21,5 +21,7 @@ export default function ComponentButton(props){
                 {props.icon} {props.button_name}
             </a>
         )
+    } else if(props.button_type == 'tag'){
+        return <a className='btn btn-primary rounded-pill px-3 py-1 me-1'>{props.button_name}</a>
     }
 }

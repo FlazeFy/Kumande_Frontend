@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faEdit, faFloppyDisk, faPlus, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons"
 import GetPieChart from '../../../components/charts/pie_chart'
 import ComponentTextMessageNoData from '../../../atoms/text_message_no_data'
+import ComponentContainerTag from '../../../molecules/container_tag'
 
 const ManageList = forwardRef((props, ref) => {
     const [isLoaded, setIsLoaded] = useState(false)
@@ -450,20 +451,7 @@ const ManageList = forwardRef((props, ref) => {
                                                 }
                                             </div>
                                             <div className='col-7'>
-                                                <div className='d-flex justify-content-between'>
-                                                    <h6 className='mt-1'>Tags</h6>
-                                                    <a className='btn btn-primary py-0'><FontAwesomeIcon icon={faEdit}/></a>
-                                                </div>
-                                                {
-                                                    items.list_tag != null ?
-                                                        items.list_tag.map((tag, tidx) => {
-                                                            return (
-                                                                <a className='btn btn-primary rounded-pill px-3 py-1 me-1'>{tag.tag_name}</a>
-                                                            )
-                                                        })
-                                                    :   
-                                                        <ComponentTextMessageNoData message="No tag provided"/>
-                                                }
+                                                <ComponentContainerTag container_title="Tags" list_tag={items.list_tag} is_editable={true}/>
                                                 <hr></hr>
                                                 <h5>List Consume</h5>
                                                 <table className='table table-bordered'>

@@ -40,7 +40,8 @@ export default function GetBarChart({items, filter_name}) {
                 {
                     filter_name ? 
                         <>
-                            <GetLimit ctx={filter_name} type={"bar"}/><br></br><br></br>
+                            <GetLimit ctx={filter_name} type={"bar"}/>
+                            <ComponentBreakLine length={2}/>
                         </>
                     :
                         <></>

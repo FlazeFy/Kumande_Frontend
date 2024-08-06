@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default function GetBreakLine({length}) {
-    const builder = Array(length).fill(1)
+export default function ComponentBreakLine(props) {
+    const builder = Array(props.length).fill(1)
 
     return (
         <>

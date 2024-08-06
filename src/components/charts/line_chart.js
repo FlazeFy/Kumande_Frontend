@@ -1,5 +1,6 @@
 import React from 'react'
 import Chart from 'react-apexcharts'
+import ComponentBreakLine from '../../atoms/breakline';
 import { getLocal } from '../../modules/storages/local'
 import GetLimit from '../controls/limit'
 
@@ -24,7 +25,6 @@ export default function GetLineChart({items, filter_name}) {
     const keyType = getLocal("stats_type_sess")
 
     chart = {
-        //series: getSeries(data),
         series: [{
             data: getSeries(data),
             name: keyType
@@ -58,7 +58,8 @@ export default function GetLineChart({items, filter_name}) {
                 {
                     filter_name ? 
                         <>
-                            <GetLimit ctx={filter_name} type={"bar"}/><br></br><br></br>
+                            <GetLimit ctx={filter_name} type={"bar"}/>
+                            <ComponentBreakLine length={2}/>
                         </>
                     :
                         <></>

@@ -3,7 +3,7 @@ import React from 'react'
 
 // Components
 import GetLabel from '../../components/labels/label'
-import GetBreakLine from '../others/breakLine'
+import ComponentBreakLine from '../others/breakLine'
 import GetDropDownDctDynamic from '../others/dropdown'
 import GetAllTag from '../others/getAllTag'
 
@@ -29,7 +29,7 @@ export default function GetFormTemplate({type, props}) {
                                         {
                                             elmt.type === 'range' ? 
                                                 <>
-                                                    <GetBreakLine length={1}/>
+                                                    <ComponentBreakLine length={1}/>
                                                     <div className='d-flex justify-content-between my-1'>
                                                         <div>
                                                             <lable className='text-white'>{elmt.min}</lable>
@@ -76,7 +76,7 @@ export default function GetFormTemplate({type, props}) {
                                 return (
                                     <div className='col-lg-12 col-md-12 col-sm-12 text-start mb-3' key={idx}>
                                         <GetLabel title={elmt.label} type="input"/>
-                                        <GetBreakLine length={2}/>
+                                        <ComponentBreakLine length={2}/>
                                         <input className="form-control" type="file" onChange={elmt.handleChange} /> 
                                         <GetLabel title={elmt.errorMsg} type="error"/>
                                     </div>
@@ -100,10 +100,10 @@ export default function GetFormTemplate({type, props}) {
                                 return (
                                     <div class="form-check" style={{marginLeft:"-10px"}}>
                                         <GetLabel title={elmt.label} type="input"/>
-                                        <GetBreakLine length={1}/>
+                                        <ComponentBreakLine length={1}/>
                                         <div className='mt-2'/>
                                         <GetAllTag url={elmt.url} cls={elmt.class} func={elmt.handleChange}/>
-                                        <GetBreakLine length={2}/>
+                                        <ComponentBreakLine length={2}/>
                                     </div>
                                 )
                             } else if (elmt.type === 'submit') {
