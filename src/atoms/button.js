@@ -41,5 +41,7 @@ export default function ComponentButton(props){
                 {!is_mobile ? props.button_name : <><FontAwesomeIcon icon={faLocationDot}/> Maps</>}
             </a>
         )
+    } else if(props.button_type == 'primary'){
+        return <a className='btn btn-primary rounded px-3 py-2' id={props.id} href={props.url}>{props.button_name}</a>
     }
 }

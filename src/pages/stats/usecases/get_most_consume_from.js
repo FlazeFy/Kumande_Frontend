@@ -74,7 +74,7 @@ export default function GetMostConsumeFrom({ctx}) {
                     items ?
                         <ComponentPieChart items={items} filter_name={null}/>  
                     :
-                        <ComponentTextMessageNoData message="No Data Found"/>
+                        <ComponentTextMessageNoData is_with_image={false}  message="No Data Found"/>
                 }
             </div>
         )

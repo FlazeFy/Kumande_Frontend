@@ -44,7 +44,7 @@ export default function ComponentContainerSchedule({items,time}) {
                 }
                 {
                     total === 0 ?
-                        <ComponentTextMessageNoData message="No Schedule for today"/>
+                        <ComponentTextMessageNoData is_with_image={false}  message="No Schedule for today"/>
                     : 
                         <></>
                 }

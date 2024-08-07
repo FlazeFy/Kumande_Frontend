@@ -207,7 +207,7 @@ export default function GetAllergic({ctx}) {
                                                     dt.allergic_desc ?
                                                         <p className='mb-1'>{dt.allergic_desc}</p>
                                                     :
-                                                        <ComponentTextMessageNoData message="No Description Provided"/>
+                                                        <ComponentTextMessageNoData is_with_image={false}  message="No Description Provided"/>
                                                 }
                                                 <hr className='my-2'></hr>
                                                 <div className='context'>
@@ -226,7 +226,7 @@ export default function GetAllergic({ctx}) {
                                 )
                             })
                         :
-                            <ComponentTextMessageNoData message="No Data Found"/>
+                            <ComponentTextMessageNoData is_with_image={false}  message="No Data Found"/>
                     }
                     {
                         itemsAllergic ?

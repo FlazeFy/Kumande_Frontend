@@ -1,8 +1,6 @@
 "use client"
 import React from 'react'
 import { useState, useEffect } from "react"
-import GetConsumeBox from '../../../components/containers/consume_box'
-import GetAnimaText from '../../../components/messages/anima_text'
 import { getCleanTitleFromCtx, ucFirstWord, convertDatetime } from '../../../modules/helpers/converter'
 
 import { getLocal, storeLocal } from '../../../modules/storages/local'
@@ -13,6 +11,8 @@ import FilterConsumeType from './filter_consume_type'
 import FilterIsFavoriteConsume from './filter_is_favorite'
 import FilterOrderConsume from './filter_order_consume'
 import { isMobile } from '../../../modules/helpers/validator'
+import ComponentContainerConsume from '../../../organisms/container_consume'
+import ComponentTextMessageNoData from '../../../atoms/text_message_no_data'
 
 export default function GetAllConsumePagination({ctx}) {
     //Initial variable
@@ -125,17 +125,17 @@ export default function GetAllConsumePagination({ctx}) {
                                             <div className='text-center'>
                                                 <h6 style={{fontSize:"var(--textMD)"}} className='bgd-primary text-white p-2 mb-3 rounded d-inline-block mx-auto'>{curr_date}</h6>
                                             </div>
-                                            <GetConsumeBox items={elmt} type="header"/>
+                                            <ComponentContainerConsume items={elmt} type="header"/>
                                         </>
                                     )
                                 } else {
                                     return (
-                                        <GetConsumeBox items={elmt} type="header"/>
+                                        <ComponentContainerConsume items={elmt} type="header"/>
                                     )
                                 }
                             })
                         :
-                            <GetAnimaText ctx="No Consume Found" url={'/icons/Consume.png'}/>
+                            <ComponentTextMessageNoData is_with_image={true} url={'/icons/Consume.png'} message="No Consume Found"/>
                     }
                     {
                         items && consumeMaxPage > 0 ? 

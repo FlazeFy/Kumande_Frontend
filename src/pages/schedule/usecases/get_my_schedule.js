@@ -13,13 +13,13 @@ import { getAllDay } from '../../../modules/helpers/generator'
 
 //Font awesome classicon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBowlRice, faCake, faCalendar, faHeart, faMugSaucer, faPlus, faXmark} from "@fortawesome/free-solid-svg-icons"
-import GetAnimaText from '../../../components/messages/anima_text'
+import { faCalendar, faHeart, faPlus, faXmark} from "@fortawesome/free-solid-svg-icons"
 import ComponentBreakLine from '../../../atoms/breakline'
 import { add_firestore } from '../../../modules/firebase/command'
 import GetSchedule from './get_schedule'
-import GetConsumeBox from '../../../components/containers/consume_box'
 import ComponentTextIcon from '../../../atoms/text_icon'
+import ComponentContainerConsume from '../../../organisms/container_consume'
+import ComponentTextMessageNoData from '../../../atoms/text_message_no_data'
 
 export default function GetMySchedule({ctx}) {
     //Initial variable
@@ -413,7 +413,7 @@ export default function GetMySchedule({ctx}) {
                                                         itemsConsume.map((elmt, idx) => {
                                                             return (
                                                                 <div className='col-6 text-start'>
-                                                                    <GetConsumeBox type='mini' items={elmt} func={(e)=>selectConsume(elmt)}/>
+                                                                    <ComponentContainerConsume type='mini' items={elmt} func={(e)=>selectConsume(elmt)}/>
                                                                 </div>
                                                             )
                                                         })
@@ -433,7 +433,7 @@ export default function GetMySchedule({ctx}) {
                                                     }
                                                 </>
                                             :
-                                                <GetAnimaText ctx="No Consume Found" url={'/icons/Consume.png'}/>
+                                                <ComponentTextMessageNoData is_with_image={true} url={'/icons/Consume.png'} message="No Consume Found"/>
                                         }
                                         <div className='d-flex justify-content-between w-100 mt-3'>
                                             <h5 className='text-start'>Selected Consume</h5>

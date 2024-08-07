@@ -315,7 +315,7 @@ export default function GetMyBodyInfo({ctx}) {
                                                 }
                                             </>
                                         :   
-                                        <ComponentTextMessageNoData message="No Data Found"/>
+                                        <ComponentTextMessageNoData is_with_image={false}  message="No Data Found"/>
                                     }
                                 </div>
                                 <div className='col-lg-8'>
@@ -324,7 +324,7 @@ export default function GetMyBodyInfo({ctx}) {
                                         itemsBloodPreasure ?
                                             <GetDataTable data={itemsBloodPreasure} columns={columnsBloodPreasure} />
                                         : 
-                                            <ComponentTextMessageNoData message="No Data Found"/>
+                                            <ComponentTextMessageNoData is_with_image={false}  message="No Data Found"/>
                                     }
                                 </div>
                             </div>
@@ -357,7 +357,7 @@ export default function GetMyBodyInfo({ctx}) {
                                                 }
                                             </>
                                         :   
-                                            <ComponentTextMessageNoData message="No Data Found"/>
+                                            <ComponentTextMessageNoData is_with_image={false}  message="No Data Found"/>
                                     }
                                 </div>
                                 <div className='col-lg-8'>
@@ -366,7 +366,7 @@ export default function GetMyBodyInfo({ctx}) {
                                         itemsBloodGlucose ?
                                             <GetDataTable data={itemsBloodGlucose} columns={columnsBloodGlucose} />
                                         : 
-                                            <ComponentTextMessageNoData message="No Data Found"/>
+                                            <ComponentTextMessageNoData is_with_image={false}  message="No Data Found"/>
                                     }
                                 </div>
                             </div>
@@ -399,7 +399,7 @@ export default function GetMyBodyInfo({ctx}) {
                                             }
                                         </>
                                         :   
-                                            <ComponentTextMessageNoData message="No Data Found"/>
+                                            <ComponentTextMessageNoData is_with_image={false}  message="No Data Found"/>
                                     }
                                 </div>
                                 <div className='col-lg-8'>
@@ -408,7 +408,7 @@ export default function GetMyBodyInfo({ctx}) {
                                         itemsGout ?
                                             <GetDataTable data={itemsGout} columns={columnsGout} />
                                         : 
-                                            <ComponentTextMessageNoData message="No Data Found"/>
+                                            <ComponentTextMessageNoData is_with_image={false}  message="No Data Found"/>
                                     }
                                 </div>
                             </div>
@@ -429,7 +429,7 @@ export default function GetMyBodyInfo({ctx}) {
                                                 }
                                             } val={(items.cholesterol - 120) / (240 - 120) * 100} label={cholesterol_status}/>
                                         :   
-                                            <ComponentTextMessageNoData message="No Data Found"/>
+                                            <ComponentTextMessageNoData is_with_image={false}  message="No Data Found"/>
                                     }
                                 </div>
                                 <div className='col-lg-8'>
@@ -453,7 +453,7 @@ export default function GetMyBodyInfo({ctx}) {
                                                 }
                                             } val={(items.bmi - 18.5) / (35.0 - 18.5) * 100} label={bmi_status}/>
                                         :   
-                                            <ComponentTextMessageNoData message="No Data Found"/>
+                                            <ComponentTextMessageNoData is_with_image={false}  message="No Data Found"/>
                                     }
                                     <p className='mb-0 text-secondary' style={{fontSize:"var(--textMD)"}}>Last Updated at {items ? convertDatetime(items.calorie_updated,'calendar'):''}</p>
                                 </div>

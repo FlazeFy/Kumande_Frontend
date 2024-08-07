@@ -7,7 +7,7 @@ import "./src/design_token/styles/table.css"
 import "./src/design_token/styles/modal.css"
 
 // Component CSS
-import "./src/components/bars/bars.css"
+import "./src/design_token/styles/bars.css"
 
 // Bootstrap 5
 import 'bootstrap/dist/css/bootstrap.min.css'

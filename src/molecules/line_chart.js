@@ -1,7 +1,7 @@
 import React from 'react'
 import Chart from 'react-apexcharts'
 import ComponentBreakLine from '../atoms/breakline';
-import GetLimit from '../components/controls/limit'
+import ComponentLimit from '../organisms/filter_limit'
 import { getLocal } from '../modules/storages/local';
 
 export default function ComponentLineChart({items, filter_name}) {
@@ -58,7 +58,7 @@ export default function ComponentLineChart({items, filter_name}) {
                 {
                     filter_name ? 
                         <>
-                            <GetLimit ctx={filter_name} type={"bar"}/>
+                            <ComponentLimit ctx={filter_name} type={"bar"}/>
                             <ComponentBreakLine length={2}/>
                         </>
                     :

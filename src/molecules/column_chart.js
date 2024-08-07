@@ -1,8 +1,8 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
 import PageBar from '../navbar/page_bar'
-import GetOrdering from '../controls/ordering'
-import GetLimit from '../components/controls/limit'
+import ComponentOrdering from '../controls/ordering'
+import ComponentLimit from '../components/controls/limit'
 
 export default function ComponentColumnChart({items, builder, maxPage, currentPage, ctx}) {
     //Initial variable
@@ -109,8 +109,8 @@ export default function ComponentColumnChart({items, builder, maxPage, currentPa
 
     return (
         <div className='custom-tbody' style={{overflowY:"hidden"}}>
-            <GetOrdering ctx={ctx}/>
-            <GetLimit ctx={ctx} type={"table"}/>
+            <ComponentOrdering ctx={ctx}/>
+            <ComponentLimit ctx={ctx} type={"table"}/>
             <div className="mt-4">
                 <Chart
                     options={chart.options}

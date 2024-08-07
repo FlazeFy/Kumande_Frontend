@@ -6,10 +6,10 @@ import { useState, useEffect } from "react"
 import { getLocal } from '../../../../modules/storages/local'
 import Swal from 'sweetalert2'
 import { convertDatetime } from '../../../../modules/helpers/converter'
-import GetBodyBoxDashboard from '../../../../components/containers/body_box_dashboard'
 import { add_firestore } from '../../../../modules/firebase/command'
 import Axios from 'axios'
 import $ from 'jquery'
+import ComponentBodyBoxDashboard from '../../../../organisms/container_body_info'
 
 export default function GetManageBody({ctx}) {
     //Initial variable
@@ -276,19 +276,19 @@ export default function GetManageBody({ctx}) {
                             <div className="modal-body text-center p-4">
                                 <div className='row'>
                                     <div className='col-lg-3 mx-auto'>
-                                        <GetBodyBoxDashboard target={"blood_glucose"} item={itemsDashboard}/>
+                                        <ComponentBodyBoxDashboard target={"blood_glucose"} item={itemsDashboard}/>
                                     </div>
                                     <div className='col-lg-3 mx-auto'>
-                                        <GetBodyBoxDashboard target={"gout"} item={itemsDashboard}/>
+                                        <ComponentBodyBoxDashboard target={"gout"} item={itemsDashboard}/>
                                     </div>
                                     <div className='col-lg-3 mx-auto'>
-                                        <GetBodyBoxDashboard target={"cholesterol"} item={itemsDashboard}/>
+                                        <ComponentBodyBoxDashboard target={"cholesterol"} item={itemsDashboard}/>
                                     </div>
                                     <div className='col-lg-3 mx-auto'>
-                                        <GetBodyBoxDashboard target={"weight"} item={itemsDashboard}/>
+                                        <ComponentBodyBoxDashboard target={"weight"} item={itemsDashboard}/>
                                     </div>
                                     <div className='col-lg-3 mx-auto'>
-                                        <GetBodyBoxDashboard target={"height"} item={itemsDashboard}/>
+                                        <ComponentBodyBoxDashboard target={"height"} item={itemsDashboard}/>
                                     </div>
                                 </div>
                                 <hr></hr>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from "react"
-import GetContentBox from '../../../components/containers/content_box'
+import ComponentProfileSummaryInfo from '../../../organisms/container_profile_summary'
 
 // Component
 import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
@@ -70,7 +70,7 @@ export default function GetBodyData({ctx}) {
     } else {
         return (
             <div> 
-                <GetContentBox items={item} builder={builder} urlImg={'/icons/BodyData.png'} title="Body Info"/>
+                <ComponentProfileSummaryInfo items={item} builder={builder} urlImg={'/icons/BodyData.png'} title="Body Info"/>
             </div>
         )
     }

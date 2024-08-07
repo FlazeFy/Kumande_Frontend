@@ -2,12 +2,12 @@ import React from 'react'
 import { useState, useEffect } from "react"
 
 // Component
-import { getCleanTitleFromCtx, ucFirstWord } from '../../modules/helpers/converter'
+import { getCleanTitleFromCtx, ucFirstWord } from '../modules/helpers/converter'
 
 // Modules
-import { getLocal } from '../../modules/storages/local'
+import { getLocal } from '../modules/storages/local'
 
-export default function GetDropDownDctDynamic({elmt, url, ctx, act, change}) {
+export default function ComponentDropDownDctDynamic({elmt, url, ctx, act, change}) {
     //Initial variable
     const [error, setError] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)

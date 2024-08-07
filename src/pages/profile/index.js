@@ -1,5 +1,5 @@
 import * as React from "react"
-import ComponentLeftNavbarToggle from "../../components/bars/navbartoggle"
+import ComponentLeftNavbarToggle from "../../atoms/navbar_toggle"
 import ComponentLeftNavbar from "../../organisms/left_navbar"
 import GetBodyData from "./usecases/get_body_data"
 import GetConsumeData from "./usecases/get_consume_data"

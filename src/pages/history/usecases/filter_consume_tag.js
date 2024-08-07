@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import GetAnimaText from '../../../components/messages/anima_text'
+import ComponentTextMessageNoData from '../../../atoms/text_message_no_data'
 import { isMobile } from '../../../modules/helpers/validator'
 import { getLocal, storeLocal } from '../../../modules/storages/local'
 
@@ -125,7 +125,7 @@ export default function FilterConsumeTag({ctx}) {
                                         )
                                     })
                                 :
-                                    <GetAnimaText ctx="No Tag found" url={'/icons/Consume.png'}/>
+                                    <ComponentTextMessageNoData is_with_image={true} url={'/icons/Consume.png'} message="No Tag found"/>
                             }
                         </div>
                         <div className="modal-footer">

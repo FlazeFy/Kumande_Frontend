@@ -1,5 +1,5 @@
 import * as React from "react"
-import ComponentLeftNavbarToggle from "../../components/bars/navbartoggle"
+import ComponentLeftNavbarToggle from "../../atoms/navbar_toggle"
 import { getTodayDate } from "../../modules/helpers/generator"
 import { getLocal } from "../../modules/storages/local"
 import ComponentLeftNavbar from "../../organisms/left_navbar"

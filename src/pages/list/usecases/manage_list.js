@@ -440,14 +440,14 @@ const ManageList = forwardRef((props, ref) => {
                                                     items.consume ?
                                                         <ComponentPieChart items={itemsConsumePieCal} filter_name={null}/>
                                                     :
-                                                        <ComponentTextMessageNoData message="No Data Found"/>
+                                                        <ComponentTextMessageNoData is_with_image={false}  message="No Data Found"/>
                                                 }
                                                  <h5 className='mt-4'>Statistic Price</h5>
                                                 {
                                                     items.consume ?
                                                         <ComponentPieChart items={itemsConsumePiePrice} filter_name={null}/>
                                                     :
-                                                        <ComponentTextMessageNoData message="No Data Found"/>
+                                                        <ComponentTextMessageNoData is_with_image={false}  message="No Data Found"/>
                                                 }
                                             </div>
                                             <div className='col-7'>

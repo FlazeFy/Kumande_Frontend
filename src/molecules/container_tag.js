@@ -25,7 +25,7 @@ export default function ComponentContainerTag(props) {
                         )
                     })
                 :   
-                    <ComponentTextMessageNoData message="No tag provided"/>
+                    <ComponentTextMessageNoData is_with_image={false}  message="No tag provided"/>
             }
         </div>
     )

@@ -5,9 +5,9 @@ import { useState } from 'react'
 import Swal from 'sweetalert2'
 
 // Component
-import GetFormTemplate from '../../../components/containers/form'
 import { storeLocal } from '../../../modules/storages/local'
 import { getStringValJson } from '../../../modules/helpers/generator'
+import ComponentForm from '../../../organisms/container_form'
 
 export default function PostLogin() {
     //Initial variable
@@ -114,7 +114,7 @@ export default function PostLogin() {
             <div className='row'>
                 <div className='col'>
                     <h4 className='text-white'>Make food scheduling, analyze it, tracking, and choose your meals for tommorow</h4>
-                    <GetFormTemplate type={"single-line"} props={builder} />
+                    <ComponentForm type={"single-line"} props={builder} />
                 </div>
                 <div className='col'>
                     <img src="/icons/Consume.png" style={{maxWidth:"50%", minWidth:"300px"}} className="img img-fluid mb-3"/>

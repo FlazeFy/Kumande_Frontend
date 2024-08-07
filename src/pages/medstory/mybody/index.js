@@ -1,5 +1,5 @@
 import * as React from "react"
-import ComponentLeftNavbarToggle from "../../../components/bars/navbartoggle"
+import ComponentLeftNavbarToggle from "../../../atoms/navbar_toggle"
 import ComponentLeftNavbar from "../../../organisms/left_navbar"
 import ComponentMedstorySubNav from "../../../organisms/medstory_subnav"
 import GetMyBodyInfo from "./usecases/get_my_body_info"

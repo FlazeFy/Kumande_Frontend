@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 
-export default function GetContentBox({builder, items, urlImg, title}) {
+export default function ComponentProfileSummaryInfo({builder, items, urlImg, title}) {
     return (
         <div className="box-content-header">
             <img className='img img-fluid my-4' src={urlImg}/>

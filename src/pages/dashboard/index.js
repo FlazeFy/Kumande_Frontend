@@ -1,5 +1,5 @@
 import * as React from "react"
-import ComponentLeftNavbarToggle from "../../components/bars/navbartoggle"
+import ComponentLeftNavbarToggle from "../../atoms/navbar_toggle"
 import ComponentButtonContentImg from "../../molecules/button_content_img"
 import ComponentLeftNavbar from "../../organisms/left_navbar"
 import GetAnalyticPaymentMonth from "./usecases/get_analytic_payment_month"

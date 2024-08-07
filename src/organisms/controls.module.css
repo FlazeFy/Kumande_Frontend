@@ -7,7 +7,7 @@
     margin-bottom: var(--spaceMD);
 }
 
-/* GetSearch */
+/* ComponentSearch */
 .search_bar {
     color: var(--whiteColor) !important;
     padding: var(--spaceSM) calc(var(--spaceLG) * 2.5) var(--spaceSM) var(--spaceMD) !important;

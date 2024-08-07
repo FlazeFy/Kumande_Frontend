@@ -12,6 +12,7 @@ export default function GetListStarted({ ctx }) {
     // Initial state variables
     const [error, setError] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)
+    const [items, setItem] = useState(null)
     const [chunkedItems, setChunkedItems] = useState([])
     const token = getLocal("token_key")
 

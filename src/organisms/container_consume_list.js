@@ -28,7 +28,7 @@ export default function ComponentContainerConsumeList(props) {
                         )
                     })
                 :   
-                    <ComponentTextMessageNoData message="No consume attached"/>
+                    <ComponentTextMessageNoData is_with_image={false}  message="No consume attached"/>
             }
         </div>
     )

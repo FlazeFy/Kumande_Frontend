@@ -1,6 +1,6 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
-import GetLimit from '../components/controls/limit';
+import ComponentLimit from '../organisms/filter_limit';
 
 export default function ComponentPieChart({items, filter_name}){
     //Initial variable
@@ -40,7 +40,7 @@ export default function ComponentPieChart({items, filter_name}){
             <div className="me-4">
                 {
                     filter_name ? 
-                        <GetLimit ctx={filter_name} type={"pie"}/>
+                        <ComponentLimit ctx={filter_name} type={"pie"}/>
                     :
                         <></>
                 }

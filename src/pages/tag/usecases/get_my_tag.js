@@ -108,7 +108,7 @@ export default function GetMyTag({ctx}) {
                             :
                                 <tr key={1}>
                                     <td colSpan={4}>
-                                        <ComponentTextMessageNoData message="No Tag found"/>
+                                        <ComponentTextMessageNoData is_with_image={false}  message="No Tag found"/>
                                     </td>
                                 </tr>
                         }

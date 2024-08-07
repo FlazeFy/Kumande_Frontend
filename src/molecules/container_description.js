@@ -13,7 +13,7 @@ export default function ComponentContainerDescription(props) {
                 props.container_body ?
                     <ComponentText text_type="sub_content" body={props.container_body}/>
                 :
-                    <ComponentTextMessageNoData message="No Description Provided"/>
+                    <ComponentTextMessageNoData is_with_image={false}  message="No Description Provided"/>
             }
         </div>
     )

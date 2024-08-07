@@ -2,20 +2,19 @@
 import React from 'react'
 
 // Components
-import GetLabel from '../../components/labels/label'
-import GetDropDownDctDynamic from '../others/dropdown'
-import GetAllTag from '../others/getAllTag'
+import ComponentDropDownDctDynamic from '../molecules/dropdown'
+import ComponentGetAllTag from './get_all_tag'
 
 //Modules
-import { countHalf } from '../../modules/helpers/math'
+import { countHalf } from '../modules/helpers/math'
 
 //Font awesome classicon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { library } from "@fortawesome/fontawesome-svg-core"
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons"
-import ComponentBreakLine from '../../atoms/breakline'
+import ComponentBreakLine from '../atoms/breakline'
+import ComponentTextForm from '../atoms/text_form'
 
-export default function GetFormTemplate({type, props}) {
+export default function ComponentForm({type, props}) {
     if (type == "single-line"){
         return (
             <div key={type}>
@@ -25,7 +24,7 @@ export default function GetFormTemplate({type, props}) {
                             if (elmt.type === 'text' || elmt.type === 'number' || elmt.type === 'range') {
                                 return (
                                     <div className='col-lg-12 col-md-12 col-sm-12 text-start mb-3' key={idx}>
-                                        <GetLabel title={elmt.label} type="input"/>
+                                        <ComponentTextForm text_type="form_label" body={elmt.label}/>
                                         {
                                             elmt.type === 'range' ? 
                                                 <>
@@ -61,48 +60,48 @@ export default function GetFormTemplate({type, props}) {
                                                     
                                                 />
                                         }
-                                        <GetLabel title={elmt.errorMsg} type="error"/>
+                                        <ComponentTextForm text_type="form_danger" body={elmt.errorMsg}/>
                                     </div>
                                 )
                             } else if (elmt.type === 'textarea') {
                                 return (
                                     <div className='col-lg-12 col-md-12 col-sm-12 text-start mb-3' key={idx}>
-                                        <GetLabel title={elmt.label} type="input"/>
+                                        <ComponentTextForm text_type="form_label" body={elmt.label}/>
                                         <textarea className={elmt.class + " w-100"} rows={elmt.line} onChange={elmt.handleChange}></textarea>
-                                        <GetLabel title={elmt.errorMsg} type="error"/>
+                                        <ComponentTextForm text_type="form_danger" body={elmt.errorMsg}/>
                                     </div>
                                 )
                             } else if (elmt.type === 'upload') {
                                 return (
                                     <div className='col-lg-12 col-md-12 col-sm-12 text-start mb-3' key={idx}>
-                                        <GetLabel title={elmt.label} type="input"/>
+                                        <ComponentTextForm text_type="form_label" body={elmt.label}/>
                                         <ComponentBreakLine length={2}/>
                                         <input className="form-control" type="file" onChange={elmt.handleChange} /> 
-                                        <GetLabel title={elmt.errorMsg} type="error"/>
+                                        <ComponentTextForm text_type="form_danger" body={elmt.errorMsg}/>
                                     </div>
                                 )
                             } else if (elmt.type === 'select') {
                                 return (
                                     <div className='col-lg-12 col-md-12 col-sm-12 text-start mb-3' key={idx}>
-                                        <GetLabel title={elmt.label} type="input"/>
-                                        <GetDropDownDctDynamic url={elmt.url} elmt={elmt} ctx="dropdown"/>
-                                        <GetLabel title={elmt.errorMsg} type="error"/>
+                                        <ComponentTextForm text_type="form_label" body={elmt.label}/>
+                                        <ComponentDropDownDctDynamic url={elmt.url} elmt={elmt} ctx="dropdown"/>
+                                        <ComponentTextForm text_type="form_danger" body={elmt.errorMsg}/>
                                     </div>
                                 )
                             } else if (elmt.type === 'checkbox') {
                                 return (
                                     <div class="form-check ms-3">
                                         <input className={elmt.class} type={elmt.type} id="disabledFieldsetCheck" onChange={elmt.handleChange}></input>
-                                        <GetLabel title={elmt.label} type="input"/>
+                                        <ComponentTextForm text_type="form_label" body={elmt.label}/>
                                     </div>
                                 )
                             } else if (elmt.type === 'tag') {
                                 return (
                                     <div class="form-check" style={{marginLeft:"-10px"}}>
-                                        <GetLabel title={elmt.label} type="input"/>
+                                        <ComponentTextForm text_type="form_label" body={elmt.label}/>
                                         <ComponentBreakLine length={1}/>
                                         <div className='mt-2'/>
-                                        <GetAllTag url={elmt.url} cls={elmt.class} func={elmt.handleChange}/>
+                                        <ComponentGetAllTag url={elmt.url} cls={elmt.class} func={elmt.handleChange}/>
                                         <ComponentBreakLine length={2}/>
                                     </div>
                                 )

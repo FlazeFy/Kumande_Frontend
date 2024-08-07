@@ -1,11 +1,11 @@
 import * as React from "react"
 import { useState, useEffect } from "react"
-import ComponentLeftNavbarToggle from "../../../components/bars/navbartoggle"
 import { getLocal } from "../../../modules/storages/local"
 import Swal from 'sweetalert2'
-import GetConsumeBox from "../../../components/containers/consume_box"
 import GetSimilarConsume from "./usecases/get_similar_consume"
 import ComponentLeftNavbar from "../../../organisms/left_navbar"
+import ComponentContainerConsume from "../../../organisms/container_consume"
+import ComponentLeftNavbarToggle from "../../../atoms/navbar_toggle"
 
 export default function ConsumeDetail({ params }) {
   //Initial variable
@@ -52,9 +52,9 @@ export default function ConsumeDetail({ params }) {
     return <div>Error: {error.message}</div>
   } else if (!isLoaded) {
       return (
-          <div>
-              <h5 className='text-center text-white mt-2 fst-italic'>Loading...</h5>
-          </div>
+        <div>
+            <h5 className='text-center text-white mt-2 fst-italic'>Loading...</h5>
+        </div>
       )
   } else {
     const date = new Date(item.created_at)
@@ -68,7 +68,7 @@ export default function ConsumeDetail({ params }) {
           <div id="content" className="p-4 p-md-5">
             <ComponentLeftNavbarToggle/>
             <div id="content-body">
-              <GetConsumeBox fetchConsume={fetchConsume} ctx="consume_detail" items={item} type="detail"/>
+              <ComponentContainerConsume fetchConsume={fetchConsume} ctx="consume_detail" items={item} type="detail"/>
               <GetSimilarConsume ctx={`similar_consume`} provide={item.consume_detail[0].provide} main_ing={item.consume_detail[0].main_ing} 
                 consume_from={item.consume_from} consume_type={item.consume_type} month={month} year={year} slug={item.slug_name}/>
             </div>

@@ -1,13 +1,13 @@
 import controls from './controls.module.css'
 
 // Toast
-import CustomToast from "../modals/toast"
+import ComponentCustomToast from "../molecules/container_toast"
 import { toast } from 'react-toastify'
 
-export default function GetOrdering({ctx}) {
+export default function ComponentOrdering({ctx}) {
     function navigate(ctx, ord){
         sessionStorage.setItem(`Table_order_${ctx}`, ord)
-        toast.success(<CustomToast msg={ctx + " filtered"} />)
+        toast.success(<ComponentCustomToast msg={ctx + " filtered"} />)
     }
 
     return (

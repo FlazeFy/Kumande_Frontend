@@ -1,12 +1,10 @@
 import React from 'react'
 import { useState, useEffect } from "react"
-import ComponentBreakLine from '../../atoms/breakline'
+import ComponentBreakLine from '../atoms/breakline'
+import ComponentTextForm from '../atoms/text_form'
+import { getLocal } from '../modules/storages/local'
 
-// Modules
-import { getLocal } from '../../modules/storages/local'
-import GetLabel from '../labels/label'
-
-export default function GetAllTag({url, cls, func}) {
+export default function ComponentGetAllTag({url, cls, func}) {
     //Initial variable
     const [error, setError] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)
@@ -87,7 +85,7 @@ export default function GetAllTag({url, cls, func}) {
                     })
                 }
                 <ComponentBreakLine length={2}/>
-                <GetLabel title="Selected Tag" type="input"/>
+                <ComponentTextForm text_type="form_label" body="Selected Tag"/>
                 <ComponentBreakLine length={1}/>
                 <div className="mt-2"/>
                 {selectedTag}
