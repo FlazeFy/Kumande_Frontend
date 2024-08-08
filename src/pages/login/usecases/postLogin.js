@@ -112,8 +112,8 @@ export default function PostLogin() {
     return (
         <div className='login-box grid-border' style={{width:"720px", display:"block", marginInline:"auto"}}> 
             <div className='row'>
-                <div className='col'>
-                    <h4 className='text-white'>Make food scheduling, analyze it, tracking, and choose your meals for tommorow</h4>
+                <div className='col text-white'>
+                    <h4 className=''>Make food scheduling, analyze it, tracking, and choose your meals for tommorow</h4>
                     <ComponentForm type={"single-line"} props={builder} />
                 </div>
                 <div className='col'>

@@ -75,7 +75,7 @@ export default function ComponentForm({type, props}) {
                                 return (
                                     <div className='col-lg-12 col-md-12 col-sm-12 text-start mb-3' key={idx}>
                                         <ComponentTextForm text_type="form_label" body={elmt.label}/>
-                                        <ComponentBreakLine length={2}/>
+                                        <ComponentBreakLine length={1}/>
                                         <input className="form-control" type="file" onChange={elmt.handleChange} /> 
                                         <ComponentTextForm text_type="form_danger" body={elmt.errorMsg}/>
                                     </div>

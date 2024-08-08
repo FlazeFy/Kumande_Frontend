@@ -14,7 +14,6 @@ label.input{
     font-size: var(--textLG);
     margin-bottom: 2px;
     font-weight: 500;
-    color: var(--whiteColor);
 }
 label.error{
     font-size: var(--textXSM);

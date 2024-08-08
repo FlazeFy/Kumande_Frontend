@@ -12,7 +12,7 @@ export default function ComponentModal(props){
     return (
         <>
             {
-                props.button_template ?? <ComponentButton button_type="modal" icon={<FontAwesomeIcon icon={faXmark} size="2xl" className='me-2'/>} text="Sign Out" class="bg-danger" target={props.id} button_name={props.title}/>
+                props.button_template ?? <ComponentButton button_type="modal" icon={props.button_icon} text="Sign Out" class={props.button_class} target={props.id} button_name={props.title}/>
             }
             <div className="modal fade" id={props.id} aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">

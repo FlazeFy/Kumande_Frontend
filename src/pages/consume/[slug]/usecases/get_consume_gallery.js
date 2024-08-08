@@ -7,6 +7,10 @@ import ComponentText from '../../../../atoms/text'
 import ComponentTextMessageImageNoData from '../../../../molecules/text_message_image_no_data'
 import ComponentContainerGalleryManage from '../../../../organisms/container_gallery_manage'
 import ComponentBreakLine from '../../../../atoms/breakline'
+import ComponentModal from '../../../../molecules/modal'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import PostGallery from './post_gallery'
 
 export default function GetConsumeGallery(props) {
     //Initial variable
@@ -23,11 +27,18 @@ export default function GetConsumeGallery(props) {
                 'Content-Type': 'application/json'
             }
         })
-        .then(res => res.json())
-            .then(
-            (result) => {
+        .then(res => {
+            return res.json().then(result => ({
+                status: res.status,
+                body: result
+            }))
+        })
+        .then(
+            ({ status, body }) => {
                 setIsLoaded(true)
-                setItems(result.data.data)
+                if (status == 200) {
+                    setItems(body.data.data)
+                }
             },
             (error) => {
                 Swal.fire({
@@ -37,7 +48,7 @@ export default function GetConsumeGallery(props) {
                 })
             }
         )
-    },[])
+    }, [])
 
     if (error) {
         return <div>Error: {error.message}</div>
@@ -64,10 +75,19 @@ export default function GetConsumeGallery(props) {
                             }
                         </div>
                     :
-                        <>
+                        <div className='text-center'>
                             <ComponentTextMessageImageNoData is_with_image={true} image_url={'/icons/Gallery.png'} body="No Gallery Found"/>
-                            
-                        </>
+                            <ComponentBreakLine length={1}/>
+                            <ComponentModal id={`addGallery`} title={`Add Gallery`} button_class="bgd-primary p-2 text-white"
+                                button_icon={<FontAwesomeIcon icon={faPlus} size="xl" className='me-2'/>}
+                                body={
+                                    <>
+                                        <PostGallery consume_id={props.id}/>
+                                    </>
+                                }
+                            />
+                            <ComponentBreakLine length={2}/>
+                        </div>
                 }
             </div>
         )
