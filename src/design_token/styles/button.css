@@ -130,3 +130,15 @@
 .btn-consume-schedule:hover {
     transform: scale(1.05);
 }
+
+/* Hovered button */
+.hovered-btn {
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s; 
+}
+
+.hovered-btn:hover {
+    transform: scale(1.025);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}

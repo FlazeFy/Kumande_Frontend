@@ -11,7 +11,9 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 export default function ComponentModal(props){
     return (
         <>
-            <ComponentButton button_type="modal" icon={<FontAwesomeIcon icon={faXmark} size="2xl" className='me-2'/>} text="Sign Out" class="bg-danger" target={props.id} button_name={props.title}/>
+            {
+                props.button_template ?? <ComponentButton button_type="modal" icon={<FontAwesomeIcon icon={faXmark} size="2xl" className='me-2'/>} text="Sign Out" class="bg-danger" target={props.id} button_name={props.title}/>
+            }
             <div className="modal fade" id={props.id} aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">

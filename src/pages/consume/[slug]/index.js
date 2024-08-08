@@ -6,6 +6,7 @@ import GetSimilarConsume from "./usecases/get_similar_consume"
 import ComponentLeftNavbar from "../../../organisms/left_navbar"
 import ComponentContainerConsume from "../../../organisms/container_consume"
 import ComponentLeftNavbarToggle from "../../../atoms/navbar_toggle"
+import GetConsumeGallery from "./usecases/get_consume_gallery"
 
 export default function ConsumeDetail({ params }) {
   //Initial variable
@@ -69,6 +70,7 @@ export default function ConsumeDetail({ params }) {
             <ComponentLeftNavbarToggle/>
             <div id="content-body">
               <ComponentContainerConsume fetchConsume={fetchConsume} ctx="consume_detail" items={item} type="detail"/>
+              <GetConsumeGallery slug={item.slug_name} consume_name={item.consume_name}/>
               <GetSimilarConsume ctx={`similar_consume`} provide={item.consume_detail[0].provide} main_ing={item.consume_detail[0].main_ing} 
                 consume_from={item.consume_from} consume_type={item.consume_type} month={month} year={year} slug={item.slug_name}/>
             </div>
