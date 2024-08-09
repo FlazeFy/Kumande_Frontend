@@ -8,6 +8,7 @@ import Axios from 'axios'
 import { faEdit, faFloppyDisk, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { getLocal } from '../../../../modules/storages/local'
+import DeletePayment from './delete_payment'
 
 export default function ManagePayment(props) {
     //Initial variable
@@ -118,6 +119,8 @@ export default function ManagePayment(props) {
                                 <label htmlFor="floatingInput">Price</label>
                             </div>
                             <button className='w-100 btn btn-success mt-2 py-2' data-bs-dismiss="modal" onClick={handleUpdate}><FontAwesomeIcon icon={faFloppyDisk} /> Save Changes</button>
+                            <hr></hr>
+                            <DeletePayment id={props.dt.id_payment} fetchConsume={props.fetchConsume}/>
                         </div>
                     </div>
                 </div>
