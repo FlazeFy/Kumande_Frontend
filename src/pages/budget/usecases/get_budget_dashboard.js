@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Swal from 'sweetalert2'
 import { add_firestore } from '../../../modules/firebase/command'
 import ComponentRadialChart from '../../../molecules/radial_chart'
+import DeleteBudget from './delete_bugdet'
 
 export default function GetBudgetDashboard({ctx}) {
     //Initial variable
@@ -23,8 +24,9 @@ export default function GetBudgetDashboard({ctx}) {
     const [budgetTotal, setBudgetTotal] = useState("")
     const [month, setMonth] = useState("")
     const [year, setYear] = useState("")
-
+    
     const [monthlyItem, setMonthlyItem] = useState(null)
+    const [budgetId, setBudgetId] = useState(null)
     const [monthlyItemMonth, setMonthlyItemMonth] = useState(null)
     const [monthlyItemYear, setMonthlyItemYear] = useState(null)
     const [monthlyItemCurrentPage, setMonthlyItemCurrentPage] = useState(1) 
@@ -35,6 +37,10 @@ export default function GetBudgetDashboard({ctx}) {
     const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Des']
     
     useEffect(() => {
+        fetchData()
+    },[])
+
+    const fetchData = () => {
         fetch(`http://127.0.0.1:8000/api/v1/budget/dashboard`, {
             method: 'POST',
             headers: {
@@ -61,7 +67,7 @@ export default function GetBudgetDashboard({ctx}) {
                 }
             }
         )
-    },[])
+    }
 
     // Services
     const handleSubmit = async (e) => {
@@ -105,8 +111,9 @@ export default function GetBudgetDashboard({ctx}) {
         }
     }
 
-    const fetchMontlyPayment = async (month, year, page) => {
+    const fetchMontlyPayment = async (month, year, page, id) => {
         try {
+            setBudgetId(id)
             setMonthlyItemMonth(month)
             setMonthlyItemYear(year)
 
@@ -179,7 +186,7 @@ export default function GetBudgetDashboard({ctx}) {
 
                                     return(
                                         <div className='col-lg-3 col-md-4 col-sm-12 p-2'>
-                                            <button className='btn container p-3 text-center shadow budget-plan-section' data-bs-toggle="modal" data-bs-target={"#paymentMonthlyModal"} onClick={(e)=>fetchMontlyPayment(dt.month, dt.year, 1)} title={'See history payment in '+dt.month+' '+dt.year}>
+                                            <button className='btn container p-3 text-center shadow budget-plan-section' data-bs-toggle="modal" data-bs-target={"#paymentMonthlyModal"} onClick={(e)=>fetchMontlyPayment(dt.month, dt.year, 1, dt.id)} title={'See history payment in '+dt.month+' '+dt.year}>
                                                 <h4 className='mb-0 budget-plan-title'>Budget in {dt.month} {dt.year}</h4>
                                                 <p className='mb-0 text-secondary' style={{fontSize:"var(--textMD)"}}>
                                                     {dt.payment_history.total_item === 0 ? (
@@ -260,6 +267,10 @@ export default function GetBudgetDashboard({ctx}) {
                                                 :
                                                     <></>
                                             }
+                                            <hr></hr>
+                                            <span className='d-flex justify-content-start mt-3'>
+                                                <DeleteBudget id={budgetId} fetchData={fetchData}/>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>

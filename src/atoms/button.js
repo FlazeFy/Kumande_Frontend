@@ -16,6 +16,7 @@ import { isMobile } from "../modules/helpers/validator";
  * <ComponentButton button_name={200} button_type='calorie'/>
  * <ComponentButton button_name='KFC' button_type='provide'/>
  * <ComponentButton button_name='Detail' id="detail-btn" url="/detail" button_type='primary'/>
+ * <ComponentButton button_name='Delete' onclick="action()" button_type='danger'/>
  * ```
  * @param {Object} props - The props object
  * @param {string} props.button_type - Type of component to render
@@ -24,6 +25,7 @@ import { isMobile } from "../modules/helpers/validator";
  * @param {string} props.button_name - Text / Title of the button
  * @param {string} props.target- ID of the modal element to call
  * @param {string} props.id- ID of the button
+ * @param {Function} props.onclick- Function to run on click
  * 
  * @returns {React.Element}
  */
@@ -67,5 +69,7 @@ export default function ComponentButton(props){
         )
     } else if(props.button_type == 'primary'){
         return <a className='btn btn-primary rounded px-3 py-2' id={props.id} href={props.url}>{props.button_name}</a>
+    } else if(props.button_type == 'danger'){
+        return <a className='btn btn-danger rounded px-3 py-2' onClick={props.onclick}>{props.button_name}</a>
     }
 }
