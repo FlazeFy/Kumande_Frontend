@@ -3,6 +3,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import React from "react"
 import { ucFirstChar } from "../modules/helpers/converter"
 
+/**
+ * This component renders a text with icon
+ *
+ * @component
+ * @example
+ * ```jsx
+ * <ComponentTextIcon text_type='Food' body='Fried Rice'/>
+ * ```
+ * @param {Object} props - The props object
+ * @param {string} props.text_type - Type of component to render
+ * @param {string} props.body - Text to show
+ * 
+ * @returns {React.Element}
+ */
 export default function ComponentTextIcon(props){
     const defaultStyle = {
         consume: {
