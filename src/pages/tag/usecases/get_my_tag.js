@@ -81,7 +81,7 @@ export default function GetMyTag({ctx}) {
         return (
             <div className='container shadow p-3'> 
                 <h4>My Tag</h4>
-                <table class="table table-bordered table-click">
+                <table className="table table-bordered table-click">
                     <thead>
                         <tr>
                             <th scope="col">Tag Name</th>

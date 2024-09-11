@@ -19,9 +19,9 @@ export default function ComponentContainerTag(props) {
             </div>
             {
                 props.list_tag != null ?
-                    props.list_tag.map((dt, tidx) => {
+                    props.list_tag.map((dt, idx) => {
                         return (
-                            <ComponentButton button_type='tag' button_name={dt.tag_name}/>
+                            <ComponentButton key={`list_tag_btn_${idx}`} button_type='tag' button_name={dt.tag_name}/>
                         )
                     })
                 :   

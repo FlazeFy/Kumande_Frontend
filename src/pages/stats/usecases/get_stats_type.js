@@ -18,7 +18,7 @@ export default function GetStatsType() {
                 <option value="health" selected={selectedStatsType === 'health' ? true : false}>Health</option>
                 <option value="budget" selected={selectedStatsType === 'budget' ? true : false}>Bugdet</option>
             </select>
-            <label for="floatingSelect">Select Context</label>
+            <label htmlFor="floatingSelect">Select Context</label>
         </div>
     )
 }

@@ -315,7 +315,7 @@ export default function GetManageBody({ctx}) {
                                                 {
                                                     itemsBodyInfo.map((dt, idx)=>{
                                                         return (
-                                                            <tr>
+                                                            <tr key={`tbody_body_data_${idx}`}>
                                                                 <td>
                                                                     {
                                                                         !showChecboxBodyInfo ?
@@ -398,7 +398,7 @@ export default function GetManageBody({ctx}) {
                                                 {
                                                     itemsCalorie.map((dt, idx)=>{
                                                         return (
-                                                            <tr>
+                                                            <tr key={`tbody_calorie_${idx}`}>
                                                                 <td>
                                                                     {
                                                                         !showChecboxCal ?

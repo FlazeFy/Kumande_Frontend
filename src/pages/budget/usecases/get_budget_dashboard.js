@@ -185,7 +185,7 @@ export default function GetBudgetDashboard({ctx}) {
                                     }
 
                                     return(
-                                        <div className='col-lg-3 col-md-4 col-sm-12 p-2'>
+                                        <div className='col-lg-3 col-md-4 col-sm-12 p-2' key={`budget_dashboard_${idx}`}>
                                             <button className='btn container p-3 text-center shadow budget-plan-section' data-bs-toggle="modal" data-bs-target={"#paymentMonthlyModal"} onClick={(e)=>fetchMontlyPayment(dt.month, dt.year, 1, dt.id)} title={'See history payment in '+dt.month+' '+dt.year}>
                                                 <h4 className='mb-0 budget-plan-title'>Budget in {dt.month} {dt.year}</h4>
                                                 <p className='mb-0 text-secondary' style={{fontSize:"var(--textMD)"}}>
@@ -237,7 +237,7 @@ export default function GetBudgetDashboard({ctx}) {
                                                     {
                                                         monthlyItem && monthlyItem.map((dt, idx) => {
                                                             return (
-                                                                <tr key={idx} className="payment-detail">
+                                                                <tr key={`tbody_payment_${idx}`} className="payment-detail">
                                                                     <td>{dt.consume_name}</td>
                                                                     <td>{dt.consume_type}</td>
                                                                     <td>{dt.payment_method}</td>
@@ -310,11 +310,11 @@ export default function GetBudgetDashboard({ctx}) {
                                     <div className='row'>
                                         <div className='col'>
                                             <div className="form-floating mb-3">
-                                                <select className="form-select" id="floatingSelect" onChange={(e)=>setYear(e.target.value)} aria-label="Floating label select example">
+                                                <select className="form-select" defaultValue={new Date().getFullYear()} id="floatingSelect" onChange={(e)=>setYear(e.target.value)} aria-label="Floating label select example">
                                                     {
                                                         years.map((dt, idx) => {
                                                             return (
-                                                                <option value={dt} selected={idx == 1 ? true : false}>{dt}</option>
+                                                                <option value={dt} key={`year_${dt}`}>{dt}</option>
                                                             )
                                                         })
                                                     }
@@ -328,7 +328,7 @@ export default function GetBudgetDashboard({ctx}) {
                                                     {
                                                         months.map((dt, idx)=>{
                                                             return (
-                                                                <option value={dt}>{dt}</option>
+                                                                <option value={dt} key={`month_${dt}`}>{dt}</option>
                                                             )
                                                         })
                                                     }
@@ -340,8 +340,8 @@ export default function GetBudgetDashboard({ctx}) {
                                     <div className='row'>
                                         <div className='col'>
                                             <div className="form-floating">
-                                                <input type="number" class="form-control" ref={budgetAmmount} onChange={(e)=>setBudgetTotal(e.target.value)} min={1} id="floatingInput"></input>
-                                                <label for="floatingInput">Budget (Rp.)</label>
+                                                <input type="number" className="form-control" ref={budgetAmmount} onChange={(e)=>setBudgetTotal(e.target.value)} min={1} id="floatingInput"></input>
+                                                <label htmlFor="floatingInput">Budget (Rp.)</label>
                                             </div>
                                         </div>
                                     </div>

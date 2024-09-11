@@ -55,7 +55,6 @@ export default function GetDailyCalendar({ctx}) {
 
     const handleMonthChange = (info) => {
         setCurrentMonth(info.view.currentStart.getMonth() + 1)
-        console.log(info.view.currentStart.getMonth() + 1)
         setCurrentYear(info.view.currentStart.getFullYear())
     }
 

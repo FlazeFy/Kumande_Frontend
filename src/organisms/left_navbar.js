@@ -100,9 +100,9 @@ export default function ComponentLeftNavbar(props) {
                 {
                     list_menu.map((dt, idx)=>{
                         if('url' in dt){
-                            return <ComponentButton url={dt.url} icon={dt.icon} button_name={dt.button_name} button_type="menu" active={props.active}/>
+                            return <ComponentButton key={`left_bar_${idx}`} url={dt.url} icon={dt.icon} button_name={dt.button_name} button_type="menu" active={props.active}/>
                         } else if('label_menu' in dt) {
-                            return dt.label_menu
+                            return <div key={`left_bar_${idx}`}>{dt.label_menu}</div>
                         }
                     })
                 }                

@@ -19,8 +19,8 @@ export default function ComponentBreakLine(props) {
     return (
         <>
             {
-                builder.map((_) => {
-                    return <br></br>
+                builder.map((_,idx) => {
+                    return <br key={`br_${idx}`}></br>
                 })
             }
         </>

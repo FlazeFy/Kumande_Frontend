@@ -156,7 +156,6 @@ export default function PostConsume() {
                 }
             });
         } 
-        console.log(selectedTag)
         setSelectedTag(selectedTag)
     }
 

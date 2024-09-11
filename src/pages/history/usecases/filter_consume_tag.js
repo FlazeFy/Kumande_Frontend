@@ -76,19 +76,19 @@ export default function FilterConsumeTag({ctx}) {
                         <p className='tag-filter-holder'>
                             {
                                 tagSelected != null && tagSelected.length > 0 ?
-                                    tagSelected.map(element => {
+                                    tagSelected.map((element,idx) => {
                                             return (
-                                                <a>{element.tag_name}</a>
+                                                <a key={`tag_name_${idx}`}>{element.tag_name}</a>
                                             );
                                         })
                                     :
-                                        <div className={is_mobile ?"alert alert-warning mt-2 mb-0 w-100":"alert alert-warning mt-2 mb-0"} role="alert">
+                                        <span className={is_mobile ?"alert alert-warning mt-2 mb-0 w-100":"alert alert-warning mt-2 mb-0"} role="alert">
                                             No tag has been selected
-                                        </div>
+                                        </span>
                             }
                         </p>
                     </div>
-                    <div className="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">
                         <div className="modal-header">
@@ -111,14 +111,14 @@ export default function FilterConsumeTag({ctx}) {
                                             <></>                                        
 
                                         return (
-                                            <div className="form-chec d-inline-block me-2">
+                                            <div className="form-chec d-inline-block me-2" key={`check_${idx}`}>
                                                 <input className="form-check-input tags_element" type="checkbox" defaultChecked={found} onChange={handleCheckboxChange} value={
                                                     JSON.stringify({
                                                         tag_slug:elmt.tag_slug,
                                                         tag_name:elmt.tag_name
                                                     })
                                                 }></input>
-                                                <label className="form-check-label ms-1" for="flexCheckDefault">
+                                                <label className="form-check-label ms-1" htmlFor="flexCheckDefault">
                                                     {elmt.tag_name}
                                                 </label>
                                             </div>

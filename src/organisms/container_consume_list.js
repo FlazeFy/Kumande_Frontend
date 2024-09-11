@@ -17,14 +17,14 @@ export default function ComponentContainerConsumeList(props) {
                 props.list_consume != null ?
                     props.list_consume.map((dt, idx) => {
                         return (
-                            <button className='btn btn-primary px-3 py-2 me-1 mb-2 text-start' style={{fontSize:"var(--textXMD)"}}>
+                            <div className='btn btn-primary px-3 py-2 me-1 mb-2 text-start' key={`container_consume_${idx}`} style={{fontSize:"var(--textXMD)"}}>
                                 <ComponentTextIcon text_type={dt.consume_type} body={dt.consume_name}/>
                                 <div>
                                     <a className='btn btn-danger p-1 rounded-pill px-2 me-2' style={{fontSize:"var(--textMD)"}}>{dt.consume_from}</a>
                                     <a className='btn btn-success p-1 rounded-pill px-2 me-2' style={{fontSize:"var(--textMD)"}}>{dt.provide}</a>
                                     <a className='btn btn-warning p-1 rounded-pill px-2' style={{fontSize:"var(--textMD)"}}>{dt.calorie} Cal</a>
                                 </div>
-                            </button>
+                            </div>
                         )
                     })
                 :   

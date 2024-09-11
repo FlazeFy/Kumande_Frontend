@@ -75,7 +75,7 @@ export default function GetListDashboard({ctx}) {
                             {
                                 items.map((dt, idx) => {
                                     return(
-                                        <div className='col-lg-6 col-md-6 col-sm-12 py-2 px-3'>
+                                        <div className='col-lg-6 col-md-6 col-sm-12 py-2 px-3' key={`list_dashboard_${idx}`}>
                                             <button className='btn container p-3 text-start shadow' data-bs-toggle="modal" data-bs-target={"#listConsumeModal"} onClick={(e) => handleListData(dt.id)}>
                                                 <div className='row'>
                                                     <div className='col'>

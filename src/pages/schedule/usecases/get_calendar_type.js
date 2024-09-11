@@ -12,12 +12,12 @@ export default function GetCalendarType() {
 
     return (
         <div className="form-floating mb-3">
-            <select class="form-select" id="floatingSelect" onChange={(e) => toogleStats(e.target.value)} aria-label="Floating label select example">
-                <option value="total_spending" selected={selectedCalendarType === 'total_spending' ? true : false}>Total Spending</option>
-                <option value="total_calorie" selected={selectedCalendarType === 'total_calorie' ? true : false}>Total Calorie</option>
-                <option value="all_consume" selected={selectedCalendarType === 'all_consume' ? true : false}>All Consume</option>
+            <select className="form-select" defaultValue={selectedCalendarType} id="floatingSelect" onChange={(e) => toogleStats(e.target.value)} aria-label="Floating label select example">
+                <option value="total_spending">Total Spending</option>
+                <option value="total_calorie">Total Calorie</option>
+                <option value="all_consume">All Consume</option>
             </select>
-            <label for="floatingSelect">Select Context</label>
+            <label htmlFor="floatingSelect">Select Context</label>
         </div>
     )
 }

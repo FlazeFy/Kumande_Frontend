@@ -106,7 +106,7 @@ export default function ComponentContainerConsume({items, type, func, fetchConsu
                                     {
                                         items['consume_tag'] ?
                                             items['consume_tag'].map((tag, idx) => {
-                                                return <ComponentButton button_type="tag" button_name={tag['tag_name']}/>
+                                                return <ComponentButton key={`tag_button_${idx}`} button_type="tag" button_name={tag['tag_name']}/>
                                             })
                                         :
                                             <ComponentTextMessageNoData is_with_image={false}  message="No Tag found"/>
@@ -148,7 +148,7 @@ export default function ComponentContainerConsume({items, type, func, fetchConsu
                                                     {
                                                         items['payment'].map((item, idx) => {
                                                             return (
-                                                                <tr>
+                                                                <tr key={`tbody_payment_${idx}`}>
                                                                     <td>{item.payment_method}</td>
                                                                     <td>Rp. {item.payment_price.toLocaleString()},00</td>
                                                                     <td style={{fontSize:"var(--textMD)"}}>
@@ -195,7 +195,7 @@ export default function ComponentContainerConsume({items, type, func, fetchConsu
                                                     {
                                                         items['schedule'].map((item, idx) => {
                                                             return (
-                                                                <tr>
+                                                                <tr key={`tbody_schedule_${idx}`}>
                                                                     <td>{item.schedule_time[0].day}</td>
                                                                     <td>{item.schedule_time[0].category}</td>
                                                                     <td>{item.schedule_time[0].time}</td>

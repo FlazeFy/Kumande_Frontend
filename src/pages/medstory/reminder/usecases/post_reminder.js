@@ -396,16 +396,16 @@ export default function PostListReminder({fetchReminders}) {
                                         <label htmlFor="floatingTextarea">Message</label>
                                     </div>
                                     <div className="form-floating mb-3">
-                                        <select className="form-select" id="floatingSelect" onChange={(e) => changeReminderType(e.target.value)} aria-label="Floating label select example">
-                                            <option value="Every Year" selected>Every Year</option>
+                                        <select className="form-select"  id="floatingSelect" defaultValue='Every Year' onChange={(e) => changeReminderType(e.target.value)} aria-label="Floating label select example">
+                                            <option value="Every Year">Every Year</option>
                                             <option value="Every Month">Every Month</option>
                                             <option value="Every Day">Every Day</option>
                                         </select>
                                         <label htmlFor="floatingSelect">Type</label>
                                     </div>
                                     <div className="form-floating mb-3">
-                                        <select className="form-select" id="floatingSelect" onChange={(e) => changeReminderAttachment(e.target.value)} aria-label="Floating label select example">
-                                            <option value="none" selected>None</option>
+                                        <select className="form-select" defaultValue='none' id="floatingSelect" onChange={(e) => changeReminderAttachment(e.target.value)} aria-label="Floating label select example">
+                                            <option value="none">None</option>
                                             <option value="location">Location</option>
                                             <option value="url">URL</option>
                                             <option value="image">Image</option>

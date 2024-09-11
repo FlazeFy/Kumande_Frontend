@@ -183,7 +183,6 @@ export default function GetMySchedule({ctx}) {
 
     // Services
     const handleSubmit = async (e) => {
-        console.log(selectedConsume[0])
         const scheduleTimeFull = [{
             day: scheduleDay,
             category: scheduleCategory,
@@ -277,7 +276,7 @@ export default function GetMySchedule({ctx}) {
         return (
             <div>
                 <h3 className='m-2 text-primary'>{getCleanTitleFromCtx(ucFirstWord(ctx))}</h3>
-                <table class="table table-bordered table-click">
+                <table className="table table-bordered table-click">
                     <thead>
                         <tr>
                             <th scope="col">Day</th>
@@ -293,7 +292,7 @@ export default function GetMySchedule({ctx}) {
                                 i++
 
                                 return (
-                                    <tr key={idx}>
+                                    <tr key={`days_tbody_${idx}`}>
                                         <td className={ i == 1 ? 'bg-success-light':''}>{dy}</td>
                                         {
                                             items != null ?
@@ -302,7 +301,7 @@ export default function GetMySchedule({ctx}) {
                                                         if (item['day'] === dy.slice(0, 3)) {
                                                             found = true
                                                             return (
-                                                                <>
+                                                                <React.Fragment key={`item_${idx}_${index}`}>
                                                                     <td className={ i == 1 ? 'bg-success-light p-0':''}>
                                                                         {
                                                                             item['time'] === 'Breakfast' ? 
@@ -327,7 +326,7 @@ export default function GetMySchedule({ctx}) {
                                                                                 <button className='cell-click' data-bs-toggle="modal" data-bs-target={"#scheduleTableEdit"} onClick={() => handleButtonClick(item['day'], 'Dinner', item['schedule_consume']) }>-</button>
                                                                         }
                                                                     </td>
-                                                                </>
+                                                                </React.Fragment>
                                                             );
                                                         }
                                                     }
@@ -412,7 +411,7 @@ export default function GetMySchedule({ctx}) {
                                                     {
                                                         itemsConsume.map((elmt, idx) => {
                                                             return (
-                                                                <div className='col-6 text-start'>
+                                                                <div className='col-6 text-start' key={`available_consume_${idx}`}>
                                                                     <ComponentContainerConsume type='mini' items={elmt} func={(e)=>selectConsume(elmt)}/>
                                                                 </div>
                                                             )
@@ -424,7 +423,7 @@ export default function GetMySchedule({ctx}) {
                                                             <div className='d-flex justify-content-start'>
                                                                 {
                                                                     Array.from({ length: availableConsumeMaxPage }, (v, i) => (
-                                                                        <button key={'page_'+i} onClick={() => getAvailableConsume(i+1)} className={availableConsumeCurrPage == i+1 ? 'btn btn-page active':'btn btn-page'}>{i+1}</button>
+                                                                        <button key={'page_ava_consume'+i} onClick={() => getAvailableConsume(i+1)} className={availableConsumeCurrPage == i+1 ? 'btn btn-page active':'btn btn-page'}>{i+1}</button>
                                                                     ))
                                                                 }
                                                             </div>

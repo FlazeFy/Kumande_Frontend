@@ -195,7 +195,7 @@ export default function GetAllergic({ctx}) {
                         itemsAllergic ?     
                             itemsAllergic.map((dt, idx) => {
                                 return (
-                                    <div className='col-12'>
+                                    <div className='col-12' key={`item_allergic_${idx}`}>
                                         <button className={dt.detected_on ? 'box-reminder':'box-reminder active'} data-bs-toggle="modal" data-bs-target={`#manageAllergic`} onClick={(e)=>openEditAllergicModal(dt)}
                                             title='Edit the Allergic'>
                                             <div style={{width:"40px"}} className="pt-2">
@@ -214,7 +214,7 @@ export default function GetAllergic({ctx}) {
                                                     {
                                                         dt.detected_on != null ?
                                                             dt.detected_on.map((ctx, cidx)=> {
-                                                                return <ComponentTextIcon text_type={ctx['consume_type']} body={ctx['consume_name']}/>
+                                                                return <ComponentTextIcon key={`consume_name_${cidx}`} text_type={ctx['consume_type']} body={ctx['consume_name']}/>
                                                             })
                                                         :
                                                             <p className='fst-italic text-success' style={{fontWeight:"600"}}>- All Consume is Safe -</p>

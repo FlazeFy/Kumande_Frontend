@@ -61,7 +61,7 @@ export default function GetTodaySchedule({ctx}) {
                             footer: `
                                 <div class="form-check d-block mx-auto mb-3" style="width:260px;">
                                     <input class="form-check-input" type="checkbox" value="" id="check_dont_remind">
-                                    <label class="form-check-label" for="flexCheckDefault">Don't remind me again for today</label>
+                                    <label class="form-check-label" htmlFor="flexCheckDefault">Don't remind me again for today</label>
                                 </div>
                                 <button id="btn_ok_reminder_schedule" class="swal2-confirm swal2-styled">Thanks!</button>
                                 <button id="btn_broadcast_remind" class="swal2-confirm swal2-styled">Send To My Social Media</button>

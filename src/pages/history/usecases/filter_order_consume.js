@@ -12,11 +12,11 @@ export default function FilterOrderConsume() {
 
     return (
         <div className="form-floating mb-3">
-            <select class="form-select" id="floatingSelect" onChange={(e) => toogle(e.target.value)} aria-label="Floating label select example">
-                <option value="desc" selected={selectedConsumeOrder === 'desc' ? true : false}>Descending</option>
-                <option value="asc" selected={selectedConsumeOrder === 'asc' ? true : false}>Ascending</option>
+            <select className="form-select" defaultValue={selectedConsumeOrder} id="floatingSelect" onChange={(e) => toogle(e.target.value)} aria-label="Floating label select example">
+                <option value="desc">Descending</option>
+                <option value="asc">Ascending</option>
             </select>
-            <label for="floatingSelect">Order By Date</label>
+            <label htmlFor="floatingSelect">Order By Date</label>
         </div>
     )
 }

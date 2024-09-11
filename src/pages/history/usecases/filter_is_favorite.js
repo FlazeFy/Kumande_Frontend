@@ -15,12 +15,12 @@ export default function FilterIsFavoriteConsume() {
 
     return (
         <div className={is_mobile ? "form-floating mb-3":"form-floating mb-3 ms-3"}>
-            <select class="form-select" id="floatingSelect" style={{minWidth:"150px"}} onChange={(e) => toogle(e.target.value)} aria-label="Floating label select example">
-                <option value="all" selected={selectedIsFav === 'all' ? true : false}>All</option>
-                <option value="1" selected={selectedIsFav === '1' ? true : false}>Yes</option>
-                <option value="0" selected={selectedIsFav === '0' ? true : false}>No</option>
+            <select className="form-select" defaultValue={selectedIsFav} id="floatingSelect" style={{minWidth:"150px"}} onChange={(e) => toogle(e.target.value)} aria-label="Floating label select example">
+                <option value="all">All</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
             </select>
-            <label for="floatingSelect">Filter By Favorite</label>
+            <label htmlFor="floatingSelect">Filter By Favorite</label>
         </div>
     )
 }

@@ -112,23 +112,23 @@ export default function GetMyProfile({ctx}) {
                 <h2>My Data</h2>
                 <div className="form-floating mb-3">
                     <input type="text" className="form-control" id="floatingInput" defaultValue={item[0].fullname} onChange={(e)=>setFullname(e.target.value)}></input>
-                    <label for="floatingInput">Fullname</label>
+                    <label htmlFor="floatingInput">Fullname</label>
                 </div>
                 <div className="form-floating mb-3">
                     <input type="email" className="form-control" id="floatingInput" defaultValue={item[0].email} onChange={(e)=>setEmail(e.target.value)}></input>
-                    <label for="floatingInput">Email</label>
+                    <label htmlFor="floatingInput">Email</label>
                 </div>
                 <div className="form-floating mb-1">
                     <input type="date" className="form-control" id="floatingInput" defaultValue={item[0].born_at} onChange={(e)=>setBornAt(e.target.value)}></input>
-                    <label for="floatingInput">Date Born</label>
+                    <label htmlFor="floatingInput">Date Born</label>
                 </div>
                 <p className='mb-2 text-secondary fst-italic' style={{fontSize:"var(--textMD)"}} id="age_user">Your age is <span>{getAge(item[0].born_at)}</span></p>
                 <div className="form-floating mb-3">
-                    <select className="form-select" id="floatingSelectGrid" onChange={(e)=>setGender(e.target.value)} aria-label="Floating label select example">
-                        <option value="male" selected={item[0].gender == 'male' ? true : false}>Male</option>
-                        <option value="female" selected={item[0].gender == 'female' ? true : false}>Female</option>
+                    <select className="form-select" defaultValue={item[0].gender} id="floatingSelectGrid" onChange={(e)=>setGender(e.target.value)} aria-label="Floating label select example">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
                     </select>
-                    <label for="floatingSelectGrid">Gender</label>
+                    <label htmlFor="floatingSelectGrid">Gender</label>
                 </div>
                 <div className='d-flex justify-content-between'>
                     <button className='btn btn-success' onClick={handleSubmit}>Save Changes</button>

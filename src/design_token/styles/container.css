@@ -77,7 +77,7 @@
 .box-reminder.active div:first-child path {
     color: var(--successBG);
 }
-.box-reminder .context, .box-reminder button{
+.box-reminder .context, .box-reminder .btn{
     font-size: var(--textMD) !important;
 }
 .box-reminder:hover {

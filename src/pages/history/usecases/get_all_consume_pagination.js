@@ -121,16 +121,16 @@ export default function GetAllConsumePagination({ctx}) {
                                 if(date_before == "" || date_before != curr_date){
                                     date_before = curr_date
                                     return (
-                                        <>
+                                        <div key ={idx}>
                                             <div className='text-center'>
                                                 <h6 style={{fontSize:"var(--textMD)"}} className='bgd-primary text-white p-2 mb-3 rounded d-inline-block mx-auto'>{curr_date}</h6>
                                             </div>
                                             <ComponentContainerConsume items={elmt} type="header"/>
-                                        </>
+                                        </div>
                                     )
                                 } else {
                                     return (
-                                        <ComponentContainerConsume items={elmt} type="header"/>
+                                        <ComponentContainerConsume key ={idx} items={elmt} type="header"/>
                                     )
                                 }
                             })

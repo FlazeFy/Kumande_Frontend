@@ -113,7 +113,7 @@ export default function GetListReminder({ctx}) {
                     {
                         items.map((dt, idx)=> {
                             return (
-                                <div className='col-lg-6 col-md-6 col-sm-12'>
+                                <div className='col-lg-6 col-md-6 col-sm-12' key={`reminder_item_${idx}`}>
                                     <button className={dt.id_rel_reminder != null ? 'box-reminder active':'box-reminder'} onClick={dt.id_rel_reminder != null ? (e)=>handleClick('delete',dt.id_rel_reminder):(e)=>handleClick('post',dt.reminder_id)}
                                         title={dt.id_rel_reminder != null ? 'Turn off the reminder':'Turn on the reminder'}>
                                         <div style={{width:"40px"}} className="pt-2">
@@ -129,9 +129,9 @@ export default function GetListReminder({ctx}) {
                                                     dt.reminder_context != null ?
                                                         dt.reminder_context.map((ctx, cidx)=> {
                                                             return (
-                                                                <button className='btn btn-primary rounded-pill ms-1 mb-2'>
+                                                                <div className='btn btn-primary rounded-pill ms-1 mb-2' key={`reminder_context_${cidx}`}>
                                                                     <FontAwesomeIcon icon={faBell}/> {ctx.time}
-                                                                </button>
+                                                                </div>
                                                             )
                                                         })
                                                     :
@@ -141,10 +141,10 @@ export default function GetListReminder({ctx}) {
                                                     dt.reminder_attachment != null ?
                                                         dt.reminder_attachment.map((ctx, cidx)=> {
                                                             return (
-                                                                <button className='btn btn-success rounded-pill ms-1 mb-2'>
+                                                                <div className='btn btn-success rounded-pill ms-1 mb-2' key={`reminder_attachment_${cidx}`}>
                                                                     <FontAwesomeIcon className='me-1' icon={ctx.attachment_type == 'location'? faLocationDot : ctx.attachment_type == 'url' ? faLink : ctx.attachment_type == 'image' ? faImage : ""}/> 
                                                                         {ctx.attachment_type == 'location' ? ctx.attachment_name : ctx.attachment_type == 'url' || 'image' ? `Click to open the ${ctx.attachment_type}` : ""}
-                                                                </button>
+                                                                </div>
                                                             )
                                                         })
                                                     :
