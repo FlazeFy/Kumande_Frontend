@@ -2,7 +2,9 @@ import React from 'react'
 import { useState, useEffect } from "react"
 import ComponentBreakLine from '../atoms/breakline'
 import ComponentTextForm from '../atoms/text_form'
+import { getCleanTitleFromCtx } from '../modules/helpers/converter'
 import { getLocal } from '../modules/storages/local'
+import ComponentAlertBox from '../molecules/alert_box'
 
 export default function ComponentGetAllTag({url, cls, func}) {
     //Initial variable
@@ -51,7 +53,7 @@ export default function ComponentGetAllTag({url, cls, func}) {
     }
 
     if (error) {
-        return <div><h2>Failed to fetch</h2> Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={'get all tag'}/>
     } else if (!isLoaded) {
         return (
             <div>

@@ -3,6 +3,8 @@ import React from 'react'
 import { useState, useEffect } from "react"
 import GoogleMapReact from 'google-map-react'
 import { getLocal } from '../../../modules/storages/local'
+import ComponentAlertBox from '../../../molecules/alert_box'
+import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
 
 export default function GetMapsboard({ctx}) {
     //Initial variable
@@ -53,7 +55,7 @@ export default function GetMapsboard({ctx}) {
     },[])
 
     if (error) {
-        return <div>Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>

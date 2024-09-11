@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import MultiRangeSlider from "multi-range-slider-react"
 import { getLocal, storeLocal } from '../../../modules/storages/local'
 import { isMobile } from '../../../modules/helpers/validator'
+import ComponentAlertBox from '../../../molecules/alert_box'
+import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
 
 export default function FilterConsumeCal({ctx}) {
     //Initial variable
@@ -69,7 +71,7 @@ export default function FilterConsumeCal({ctx}) {
     }
     
     if (error) {
-        return <div>Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>

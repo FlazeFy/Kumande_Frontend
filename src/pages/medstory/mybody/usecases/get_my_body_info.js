@@ -3,7 +3,7 @@ import React from 'react'
 import { useState, useEffect } from "react"
 import { getLocal } from '../../../../modules/storages/local'
 import ComponentRadialChart from '../../../../molecules/radial_chart'
-import { convertDatetime, ucFirstWord } from '../../../../modules/helpers/converter'
+import { convertDatetime, getCleanTitleFromCtx, ucFirstWord } from '../../../../modules/helpers/converter'
 import GetManageBody from './get_manage_body'
 import Swal from 'sweetalert2'
 import Axios from 'axios'
@@ -12,6 +12,7 @@ import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ComponentTextMessageNoData from '../../../../atoms/text_message_no_data'
 import ComponentBreakLine from '../../../../atoms/breakline'
+import ComponentAlertBox from '../../../../molecules/alert_box'
 
 export default function GetMyBodyInfo({ctx}) {
     //Initial variable
@@ -138,7 +139,7 @@ export default function GetMyBodyInfo({ctx}) {
     }, []);
     
     if (error) {
-        return <div>Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>

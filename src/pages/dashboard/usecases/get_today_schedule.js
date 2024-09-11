@@ -6,7 +6,7 @@ import useSound from 'use-sound'
 import audioUrl from '../../../../public/digital-alarm-2-151919.mp3'
 
 // Modules
-import { ucFirstWord } from '../../../modules/helpers/converter'
+import { getCleanTitleFromCtx, ucFirstWord } from '../../../modules/helpers/converter'
 import { getLocal, storeLocal } from '../../../modules/storages/local'
 
 // Components
@@ -14,6 +14,7 @@ import ComponentContainerSchedule from '../../../molecules/container_schedule'
 import { getTodayDate } from '../../../modules/helpers/generator'
 import { isMobile } from '../../../modules/helpers/validator'
 import ComponentText from '../../../atoms/text'
+import ComponentAlertBox from '../../../molecules/alert_box'
 
 export default function GetTodaySchedule({ctx}) {
     //Initial variable
@@ -114,7 +115,7 @@ export default function GetTodaySchedule({ctx}) {
     }, [playSound]);
 
     if (error) {
-        return <div>Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>

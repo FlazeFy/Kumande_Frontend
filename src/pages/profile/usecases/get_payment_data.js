@@ -7,6 +7,7 @@ import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
 
 // Modules
 import { getLocal, storeLocal } from '../../../modules/storages/local'
+import ComponentAlertBox from '../../../molecules/alert_box'
 
 export default function GetPaymentData({ctx}) {
     //Initial variable
@@ -55,7 +56,7 @@ export default function GetPaymentData({ctx}) {
     },[])
 
     if (error) {
-        return <div><h2>{getCleanTitleFromCtx(ctx)}</h2> Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>

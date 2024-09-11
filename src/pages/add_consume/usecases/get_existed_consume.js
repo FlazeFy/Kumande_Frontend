@@ -2,6 +2,8 @@
 import React from 'react'
 import { getLocal } from '../../../modules/storages/local'
 import { useState, useEffect } from "react"
+import ComponentAlertBox from '../../../molecules/alert_box'
+import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
 
 export default function GetExistedConsume({ctx}) {
     //Initial variable
@@ -35,7 +37,7 @@ export default function GetExistedConsume({ctx}) {
     },[])
 
     if (error) {
-        return <div>Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>

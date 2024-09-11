@@ -5,10 +5,11 @@ import { getLocal } from '../../../../modules/storages/local'
 import Swal from 'sweetalert2'
 
 //Font awesome classicon
-import { ucFirstWord } from '../../../../modules/helpers/converter'
+import { getCleanTitleFromCtx, ucFirstWord } from '../../../../modules/helpers/converter'
 import { getMonthName } from '../../../../modules/helpers/generator'
 import ComponentTextMessageNoData from '../../../../atoms/text_message_no_data'
 import ComponentContainerConsume from '../../../../organisms/container_consume'
+import ComponentAlertBox from '../../../../molecules/alert_box'
 
 export default function GetSimilarConsume({ctx, consume_from, consume_type, provide, main_ing, month, year, slug}) {
     //Initial variable
@@ -82,7 +83,7 @@ export default function GetSimilarConsume({ctx, consume_from, consume_type, prov
     },[])
 
     if (error) {
-        return <div>Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>

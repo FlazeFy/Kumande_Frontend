@@ -20,6 +20,7 @@ import GetSchedule from './get_schedule'
 import ComponentTextIcon from '../../../atoms/text_icon'
 import ComponentContainerConsume from '../../../organisms/container_consume'
 import ComponentTextMessageNoData from '../../../atoms/text_message_no_data'
+import ComponentAlertBox from '../../../molecules/alert_box'
 
 export default function GetMySchedule({ctx}) {
     //Initial variable
@@ -263,7 +264,7 @@ export default function GetMySchedule({ctx}) {
     }
 
     if (error) {
-        return <div>Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>

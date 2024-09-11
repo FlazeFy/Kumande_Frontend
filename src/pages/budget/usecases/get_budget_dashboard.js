@@ -3,13 +3,14 @@ import Axios from 'axios'
 import React, { useRef } from 'react'
 import { getLocal } from '../../../modules/storages/local'
 import { useState, useEffect } from "react"
-import { convertDatetime, numberToPrice } from '../../../modules/helpers/converter'
+import { convertDatetime, getCleanTitleFromCtx, numberToPrice } from '../../../modules/helpers/converter'
 import { faAngleDown, faAngleUp, faEdit, faRotateBackward, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Swal from 'sweetalert2'
 import { add_firestore } from '../../../modules/firebase/command'
 import ComponentRadialChart from '../../../molecules/radial_chart'
 import DeleteBudget from './delete_bugdet'
+import ComponentAlertBox from '../../../molecules/alert_box'
 
 export default function GetBudgetDashboard({ctx}) {
     //Initial variable
@@ -149,7 +150,7 @@ export default function GetBudgetDashboard({ctx}) {
     }
 
     if (error) {
-        return <div>Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>

@@ -1,13 +1,14 @@
 "use client"
 import React from 'react'
 import { useState, useEffect } from "react"
-import { ucFirstWord } from '../../../modules/helpers/converter'
+import { getCleanTitleFromCtx, ucFirstWord } from '../../../modules/helpers/converter'
 import { getTodayDate } from '../../../modules/helpers/generator'
 import { isMobile } from '../../../modules/helpers/validator'
 import Swal from 'sweetalert2'
 import { getLocal } from '../../../modules/storages/local'
 import ComponentButtonPrice from '../../../molecules/button_price'
 import ComponentText from '../../../atoms/text'
+import ComponentAlertBox from '../../../molecules/alert_box'
 
 export default function GetAnalyticPaymentMonth({ctx}) {
     //Initial variable
@@ -49,7 +50,7 @@ export default function GetAnalyticPaymentMonth({ctx}) {
     },[])
 
     if (error) {
-        return <div>Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>

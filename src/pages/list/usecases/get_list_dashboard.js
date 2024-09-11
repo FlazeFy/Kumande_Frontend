@@ -8,6 +8,8 @@ import ComponentContainerTag from '../../../molecules/container_tag'
 import ComponentContainerConsumeList from '../../../organisms/container_consume_list'
 import ComponentContainerDescription from '../../../molecules/container_description'
 import ComponentTextProps from '../../../molecules/text_props'
+import ComponentAlertBox from '../../../molecules/alert_box'
+import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
 
 export default function GetListDashboard({ctx}) {
     //Initial variable
@@ -59,7 +61,7 @@ export default function GetListDashboard({ctx}) {
 
 
     if (error) {
-        return <div>Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>

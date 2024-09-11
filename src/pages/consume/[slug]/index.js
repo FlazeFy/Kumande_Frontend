@@ -7,6 +7,8 @@ import ComponentLeftNavbar from "../../../organisms/left_navbar"
 import ComponentContainerConsume from "../../../organisms/container_consume"
 import ComponentLeftNavbarToggle from "../../../atoms/navbar_toggle"
 import GetConsumeGallery from "./usecases/get_consume_gallery"
+import ComponentAlertBox from "../../../molecules/alert_box"
+import { getCleanTitleFromCtx } from "../../../modules/helpers/converter"
 
 export default function ConsumeDetail({ params }) {
   //Initial variable
@@ -50,7 +52,7 @@ export default function ConsumeDetail({ params }) {
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>
+    return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
   } else if (!isLoaded) {
       return (
         <div>

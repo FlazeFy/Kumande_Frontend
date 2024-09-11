@@ -7,6 +7,8 @@ import { getLocal } from '../../../modules/storages/local'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAdd } from "@fortawesome/free-solid-svg-icons"
 import ComponentTextIcon from '../../../atoms/text_icon'
+import ComponentAlertBox from '../../../molecules/alert_box'
+import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
 
 export default function GetListStarted({ ctx }) {
     // Initial state variables
@@ -50,7 +52,7 @@ export default function GetListStarted({ ctx }) {
     }, [ctx, token]);
 
     if (error) {
-        return <div>Error: {error.message}</div>;
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>

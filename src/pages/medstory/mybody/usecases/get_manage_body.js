@@ -5,11 +5,12 @@ import React from 'react'
 import { useState, useEffect } from "react"
 import { getLocal } from '../../../../modules/storages/local'
 import Swal from 'sweetalert2'
-import { convertDatetime } from '../../../../modules/helpers/converter'
+import { convertDatetime, getCleanTitleFromCtx } from '../../../../modules/helpers/converter'
 import { add_firestore } from '../../../../modules/firebase/command'
 import Axios from 'axios'
 import $ from 'jquery'
 import ComponentBodyBoxDashboard from '../../../../organisms/container_body_info'
+import ComponentAlertBox from '../../../../molecules/alert_box'
 
 export default function GetManageBody({ctx}) {
     //Initial variable
@@ -252,7 +253,7 @@ export default function GetManageBody({ctx}) {
     }
 
     if (error) {
-        return <div>Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>

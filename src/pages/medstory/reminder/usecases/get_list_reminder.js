@@ -7,6 +7,8 @@ import { getLocal } from '../../../../modules/storages/local'
 import Swal from 'sweetalert2'
 import Axios from 'axios'
 import PostListReminder from './post_reminder'
+import ComponentAlertBox from '../../../../molecules/alert_box'
+import { getCleanTitleFromCtx } from '../../../../modules/helpers/converter'
 
 export default function GetListReminder({ctx}) {
     //Initial variable
@@ -96,7 +98,7 @@ export default function GetListReminder({ctx}) {
     }
 
     if (error) {
-        return <div>Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>

@@ -8,6 +8,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import { getCleanTitleFromCtx, ucFirstWord } from '../../../modules/helpers/converter'
 import { getTodayDate } from '../../../modules/helpers/generator'
 import { getLocal } from '../../../modules/storages/local'
+import ComponentAlertBox from '../../../molecules/alert_box'
 
 export default function GetDailyCalendar({ctx}) {
     //Initial variable
@@ -77,7 +78,7 @@ export default function GetDailyCalendar({ctx}) {
     }
 
     if (error) {
-        return <div>Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>

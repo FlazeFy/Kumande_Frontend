@@ -11,6 +11,8 @@ import ComponentModal from '../../../../molecules/modal'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PostGallery from './post_gallery'
+import ComponentAlertBox from '../../../../molecules/alert_box'
+import { getCleanTitleFromCtx } from '../../../../modules/helpers/converter'
 
 export default function GetConsumeGallery(props) {
     //Initial variable
@@ -51,7 +53,7 @@ export default function GetConsumeGallery(props) {
     }, [])
 
     if (error) {
-        return <div>Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={'consume gallery'}/>
     } else if (!isLoaded) {
         return (
             <div>

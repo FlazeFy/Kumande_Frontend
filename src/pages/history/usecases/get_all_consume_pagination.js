@@ -13,6 +13,7 @@ import FilterOrderConsume from './filter_order_consume'
 import { isMobile } from '../../../modules/helpers/validator'
 import ComponentContainerConsume from '../../../organisms/container_consume'
 import ComponentTextMessageNoData from '../../../atoms/text_message_no_data'
+import ComponentAlertBox from '../../../molecules/alert_box'
 
 export default function GetAllConsumePagination({ctx}) {
     //Initial variable
@@ -81,7 +82,7 @@ export default function GetAllConsumePagination({ctx}) {
     }, []);
 
     if (error) {
-        return <div>Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>

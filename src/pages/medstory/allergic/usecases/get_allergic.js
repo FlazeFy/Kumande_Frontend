@@ -6,10 +6,11 @@ import Swal from 'sweetalert2'
 import Axios from 'axios'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBowlRice, faCake, faCheckCircle, faFloppyDisk, faMugSaucer, faTrash, faTriangleExclamation, faXmark } from "@fortawesome/free-solid-svg-icons"
-import { convertDatetime, ucFirstChar } from '../../../../modules/helpers/converter'
+import { convertDatetime, getCleanTitleFromCtx, ucFirstChar } from '../../../../modules/helpers/converter'
 import PostAllergic from './post_allergic'
 import ComponentTextMessageNoData from '../../../../atoms/text_message_no_data'
 import ComponentTextIcon from '../../../../atoms/text_icon'
+import ComponentAlertBox from '../../../../molecules/alert_box'
 
 export default function GetAllergic({ctx}) {
     //Initial variable
@@ -165,7 +166,7 @@ export default function GetAllergic({ctx}) {
     }
 
     if (error) {
-        return <div>Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>

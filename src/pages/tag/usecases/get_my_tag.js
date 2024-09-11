@@ -10,6 +10,7 @@ import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
 
 // Modules
 import { getLocal } from '../../../modules/storages/local'
+import ComponentAlertBox from '../../../molecules/alert_box'
 import GetAnalyzeTag from './get_analyze_tag'
 import PostTag from './post_tag'
 
@@ -70,7 +71,7 @@ export default function GetMyTag({ctx}) {
     }
 
     if (error) {
-        return <div><h2>{getCleanTitleFromCtx(ctx)}</h2> Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>

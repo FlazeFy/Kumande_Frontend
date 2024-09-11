@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import ComponentTextMessageNoData from '../../../atoms/text_message_no_data'
+import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
 import { isMobile } from '../../../modules/helpers/validator'
 import { getLocal, storeLocal } from '../../../modules/storages/local'
+import ComponentAlertBox from '../../../molecules/alert_box'
 
 export default function FilterConsumeTag({ctx}) {
     //Initial variable
@@ -59,7 +61,7 @@ export default function FilterConsumeTag({ctx}) {
     }
   
     if (error) {
-        return <div>Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>

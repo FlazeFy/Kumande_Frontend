@@ -10,6 +10,7 @@ import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
 import { getLocal, storeLocal } from '../../../modules/storages/local'
 import { getAge } from '../../../modules/helpers/generator'
 import GetQRCode from './get_qrcode'
+import ComponentAlertBox from '../../../molecules/alert_box'
 
 export default function GetMyProfile({ctx}) {
     //Initial variable
@@ -99,7 +100,7 @@ export default function GetMyProfile({ctx}) {
     }
 
     if (error) {
-        return <div><h2>{getCleanTitleFromCtx(ctx)}</h2> Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>

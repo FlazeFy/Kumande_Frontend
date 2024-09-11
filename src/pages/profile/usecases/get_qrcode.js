@@ -3,6 +3,8 @@ import Swal from 'sweetalert2'
 import QRCode from 'qrcode'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQrcode, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
+import ComponentAlertBox from '../../../molecules/alert_box'
 
 export default function GetQRCode({ id }) {
     const [error, setError] = useState(null)
@@ -31,7 +33,7 @@ export default function GetQRCode({ id }) {
     }, [id])
 
     if (error) {
-        return <div>Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={'QR Code'}/>
     } else if (!isLoaded) {
         return (
             <div>

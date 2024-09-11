@@ -7,6 +7,7 @@ import { getTodayDate } from '../../../modules/helpers/generator'
 
 // Modules
 import { getLocal, storeLocal } from '../../../modules/storages/local'
+import ComponentAlertBox from '../../../molecules/alert_box'
 import ComponentLineChart from '../../../molecules/line_chart'
 
 export default function GetTotalDailyCal({ctx, filter_name}) {
@@ -51,7 +52,7 @@ export default function GetTotalDailyCal({ctx, filter_name}) {
     },[])
 
     if (error) {
-        return <div><h2>{getCleanTitleFromCtx(ctx)}</h2> Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>

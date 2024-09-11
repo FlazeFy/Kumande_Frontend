@@ -10,9 +10,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons"
 import { add_firestore } from '../../../modules/firebase/command'
 import GetExistedConsume from './get_existed_consume'
-import { convertDatetime, numberToPrice } from '../../../modules/helpers/converter'
+import { convertDatetime, getCleanTitleFromCtx, numberToPrice } from '../../../modules/helpers/converter'
 import consumeFromTokens from '../../../design_token/variable/consume_from'
 import consumeTypeTokens from '../../../design_token/variable/consume_type'
+import ComponentAlertBox from '../../../molecules/alert_box'
 
 export default function PostConsume() {
     //Initial variable
@@ -293,7 +294,7 @@ export default function PostConsume() {
     } 
 
     if (error) {
-        return <div>Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>

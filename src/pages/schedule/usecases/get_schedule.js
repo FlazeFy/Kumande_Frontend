@@ -13,6 +13,8 @@ import { getLocal } from '../../../modules/storages/local'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBowlRice, faCake,  faHeart, faMugSaucer} from "@fortawesome/free-solid-svg-icons"
 import ComponentTextIcon from '../../../atoms/text_icon'
+import ComponentAlertBox from '../../../molecules/alert_box'
+import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
 
 export default function GetSchedule({ctx, day, category}) {
     //Initial variable
@@ -101,7 +103,7 @@ export default function GetSchedule({ctx, day, category}) {
     }
 
     if (error) {
-        return <div>Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>

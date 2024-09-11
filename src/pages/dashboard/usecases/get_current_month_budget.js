@@ -3,7 +3,8 @@ import React from 'react'
 import { getLocal } from '../../../modules/storages/local'
 import { useState, useEffect } from "react"
 import ComponentRadialChart from '../../../molecules/radial_chart'
-import { numberToPrice } from '../../../modules/helpers/converter'
+import { getCleanTitleFromCtx, numberToPrice } from '../../../modules/helpers/converter'
+import ComponentAlertBox from '../../../molecules/alert_box'
 
 export default function GetCurrentMonthBudget({ctx}) {
     //Initial variable
@@ -49,7 +50,7 @@ export default function GetCurrentMonthBudget({ctx}) {
     },[])
 
     if (error) {
-        return <div>Error: {error.message}</div>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>
