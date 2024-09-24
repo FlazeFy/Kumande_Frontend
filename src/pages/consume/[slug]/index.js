@@ -9,6 +9,8 @@ import ComponentLeftNavbarToggle from "../../../atoms/navbar_toggle"
 import GetConsumeGallery from "./usecases/get_consume_gallery"
 import ComponentAlertBox from "../../../molecules/alert_box"
 import { getCleanTitleFromCtx } from "../../../modules/helpers/converter"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faPrint } from "@fortawesome/free-solid-svg-icons"
 
 export default function ConsumeDetail({ params }) {
   //Initial variable
@@ -70,6 +72,9 @@ export default function ConsumeDetail({ params }) {
           <ComponentLeftNavbar active="history"/>
           <div id="content" className="p-4 p-md-5">
             <ComponentLeftNavbarToggle/>
+            <div className="d-flex justify-content-start" style={{marginLeft:"60px",marginTop:"2.5px"}}>
+              <a className="btn btn-success" href={`/document/consume/${item.slug_name}`}><FontAwesomeIcon icon={faPrint}/> Preview Doc</a>
+            </div>
             <div id="content-body">
               <ComponentContainerConsume fetchConsume={fetchConsume} ctx="consume_detail" items={item} type="detail"/>
               <GetConsumeGallery id={item.id} slug={item.slug_name} consume_name={item.consume_name}/>

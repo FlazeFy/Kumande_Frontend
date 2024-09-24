@@ -84,9 +84,9 @@ export default function GetCurrentMonthBudget({ctx}) {
                             }
 
                             return(
-                                <div className=''>
+                                <div key={`month_budget_${idx}`}>
                                     <button className='container p-3 text-center bg-white'>
-                                        <h4 className='mb-0'>Budget in {dt.month} {dt.year}</h4>
+                                        <h4 className='mb-0 budget-plan-title'>Budget in {dt.month} {dt.year}</h4>
                                         <p className='mb-0 text-secondary' style={{fontSize:"var(--textMD)"}}>
                                             {dt.payment_history.total_item === 0 ? (
                                                 <span className='fst-italic'>- No Payment Found -</span>
@@ -101,11 +101,11 @@ export default function GetCurrentMonthBudget({ctx}) {
                                         <div className='row'>
                                             <div className='col'>
                                                 <h6 className='mb-0'>Budget</h6>
-                                                <p className='mb-0'>Rp. {numberToPrice(dt.budget_total)}</p>
+                                                <p className='mb-0 budget-text'>Rp. {numberToPrice(dt.budget_total)}</p>
                                             </div>
                                             <div className='col'>
                                                 <h6 className='mb-0'>Spending</h6>
-                                                <p className='mb-0'>Rp. {numberToPrice(dt.payment_history.total_price)}</p>
+                                                <p className='mb-0 spending-text'>Rp. {numberToPrice(dt.payment_history.total_price)}</p>
                                             </div>
                                         </div>
                                     </button>

@@ -44,7 +44,7 @@ export default function ComponentButton(props){
     if(props.button_type == 'menu'){
         return (
             <li className={getActive(props.active, props.url.split('/')[0])}>
-                <a href={`/${props.url}`}>{props.icon} {props.button_name}</a>
+                <a href={`/${props.url}`} id={`${props.url.replace('/','')}_menu_nav_btn`}>{props.icon} {props.button_name}</a>
             </li>
         )
     } else if(props.button_type == 'submenu'){

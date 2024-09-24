@@ -35,10 +35,10 @@ export default function ComponentContainerSchedule({items,time}) {
                     </>
                 }/>
                 {
-                    items.map((data, i, idx) => {
+                    items.map((data, idx) => {
                         if(data['schedule_time'][0]['category'] == ucFirstChar(time)){
                             total++
-                            return <ComponentTextIcon text_type={data['consume_type']} body={data['schedule_consume']}/>
+                            return <ComponentTextIcon key={`schedule_time_${idx}`} text_type={data['consume_type']} body={data['schedule_consume']}/>
                         }
                     })
                 }

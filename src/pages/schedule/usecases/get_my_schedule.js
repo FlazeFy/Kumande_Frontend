@@ -277,7 +277,7 @@ export default function GetMySchedule({ctx}) {
         return (
             <div>
                 <h3 className='m-2 text-primary'>{getCleanTitleFromCtx(ucFirstWord(ctx))}</h3>
-                <table className="table table-bordered table-click">
+                <table className="table table-bordered table-click" id='table_my_schedule'>
                     <thead>
                         <tr>
                             <th scope="col">Day</th>
