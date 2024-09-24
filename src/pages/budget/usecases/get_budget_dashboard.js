@@ -4,7 +4,7 @@ import React, { useRef } from 'react'
 import { getLocal } from '../../../modules/storages/local'
 import { useState, useEffect } from "react"
 import { convertDatetime, getCleanTitleFromCtx, numberToPrice } from '../../../modules/helpers/converter'
-import { faAngleDown, faAngleUp, faEdit, faRotateBackward, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown, faAngleUp, faEdit, faPrint, faRotateBackward, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Swal from 'sweetalert2'
 import { add_firestore } from '../../../modules/firebase/command'
@@ -228,8 +228,8 @@ export default function GetBudgetDashboard({ctx}) {
                                                     <tr>
                                                         <td>Consume Name</td>
                                                         <td>Consume Type</td>
-                                                        <td>Payment Method</td>
-                                                        <td>Payment Price</td>
+                                                        <td>Method</td>
+                                                        <td>Price</td>
                                                         <td>Props</td>
                                                         <td>Action</td>
                                                     </tr>
@@ -271,6 +271,7 @@ export default function GetBudgetDashboard({ctx}) {
                                             <hr></hr>
                                             <span className='d-flex justify-content-start mt-3'>
                                                 <DeleteBudget id={budgetId} fetchData={fetchData}/>
+                                                <a className="btn btn-success ms-2" href={`/document/payment/${monthlyItemMonth}_${monthlyItemYear}`}><FontAwesomeIcon icon={faPrint}/> Preview Doc</a>
                                             </span>
                                         </div>
                                     </div>

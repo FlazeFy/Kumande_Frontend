@@ -4,6 +4,7 @@ import { getLocal } from '../../../../modules/storages/local';
 import Swal from 'sweetalert2';
 import { getTodayDate } from '../../../../modules/helpers/generator';
 import ComponentAlertBox from '../../../../molecules/alert_box';
+import { numberToPrice } from '../../../../modules/helpers/converter';
 
 const styles = StyleSheet.create({
   page: {
@@ -12,8 +13,8 @@ const styles = StyleSheet.create({
   },
   section: {
     margin: 10,
-    paddingVertical: 6,
-  },
+    paddingVertical: 6,  
+},
   title: {
     fontSize: 18,
     color: '#00A7EA',
@@ -30,7 +31,6 @@ const styles = StyleSheet.create({
   },
   column: {
     flex: 1,
-    padding: 10,
   },
   hr: {
     marginVertical: 10,
@@ -75,30 +75,32 @@ export default function DocumentPage({ params }){
   const [isLoaded, setIsLoaded] = React.useState(false)
   const [item, setItem] = useState(null)
   const token = getLocal("token_key")
+  const month_year = params.month_year.split('_')
 
   useEffect(() => {
     fetchConsume()
   },[])
 
   const fetchConsume = () => {
-    fetch('http://127.0.0.1:8000/api/v1/consume/detail/'+params.slug, {
+
+    fetch(`http://127.0.0.1:8000/api/v1/payment/detail/month/${month_year[0]}/year/${month_year[1]}?all=true`, {
       headers: {
           Authorization: `Bearer ${token}`
       }
     })
     .then(res => res.json())
-      .then(
-      (result) => {
-        setIsLoaded(true)
-        setItem(result.data)        
-      },
-      (error) => {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!",
-        })
-      }
+        .then(
+        (result) => {
+            setIsLoaded(true)
+            setItem(result.data)        
+        },
+        (error) => {
+            Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            })
+        }
     )
   }
 
@@ -122,34 +124,25 @@ export default function DocumentPage({ params }){
               </Text>
             </View>
             <View style={styles.hr} />
-              <Text style={styles.content_title}>{item.consume_name}</Text>
-              <Text style={styles.content_body}>{item.consume_comment ?? '-'}</Text>
-              <View style={styles.br} />
-
-              <Text style={styles.content_title}>Detail</Text>
-              <Text style={styles.content_body}>Main Ingredient : {item.consume_detail[0]['main_ing']}</Text>
-              <Text style={styles.content_body}>Calorie: {item.consume_detail[0]['calorie']} Cal</Text>
-              <Text style={styles.content_body}>Provide By: {item.consume_detail[0]['provide']}</Text>
-
-              <View style={styles.br} />
-              <Text style={styles.content_title}>Props</Text>
-              <Text style={styles.content_body}>Created At : {item.created_at}</Text>
-              <Text style={styles.content_body}>Updated At: {item.updated_at ?? '-'}</Text>
-
-              <View style={styles.br} />
               <Text style={styles.content_title}>Payment History</Text>
+              <Text style={styles.content_body}>Month : {month_year[0]}</Text>
+              <Text style={styles.content_body}>Year: {month_year[1]}</Text>
 
               <View style={styles.table}>
                 <View style={[styles.tableRow, styles.tableHeader]}>
+                  <Text style={styles.tableCell}>Consume Name</Text>
+                  <Text style={styles.tableCell}>Consume Type</Text>
                   <Text style={styles.tableCell}>Method</Text>
-                  <Text style={styles.tableCell}>Amount</Text>
+                  <Text style={styles.tableCell}>Price</Text>
                   <Text style={styles.tableCell}>Created At</Text>
                 </View>
 
-                {item.payment.map((dt, idx) => (
+                {item.map((dt, idx) => (
                   <View style={styles.tableRow} key={idx}>
+                    <Text style={styles.tableCell}>{dt.consume_name}</Text>
+                    <Text style={styles.tableCell}>{dt.consume_type}</Text>
                     <Text style={styles.tableCell}>{dt.payment_method}</Text>
-                    <Text style={styles.tableCell}>{dt.payment_price}</Text>
+                    <Text style={styles.tableCell}>Rp. {numberToPrice(dt.payment_price)}</Text>
                     <Text style={styles.tableCell}>{dt.created_at}</Text>
                   </View>
                 ))}
