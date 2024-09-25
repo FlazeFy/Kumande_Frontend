@@ -2,13 +2,14 @@ import React from 'react'
 import { useState, useEffect } from "react"
 import Swal from 'sweetalert2'
 import ComponentTextMessageNoData from '../../../atoms/text_message_no_data'
-import { ComponentPieChart } from '../../../molecules/pie_chart'
+
 // Component
 import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
 
 // Modules
 import { getLocal, storeLocal } from '../../../modules/storages/local'
 import ComponentAlertBox from '../../../molecules/alert_box'
+import ComponentPieChart from '../../../molecules/pie_chart'
 
 export default function GetMostConsumeFrom({ctx}) {
     //Initial variable
@@ -57,7 +58,7 @@ export default function GetMostConsumeFrom({ctx}) {
                 setError(error)
             }
         })
-    },[])
+    },[ctx,token])
 
     if (error) {
         return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>

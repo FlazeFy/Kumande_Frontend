@@ -46,7 +46,7 @@ const GetAnalyzeTag = forwardRef((props, ref) => {
                 }
             } else {
                 setItems(null)
-                if (status != 404) {
+                if (status !== 404) {
                     Swal.fire({
                         title: 'Error!',
                         text: 'Something wrong happened. Call the Admin!',
@@ -96,7 +96,7 @@ const GetAnalyzeTag = forwardRef((props, ref) => {
                                     </>
                                 :
                                     <div className='my-3 mx-auto d-block text-center'>
-                                        <img className='m-3' style={{width:"100px"}} src={'/icons/Tag.png'}/>
+                                        <img className='m-3' style={{width:"100px"}} src={'/icons/Tag.png'} alt={'/icons/Tag.png'}/>
                                         <p className='text-secondary text-center fst-italic'>- {messageRes} -</p>
                                     </div>
                             )

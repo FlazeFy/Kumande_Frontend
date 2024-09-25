@@ -78,7 +78,7 @@ export default function GetMyProfile({ctx}) {
                 }
             })
 
-            if(response.status == 200){
+            if(response.status === 200){
                 Swal.fire({
                     title: "Success!",
                     text: "Profile updated",

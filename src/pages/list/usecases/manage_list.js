@@ -4,8 +4,6 @@ import { useState, useEffect } from "react"
 import { getLocal } from '../../../modules/storages/local'
 import Swal from 'sweetalert2'
 import Axios from 'axios'
-
-//Font awesome classicon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faFloppyDisk, faPlus, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons"
 import ComponentPieChart from '../../../molecules/pie_chart'
@@ -15,7 +13,6 @@ import ComponentContainerTag from '../../../molecules/container_tag'
 const ManageList = forwardRef((props, ref) => {
     const [isLoaded, setIsLoaded] = useState(false)
     const [items, setItems] = useState(null)
-    const [messageRes, setMessageRes] = useState('...')
     const token = getLocal("token_key")
 
     // Form
@@ -93,10 +90,6 @@ const ManageList = forwardRef((props, ref) => {
                 }
                 if(listDescRef.current){
                     listDescRef.current.value = result.data.list_desc
-                }
-
-                if(!items){
-                    setMessageRes(result.message)
                 }
             } else {
                 setItems(null)
@@ -479,7 +472,7 @@ const ManageList = forwardRef((props, ref) => {
                                                                         <td>{dt.calorie} Cal</td>
                                                                         <td><span className='btn btn-success rounded-pill py-0 px-2 me-1' style={{fontSize:"var(--textMD)"}}>{dt.consume_from}</span>{dt.provide}</td>
                                                                         <td>Rp. {dt.average_price.toLocaleString()},00</td>
-                                                                        <td><a className='btn btn-danger' onClick={(e)=>handleRemoveConsume(dt.id)}><FontAwesomeIcon icon={faTrash}/></a></td>
+                                                                        <td><a className='btn btn-danger' onClick={(e)=>handleRemoveConsume(dt.id)} aria-label="Remove Consume"><FontAwesomeIcon icon={faTrash}/></a></td>
                                                                     </tr>
                                                                 )
                                                             }))

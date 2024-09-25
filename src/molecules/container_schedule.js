@@ -19,7 +19,7 @@ export default function ComponentContainerSchedule({items,time}) {
                     <></>
                 :
                     <div>
-                        <img className='img-icon-lg' src={'/icons/'+ucFirstChar(time)+'.png'}/>
+                        <img className='img-icon-lg' src={'/icons/'+ucFirstChar(time)+'.png'} alt={'/icons/'+ucFirstChar(time)+'.png'}/>
                     </div>
             }
             <div>
@@ -27,7 +27,7 @@ export default function ComponentContainerSchedule({items,time}) {
                     <>
                     {
                         is_mobile ?
-                            <img className='img-icon-md' src={'/icons/'+ucFirstChar(time)+'.png'}/>
+                            <img className='img-icon-md' src={'/icons/'+ucFirstChar(time)+'.png'} alt={'/icons/'+ucFirstChar(time)+'.png'}/>
                         :
                             <></>
                     }

@@ -53,7 +53,7 @@ export default function GetQRCode({ id }) {
                                 <button type="button" className="btn_close_modal" data-bs-dismiss="modal" aria-label="Close"><FontAwesomeIcon icon={faXmark}/></button>
                             </div>
                             <div className="modal-body text-center p-4">
-                                <img src={qrCodeUrl} style={{width:'250px'}}/>
+                                <img src={qrCodeUrl} alt={qrCodeUrl} style={{width:'250px'}}/>
                                 <div className='text-start'>
                                     <h6>How to Connect :</h6>
                                     <ol>

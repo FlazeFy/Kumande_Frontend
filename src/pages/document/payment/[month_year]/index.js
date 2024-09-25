@@ -82,7 +82,6 @@ export default function DocumentPage({ params }){
   },[])
 
   const fetchConsume = () => {
-
     fetch(`http://127.0.0.1:8000/api/v1/payment/detail/month/${month_year[0]}/year/${month_year[1]}?all=true`, {
       headers: {
           Authorization: `Bearer ${token}`
@@ -95,11 +94,12 @@ export default function DocumentPage({ params }){
             setItem(result.data)        
         },
         (error) => {
-            Swal.fire({
+          setError(error)
+          Swal.fire({
             icon: "error",
             title: "Oops...",
             text: "Something went wrong!",
-            })
+          })
         }
     )
   }

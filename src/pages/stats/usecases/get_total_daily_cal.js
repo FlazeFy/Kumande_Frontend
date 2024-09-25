@@ -1,11 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from "react"
-
-// Component
 import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
 import { getTodayDate } from '../../../modules/helpers/generator'
-
-// Modules
 import { getLocal, storeLocal } from '../../../modules/storages/local'
 import ComponentAlertBox from '../../../molecules/alert_box'
 import ComponentLineChart from '../../../molecules/line_chart'
@@ -18,10 +14,9 @@ export default function GetTotalDailyCal({ctx, filter_name}) {
     const token = getLocal("token_key")
     const yr =  getTodayDate('year')
     const mon = getTodayDate('month')
+    const keyLimit = sessionStorage.getItem(`Line_limit_${filter_name}`)
 
     useEffect(() => {
-        //Default config
-        const keyLimit = sessionStorage.getItem(`Line_limit_${filter_name}`)
         if(keyLimit == null){
             sessionStorage.setItem(`Line_limit_${filter_name}`, 5);
         }
@@ -49,7 +44,7 @@ export default function GetTotalDailyCal({ctx, filter_name}) {
                 }
             }
         )
-    },[])
+    },[ctx,mon,yr,token,keyLimit,filter_name])
 
     if (error) {
         return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>

@@ -81,7 +81,7 @@ export default function GetListStarted({ ctx }) {
                     </div>
                 </div>
                 <div className='col-lg-4 mx-auto text-center'>
-                    <img className='img img-fluid' src={'/icons/Confused.png'} alt="Confused" />
+                    <img className='img img-fluid' src={'/icons/Confused.png'} alt={'/icons/Confused.png'} />
                     <h5>Confused how to manage your consume schedule? Do you want to group all in similiar list or your favorite food?</h5>
                     <a className='btn btn-success px-4 py-3 rounded-pill mt-4'><FontAwesomeIcon icon={faAdd} className='me-2'/> Make List Now!</a>
                 </div>

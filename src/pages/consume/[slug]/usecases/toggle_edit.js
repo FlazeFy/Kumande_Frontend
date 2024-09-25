@@ -11,7 +11,7 @@ import { getLocal, storeLocal } from '../../../../modules/storages/local'
 
 export default function GetToggleEdit(props) {
     const toggleEdit = () => {
-        if(getLocal('is_edit_consume') == 'true'){
+        if(getLocal('is_edit_consume') === 'true'){
             storeLocal('is_edit_consume','false')
         } else {
             storeLocal('is_edit_consume','true')
@@ -21,6 +21,6 @@ export default function GetToggleEdit(props) {
     }
 
     return (
-        <a className={getLocal('is_edit_consume') == 'true' ? "btn btn-success me-2":"btn btn-danger me-2"} onClick={toggleEdit}><FontAwesomeIcon icon={faEdit}/> Toggle Edit : {getLocal('is_edit_consume') == 'true' ? <span>On</span>:<span>Off</span>}</a>
+        <a className={getLocal('is_edit_consume') === 'true' ? "btn btn-success me-2":"btn btn-danger me-2"} onClick={toggleEdit}><FontAwesomeIcon icon={faEdit}/> Toggle Edit : {getLocal('is_edit_consume') === 'true' ? <span>On</span>:<span>Off</span>}</a>
     );
 }

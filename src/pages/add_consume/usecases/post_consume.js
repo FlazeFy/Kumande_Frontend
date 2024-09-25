@@ -150,7 +150,7 @@ export default function PostConsume() {
     const removeTag = (slug) => {        
         const newTag = []
 
-        if(selectedTag.length != 0){
+        if(selectedTag.length !== 0){
             selectedTag.forEach(element => {
                 if(element.props.value.slug_name !== slug){
                     newTag.push(element)
@@ -194,7 +194,7 @@ export default function PostConsume() {
             return res.json().then(result => ({ status: res.status, result: result }))
         })
             .then(({ status, result }) => {
-                if(status != 404){
+                if(status !== 404){
                     const data = result.data
                     if (consumeNameRef.current) {
                         consumeNameRef.current.value = data.consume_name
@@ -245,7 +245,7 @@ export default function PostConsume() {
                     }
 
                     setExistingHistory(
-                        data.payment != null ?
+                        data.payment !== null ?
                             <div className='row mt-2 ps-1 mx-1 p-1 rounded mb-3' style={{border:"1.25px solid #DFE2E6"}}>
                                 <div className='col'>
                                     <label className='text-secondary' style={{fontSize:"var(--textMD)"}}>Consume History</label>
@@ -375,7 +375,7 @@ export default function PostConsume() {
 
                 <h5>Tags</h5>
                 {
-                    item != null ? (
+                    item !== null ? (
                         <div>
                             {
                                 item.map((elmt, index) => (

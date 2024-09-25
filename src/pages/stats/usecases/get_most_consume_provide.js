@@ -2,12 +2,8 @@ import React from 'react'
 import { useState, useEffect } from "react"
 import Swal from 'sweetalert2'
 import ComponentTextMessageNoData from '../../../atoms/text_message_no_data'
-
-// Component
-import { ComponentPieChart } from '../../../molecules/pie_chart'
+import ComponentPieChart from '../../../molecules/pie_chart'
 import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
-
-// Modules
 import { getLocal, storeLocal } from '../../../modules/storages/local'
 import ComponentAlertBox from '../../../molecules/alert_box'
 
@@ -36,7 +32,7 @@ export default function GetMostConsumeProvide({ctx}) {
         })
         .then(({ status, result }) => {
             setIsLoaded(true)
-            if(status == 200){ 
+            if(status === 200){ 
                 setItems(result.data)
                 const item = result.data
                 storeLocal(ctx + "_sess",JSON.stringify(item))  
@@ -58,7 +54,7 @@ export default function GetMostConsumeProvide({ctx}) {
                 setError(error)
             }
         })
-    },[])
+    },[ctx,token])
 
     if (error) {
         return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>

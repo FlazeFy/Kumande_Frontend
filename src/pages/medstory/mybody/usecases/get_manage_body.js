@@ -53,6 +53,7 @@ export default function GetManageBody({ctx}) {
                 setItemsDashboard(result.data.dashboard)
             },
             (error) => {
+                setError(error)
                 Swal.fire({
                     title: 'Error!',
                     text: 'Something wrong happen. Call the Admin!',
@@ -337,10 +338,10 @@ export default function GetManageBody({ctx}) {
                                                     showInputRow && (
                                                         <tr className='tr-form'>
                                                             <td><button className='bgd-success border-0 w-100 text-white'><FontAwesomeIcon icon={faDroplet}/> Check</button></td>
-                                                            <td><input type="text" className="form-control" onChange={(e)=>setBloodPressure(e.target.value)}/></td>
-                                                            <td><input type="number" className="form-control" onChange={(e)=>setGlucose(e.target.value)}/></td>
-                                                            <td><input type="number" className="form-control" onChange={(e)=>setGout(e.target.value)}/></td>
-                                                            <td><input type="number" className="form-control" onChange={(e)=>setCholesterol(e.target.value)}/></td>
+                                                            <td><input aria-label="Blood Pressure" type="text" className="form-control" onChange={(e)=>setBloodPressure(e.target.value)}/></td>
+                                                            <td><input aria-label="Glucose" type="number" className="form-control" onChange={(e)=>setGlucose(e.target.value)}/></td>
+                                                            <td><input aria-label="Gout" type="number" className="form-control" onChange={(e)=>setGout(e.target.value)}/></td>
+                                                            <td><input aria-label="Cholesterol" type="number" className="form-control" onChange={(e)=>setCholesterol(e.target.value)}/></td>
                                                         </tr>
                                                     )
                                                 }
@@ -419,9 +420,9 @@ export default function GetManageBody({ctx}) {
                                                     showInputCalRow && (
                                                         <tr className='tr-form'>
                                                             <td><button className='bgd-success border-0 w-100 text-white'><FontAwesomeIcon icon={faCalculator}/> Calorie</button></td>
-                                                            <td><input type="text" className="form-control" onChange={(e)=>setWeight(e.target.value)}/></td>
-                                                            <td><input type="number" className="form-control" onChange={(e)=>setHeight(e.target.value)}/></td>
-                                                            <td><input type="number" className="form-control" onChange={(e)=>setCalorie(e.target.value)}/></td>
+                                                            <td><input aria-label='Weight' type="text" className="form-control" onChange={(e)=>setWeight(e.target.value)}/></td>
+                                                            <td><input aria-label='Height' type="number" className="form-control" onChange={(e)=>setHeight(e.target.value)}/></td>
+                                                            <td><input aria-label='Calorie' type="number" className="form-control" onChange={(e)=>setCalorie(e.target.value)}/></td>
                                                         </tr>
                                                     )
                                                 }

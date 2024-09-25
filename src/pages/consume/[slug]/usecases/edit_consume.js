@@ -117,7 +117,6 @@ export default function EditConsume(props){
                 });
             } 
             if(selectedTagRemove.length > 0){
-                let tag = []
                 consumeTag = consumeTag.filter(element => 
                     !selectedTagRemove.some(dt => dt.props.value.slug_name === element.slug_name)
                 );
@@ -242,7 +241,7 @@ export default function EditConsume(props){
                     <label style={{marginBottom:"var(--spaceSM)",color:"grey",fontSize:"var(--textXMD)"}}>Attached Tags</label>
                     <ComponentBreakLine length={1}/>
                     {
-                        props.data.consume_tag != null ? (
+                        props.data.consume_tag !== null ? (
                             <div>
                                 {
                                     props.data.consume_tag.map((elmt, index) => (

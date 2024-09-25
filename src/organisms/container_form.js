@@ -15,7 +15,7 @@ import ComponentBreakLine from '../atoms/breakline'
 import ComponentTextForm from '../atoms/text_form'
 
 export default function ComponentForm({type, props}) {
-    if (type == "single-line"){
+    if (type === "single-line"){
         return (
             <div key={type}>
                 <div className='row'>
@@ -56,7 +56,7 @@ export default function ComponentForm({type, props}) {
                                                     onChange={elmt.handleChange}
                                                     maxLength={elmt.max}
                                                     id={elmt.id}
-                                                    type={elmt.is_obsecure == true ? 'password' : elmt.type}
+                                                    type={elmt.is_obsecure === true ? 'password' : elmt.type}
                                                     
                                                 />
                                         }

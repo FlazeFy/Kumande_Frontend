@@ -117,7 +117,7 @@ export default function PostLogin() {
                     <ComponentForm type={"single-line"} props={builder} />
                 </div>
                 <div className='col'>
-                    <img src="/icons/Consume.png" style={{maxWidth:"50%", minWidth:"300px"}} className="img img-fluid mb-3"/>
+                    <img src="/icons/Consume.png" alt="/icons/Consume.png" style={{maxWidth:"50%", minWidth:"300px"}} className="img img-fluid mb-3"/>
                 </div>
             </div>
         </div>

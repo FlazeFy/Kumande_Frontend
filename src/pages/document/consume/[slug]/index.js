@@ -93,6 +93,7 @@ export default function DocumentPage({ params }){
         setItem(result.data)        
       },
       (error) => {
+        setError(error)
         Swal.fire({
           icon: "error",
           title: "Oops...",

@@ -127,7 +127,7 @@ export default function PostListReminder({fetchReminders}) {
     const [marker, setMarker] = useState(null)
     const Marker = ({text}) => (
         <div className='position-relative'>
-            <img src="https://maps.google.com/mapfiles/ms/icons/blue-dot.png" alt="Marker" />
+            <img src="https://maps.google.com/mapfiles/ms/icons/blue-dot.png" alt="https://maps.google.com/mapfiles/ms/icons/blue-dot.png" />
             <h6 className='text-white text-center position-absolute' style={{width:"100px", left:"-30px"}}>{text}</h6>
         </div>
     );
@@ -213,7 +213,7 @@ export default function PostListReminder({fetchReminders}) {
             case "image":
                 return (
                     <>
-                        <img className='w-100' ref={uploadedImageRef}></img>
+                        <img className='w-100' ref={uploadedImageRef} alt='uploaded image'></img>
                         <a className='err-msg' ref={uploadFileStatusRef}></a>
                         <div className="input-group mb-2">
                             <button className="btn btn-outline-secondary" type="button" id="inputGroupFileAddon03">Upload</button>
@@ -369,7 +369,7 @@ export default function PostListReminder({fetchReminders}) {
         <div className='col-lg-6 col-md-6 col-sm-12'>
             <button className='btn-main' style={{height:"150px"}} data-bs-toggle="modal" data-bs-target={`#addReminder`} title={'Add reminder'}>
                 <div className='ms-2 me-4'>
-                    <img style={{height:"140px",bottom:"0"}} src={'/icons/Reminder.png'}/>
+                    <img style={{height:"140px",bottom:"0"}} src={'/icons/Reminder.png'} alt={'/icons/Reminder.png'}/>
                 </div>
                 <div className='text-start py-4'>
                     <p className='mb-0'>Making a schedule but always forget to do it?</p>

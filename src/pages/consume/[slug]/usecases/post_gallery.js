@@ -113,7 +113,7 @@ export default function PostGallery(props) {
     return <>
         {
             galleryUrl && <>
-                <img className='img img-fluid' src={galleryUrl} title={galleryUrl}></img>
+                <img className='img img-fluid' src={galleryUrl} alt={galleryUrl} title={galleryUrl}></img>
                 <ComponentBreakLine label={1}/>
             </>
         }

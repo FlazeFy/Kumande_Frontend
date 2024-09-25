@@ -6,7 +6,7 @@ import ComponentBreakLine from '../atoms/breakline'
 export default function ComponentContainerGallery(props) {
     return (
         <div className='text-start text-white'>
-            <img className='img img-fluid rounded' src={props.image_url}></img>
+            <img className='img img-fluid rounded' src={props.image_url} alt={props.image_url}></img>
             <ComponentBreakLine length={props.created_at ? 1 : 2}/>
             <ComponentText text_type="mini_sub_heading" body={props.body}/>
             {

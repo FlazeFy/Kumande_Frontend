@@ -289,7 +289,7 @@ export default function GetBudgetDashboard({ctx}) {
                             <p className='mb-0'>Set a limit for your monthly spending, get alerts, and monitor it!</p>
                         </div>
                         <div className='w-100 mb-4'>
-                            <img className='img img-fluid' style={{maxHeight:"160px"}} src={'/icons/BudgetData.png'}/>
+                            <img className='img img-fluid' style={{maxHeight:"160px"}} src={'/icons/BudgetData.png'} alt={'/icons/BudgetData.png'}/>
                         </div>
                         {
                             (() => {

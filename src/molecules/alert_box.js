@@ -10,10 +10,10 @@ export default function ComponentAlertBox(props) {
     return (
         <div>
             {
-                props.type == 'error' && <ComponentText body={getCleanTitleFromCtx(props.context)} text_type="sub_heading"/>
+                props.type === 'error' && <ComponentText body={getCleanTitleFromCtx(props.context)} text_type="sub_heading"/>
             }
             <div className={`alert alert-${props.type}`} role='alert'>
-                <h4><FontAwesomeIcon icon={props.type == 'warning' || props.type == 'danger' ? faWarning : faIcons}/> {ucFirstChar(props.type == 'danger' ? 'error':props.type)}</h4>
+                <h4><FontAwesomeIcon icon={props.type === 'warning' || props.type === 'danger' ? faWarning : faIcons}/> {ucFirstChar(props.type === 'danger' ? 'error':props.type)}</h4>
                 {props.message}
             </div>
         </div>

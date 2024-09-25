@@ -55,7 +55,7 @@ export default function GetTodaySchedule({ctx}) {
                         Swal.fire({
                             html: `
                                 <br>
-                                <img class='img-icon-lg' src='/icons/Eat.png' alt='Eat Icon' style='width: 240px; height: 240px;'/><br>
+                                <img class='img-icon-lg' src='/icons/Eat.png' alt='/icons/Eat.png' style='width: 240px; height: 240px;'/><br>
                                 <b>You Have Schedule Today!</b> 
                                 <div class="mt-2">${content}</div>
                             `,

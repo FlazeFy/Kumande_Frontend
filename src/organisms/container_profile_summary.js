@@ -4,7 +4,7 @@ import React from 'react'
 export default function ComponentProfileSummaryInfo({builder, items, urlImg, title}) {
     return (
         <div className="box-content-header">
-            <img className='img img-fluid my-4' src={urlImg}/>
+            <img className='img img-fluid my-4' alt={urlImg} src={urlImg}/>
             <div className="content">
                 <h3 className='text-white mb-3'>{title}</h3>
                 <div className="row">

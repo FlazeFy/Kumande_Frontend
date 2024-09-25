@@ -8,7 +8,7 @@ import ComponentText from '../atoms/text'
 export default function ComponentContainerMaps(props) {
     const Marker = ({text}) => (
         <div className='position-relative'>
-            <img src="https://maps.google.com/mapfiles/ms/icons/blue-dot.png" alt="Marker" />
+            <img src="https://maps.google.com/mapfiles/ms/icons/blue-dot.png" alt="https://maps.google.com/mapfiles/ms/icons/blue-dot.png"/>
             <h6 className='text-white text-center position-absolute' style={{width:"100px", left:"-30px"}}>{text}</h6>
         </div>
     );

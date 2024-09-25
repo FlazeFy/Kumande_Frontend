@@ -16,7 +16,7 @@ const HistoryPage = () => {
           <ComponentLeftNavbarToggle/>
           <div id="content-body">
             <GetAllConsumePagination ctx="all_consume"/>
-            <a className="btn btn-add" href="/add_consume"><FontAwesomeIcon icon={faPlusSquare} size="xl"/></a>
+            <a className="btn btn-add" href="/add_consume"><FontAwesomeIcon icon={faPlusSquare} size="xl" aria-label="Add Consume"/></a>
           </div>
         </div>
       </div>

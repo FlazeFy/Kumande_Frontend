@@ -17,8 +17,6 @@ export default function GetListDashboard({ctx}) {
     const [isLoaded, setIsLoaded] = useState(false)
     const [items, setItems] = useState(null)
     const token = getLocal("token_key")
-    const [resMsgAll, setResMsgAll] = useState([])
-
     const [listData, setListData] = useState(null)
 
     // Ref

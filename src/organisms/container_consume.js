@@ -33,9 +33,9 @@ export default function ComponentContainerConsume({items, type, func, fetchConsu
         }
     };
 
-    if(type != 'mini'){
+    if(type !== 'mini'){
         return (
-            <div className={type != 'detail'?'consume-box':'mb-2 container p-4'} onClick={handleClick} style={{borderLeft:getFavorite(items['is_favorite'])}}>
+            <div className={type !== 'detail'?'consume-box':'mb-2 container p-4'} onClick={handleClick} style={{borderLeft:getFavorite(items['is_favorite'])}}>
                 <div className='d-flex justify-content-between mb-2'>
                     <div>
                         {
@@ -44,7 +44,7 @@ export default function ComponentContainerConsume({items, type, func, fetchConsu
                         <ComponentTextIcon text_style={{fontWeight:500,fontSize:"var(--textXLG)"}} text_type={items.consume_type} body={items.consume_name}/>
                     </div>
                     {
-                        type != 'detail' && !is_mobile ?
+                        type !== 'detail' && !is_mobile ?
                             <div style={{fontWeight:"500"}}>
                                 <a className='text-secondary me-3'>{items['consume_from']}</a>
                                 <a className='bgd-success rounded py-2 px-3 text-white'>

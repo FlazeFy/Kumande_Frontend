@@ -49,7 +49,7 @@ export default function ManagePayment(props) {
                 }
             })
 
-            if(response.status == 200){
+            if(response.status === 200){
                 props.fetchConsume()
                 Swal.fire({
                     title: "Success!",

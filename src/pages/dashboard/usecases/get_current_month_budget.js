@@ -79,7 +79,7 @@ export default function GetCurrentMonthBudget({ctx}) {
                             if(dt.budget_total > largetBudget){
                                 largetBudget = dt.budget_total
                             }
-                            if(smallesBudget == 0 || dt.budget_total < smallesBudget){
+                            if(smallesBudget === 0 || dt.budget_total < smallesBudget){
                                 smallesBudget = dt.budget_total
                             }
 

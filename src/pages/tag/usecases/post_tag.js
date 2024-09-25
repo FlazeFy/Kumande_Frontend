@@ -84,7 +84,7 @@ export default function PostTag({fetchTag}) {
                             </td>
                             <td colSpan={1}>
                                 <a className='fst-italic text-secondary mb-1'>
-                                    <button className='btn btn-danger w-100' style={{borderRadius:"0"}} onClick={(e)=>handleCloseNewTag()}><FontAwesomeIcon icon={faXmark}/></button>
+                                    <button className='btn btn-danger w-100' style={{borderRadius:"0"}} onClick={(e)=>handleCloseNewTag()} aria-label="Close New Tag"><FontAwesomeIcon icon={faXmark}/></button>
                                 </a>
                             </td>
                         </tr>

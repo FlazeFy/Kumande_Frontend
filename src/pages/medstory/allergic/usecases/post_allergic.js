@@ -63,7 +63,7 @@ export default function PostAllergic({fetchAllergic, count, total_found}) {
         <>
             <button className='btn-main mb-3' style={{height:"150px"}} data-bs-toggle="modal" data-bs-target={`#addAllergic`} title='Add Allergic'>
                 <div className='ms-2 me-4'>
-                    <img style={{height:"140px",bottom:"0"}} src={'/icons/Allergic.png'}/>
+                    <img style={{height:"140px",bottom:"0"}} src={'/icons/Allergic.png'} alt={'/icons/Allergic.png'}/>
                 </div>
                 <div className='text-start py-4'>
                     <p className='mb-0'>{count === 0 ? 'You have some allergic and want to monitor all your food? You will receive warning alert' : 'From our analyze for all your consume history'}</p>

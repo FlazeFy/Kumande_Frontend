@@ -1,11 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from "react"
-
-// Component
 import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
 import { getTodayDate } from '../../../modules/helpers/generator'
-
-// Modules
 import { getLocal, storeLocal } from '../../../modules/storages/local'
 import ComponentAlertBox from '../../../molecules/alert_box'
 import ComponentLineChart from '../../../molecules/line_chart'
@@ -17,10 +13,9 @@ export default function GetTotalSpending({ctx, filter_name}) {
     const [items, setItems] = useState([])
     const token = getLocal("token_key")
     const yr =  getTodayDate('year')
+    const keyLimit = sessionStorage.getItem(`Line_limit_${filter_name}`)
 
     useEffect(() => {
-        //Default config
-        const keyLimit = sessionStorage.getItem(`Line_limit_${filter_name}`)
         if(keyLimit == null){
             sessionStorage.setItem(`Line_limit_${filter_name}`, 5);
         }
@@ -48,7 +43,7 @@ export default function GetTotalSpending({ctx, filter_name}) {
                 }
             }
         )
-    },[])
+    },[ctx,token,yr,filter_name,keyLimit])
 
     if (error) {
         return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>

@@ -290,9 +290,9 @@ export default function GetMySchedule(props) {
                     <thead>
                         <tr>
                             <th scope="col">Day</th>
-                            <th scope="col"><img className='img-icon-lg' src={'/icons/Breakfast.png'}/></th>
-                            <th scope="col"><img className='img-icon-lg' src={'/icons/Lunch.png'}/></th>
-                            <th scope="col"><img className='img-icon-lg' src={'/icons/Dinner.png'}/></th>
+                            <th scope="col"><img className='img-icon-lg' src={'/icons/Breakfast.png'} alt={'/icons/Breakfast.png'}/></th>
+                            <th scope="col"><img className='img-icon-lg' src={'/icons/Lunch.png'} alt={'/icons/Lunch.png'}/></th>
+                            <th scope="col"><img className='img-icon-lg' src={'/icons/Dinner.png'} alt={'/icons/Dinner.png'}/></th>
                         </tr>
                     </thead>
                     <tbody>

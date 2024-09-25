@@ -99,10 +99,8 @@ export default function GetMyTag({ctx}) {
                                         <tr key={idx}>
                                             <td>{dt.tag_name}</td>
                                             <td>{dt.total_used}</td>
-                                            <td>
-                                                <button className='btn btn-success my-1' data-bs-toggle="modal" data-bs-target="#analyze_tag" onClick={(e) => handleAnalyzeTagData(dt)}><FontAwesomeIcon icon={faChartSimple}/></button>
-                                            </td>
-                                            <td><button className='btn btn-warning my-1'><FontAwesomeIcon icon={faEdit}/></button></td>
+                                            <td><button aria-label="Analyze Chart" className='btn btn-success my-1' data-bs-toggle="modal" data-bs-target="#analyze_tag" onClick={(e) => handleAnalyzeTagData(dt)}><FontAwesomeIcon icon={faChartSimple}/></button></td>
+                                            <td><button aria-label="Edit" className='btn btn-warning my-1'><FontAwesomeIcon icon={faEdit}/></button></td>
                                         </tr>
                                     )
                                 })
