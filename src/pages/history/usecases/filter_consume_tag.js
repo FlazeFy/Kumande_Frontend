@@ -5,7 +5,7 @@ import { isMobile } from '../../../modules/helpers/validator'
 import { getLocal, storeLocal } from '../../../modules/storages/local'
 import ComponentAlertBox from '../../../molecules/alert_box'
 
-export default function FilterConsumeTag({ctx}) {
+export default function FilterConsumeTag(props) {
     //Initial variable
     const [error, setError] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)
@@ -15,6 +15,10 @@ export default function FilterConsumeTag({ctx}) {
     const is_mobile = isMobile()
 
     useEffect(() => {
+        fetchTag()
+    },[])
+
+    const fetchTag = () => {
         fetch(`http://127.0.0.1:8000/api/v1/tag`, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -29,18 +33,18 @@ export default function FilterConsumeTag({ctx}) {
                 } 
             },
             (error) => {
-                if(getLocal(ctx + "_sess") !== undefined){
+                if(getLocal(props.ctx + "_sess") !== undefined){
                     setIsLoaded(true)
-                    setItems(JSON.parse(getLocal(ctx + "_sess")))
+                    setItems(JSON.parse(getLocal(props.ctx + "_sess")))
                 } else {
                     setIsLoaded(true)
                     setError(error)
                 }
             }
         )
-    },[])
+    }
 
-    function handleCheckboxChange(event) {
+    const handleCheckboxChange = (event) => {
         const { checked, value } = event.target
         const tagValue = JSON.parse(value)
         if (checked) {
@@ -50,18 +54,18 @@ export default function FilterConsumeTag({ctx}) {
         }
     }
 
-    function applyFilter(){
-        storeLocal("Table_filter_"+ctx, tags)
-        window.location.reload()
+    const applyFilter = () => {
+        storeLocal("Table_filter_"+props.ctx, tags)
+        props.onchange()
     }
 
-    function resetFilter(){
-        localStorage.removeItem("Table_filter_"+ctx)
-        window.location.reload()
+    const resetFilter = () => {
+        localStorage.removeItem("Table_filter_"+props.ctx)
+        props.onchange()
     }
   
     if (error) {
-        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(props.ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>
@@ -69,7 +73,7 @@ export default function FilterConsumeTag({ctx}) {
             </div>
         )
     } else {
-        const tagSelected = JSON.parse(getLocal("Table_filter_"+ctx))
+        const tagSelected = JSON.parse(getLocal("Table_filter_"+props.ctx))
         return (
             <>
                 <div className={is_mobile ?'W-100 p-2 rounded mb-2':'w-50 p-2 rounded ms-2'} style={{border:"1px solid #DFE2E6", cursor:"pointer"}} title="Click to select tag"
@@ -104,7 +108,7 @@ export default function FilterConsumeTag({ctx}) {
                                         let found = false
                                         tagSelected != null && tagSelected.length > 0 ?
                                             tagSelected.map(element => {
-                                                if(element.tag_slug == elmt.tag_slug){
+                                                if(element.tag_slug === elmt.tag_slug){
                                                     found = true
                                                     return
                                                 }

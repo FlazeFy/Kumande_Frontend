@@ -5,7 +5,7 @@ import { getLocal } from "../../../../modules/storages/local"
 import Swal from 'sweetalert2'
 import Axios from 'axios'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faBowlRice, faCake, faCheckCircle, faFloppyDisk, faMugSaucer, faTrash, faTriangleExclamation, faXmark } from "@fortawesome/free-solid-svg-icons"
+import { faCheckCircle, faFloppyDisk, faTrash, faTriangleExclamation, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { convertDatetime, getCleanTitleFromCtx, ucFirstChar } from '../../../../modules/helpers/converter'
 import PostAllergic from './post_allergic'
 import ComponentTextMessageNoData from '../../../../atoms/text_message_no_data'
@@ -37,7 +37,7 @@ export default function GetAllergic({ctx}) {
         }).then(({status, result}) => {
             setIsLoaded(true)
 
-            if(status == 200){
+            if(status === 200){
                 setItemsAllergic(result.data) 
             } else {
                 setItemsAllergic(null)
@@ -72,7 +72,7 @@ export default function GetAllergic({ctx}) {
     const handleUpdateAllergic = async (id) => {
         const data = {
             allergic_context: allergicName,
-            allergic_desc: allergicDesc && allergicDesc.trim() == "" ? null : allergicDesc,
+            allergic_desc: allergicDesc && allergicDesc.trim() === "" ? null : allergicDesc,
         }
 
         try {
@@ -84,7 +84,7 @@ export default function GetAllergic({ctx}) {
                 }
             })
 
-            if(response.status == 200){
+            if(response.status === 200){
                 fetchAllergic()
                 Swal.fire({
                     title: "Success!",

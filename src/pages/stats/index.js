@@ -26,7 +26,7 @@ const StatsPage = () => {
                     <div id="content-body">
                         <GetStatsType/>
                         {
-                            selectedStatsType == "consume" ?
+                            selectedStatsType === "consume" ?
                                 <div className="row">
                                     <div className="col-lg-4 col-md-4 col-sm-6 py-3">
                                         <GetMostConsumeType ctx="most consume type"/>
@@ -41,19 +41,19 @@ const StatsPage = () => {
                                         <GetMostConsumeMainIng ctx="most consume main ingredient"/>
                                     </div>
                                 </div>
-                            : selectedStatsType == "spending" ?
+                            : selectedStatsType === "spending" ?
                                 <div className="row">
                                     <div className="col-lg-6 col-md-6 col-sm-12 py-3">
                                         <GetTotalSpending ctx={"total spending "+yr} filter_name="total_spending"/>
                                     </div>
                                 </div>
-                            : selectedStatsType == "health" ?
+                            : selectedStatsType === "health" ?
                                 <div className="row">
                                     <div className="col-lg-6 col-md-6 col-sm-12 py-3">
                                         <GetTotalDailyCal ctx={"total daily cal "+mon+" "+yr} filter_name="total_daily_cal"/>
                                     </div>
                                 </div>
-                            : selectedStatsType == "budget" ?
+                            : selectedStatsType === "budget" ?
                                 <div className="row">
                                     <div className="col-lg-6 col-md-6 col-sm-12 py-3">
                                         <GetTotalBudget ctx={"all budget in "+yr} filter_name="total_budget"/>

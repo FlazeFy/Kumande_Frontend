@@ -9,8 +9,9 @@ import { getCleanTitleFromCtx, ucFirstWord } from '../../../modules/helpers/conv
 import { getTodayDate } from '../../../modules/helpers/generator'
 import { getLocal } from '../../../modules/storages/local'
 import ComponentAlertBox from '../../../molecules/alert_box'
+import GetCalendarType from './get_calendar_type'
 
-export default function GetDailyCalendar({ctx}) {
+export default function GetDailyCalendar(props) {
     //Initial variable
     const [error, setError] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)
@@ -21,17 +22,21 @@ export default function GetDailyCalendar({ctx}) {
     const event = []
 
     const getUrl = (type, month, year) => {
-        if(type == 'daily_total_spending'){
+        if(type === 'daily_total_spending'){
             return `http://127.0.0.1:8000/api/v1/payment/total/month/${month}/year/${year}`
-        } else if (type == 'daily_total_calorie'){
+        } else if (type === 'daily_total_calorie'){
             return `http://127.0.0.1:8000/api/v1/consume/total/day/cal/month/${month}/year/${year}`
-        } else if (type == 'daily_all_consume'){
+        } else if (type === 'daily_all_consume'){
             return ``
         }
     }
 
     useEffect(() => {
-        fetch(getUrl(ctx, month, year), {
+        fetchCalendar()
+    }, [props.ctx,month, year])
+
+    const fetchCalendar = () => {
+        fetch(getUrl(props.ctx, month, year), {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -43,16 +48,16 @@ export default function GetDailyCalendar({ctx}) {
                 setItems(result.data)        
             },
             (error) => {
-                if(getLocal(ctx + "_sess") !== undefined){
+                if(getLocal(props.ctx + "_sess") !== undefined){
                     setIsLoaded(true)
-                    setItems(JSON.parse(getLocal(ctx + "_sess")))
+                    setItems(JSON.parse(getLocal(props.ctx + "_sess")))
                 } else {
                     setIsLoaded(true)
                     setError(error)
                 }
             }
         )
-    }, [month, year])
+    }
 
     const handleMonthChange = (info) => {
         setCurrentMonth(info.view.currentStart.getMonth() + 1)
@@ -68,17 +73,17 @@ export default function GetDailyCalendar({ctx}) {
     }
 
     const getUnit = (total, type) => {
-        if(type == 'daily_total_spending'){
+        if(type === 'daily_total_spending'){
             return `Rp. ${total}`
-        } else if (type == 'daily_total_calorie'){
+        } else if (type === 'daily_total_calorie'){
             return total + ` cal`
-        } else if (type == 'daily_all_consume'){
+        } else if (type === 'daily_all_consume'){
             return ``
         }
     }
 
     if (error) {
-        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(props.ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>
@@ -90,7 +95,7 @@ export default function GetDailyCalendar({ctx}) {
             items.forEach((el)=> {
                 event.push(
                     { 
-                        title: getUnit(el['total'],ctx), 
+                        title: getUnit(el['total'],props.ctx), 
                         date: `${year}-${fixNumber(month)}-${fixNumber(el['context'])}` 
                     }
                 )
@@ -99,7 +104,8 @@ export default function GetDailyCalendar({ctx}) {
         
         return (
             <div>
-                <h3 className='m-2 text-primary'>{getCleanTitleFromCtx(ucFirstWord(ctx))}</h3>
+                <h3 className='m-2 text-primary'>{getCleanTitleFromCtx(ucFirstWord(props.ctx))}</h3>
+                <GetCalendarType onchange={props.onchange}/>
                 <FullCalendar
                     plugins={[ dayGridPlugin ]}
                     initialView="dayGridMonth"

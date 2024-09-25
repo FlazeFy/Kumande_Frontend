@@ -44,7 +44,7 @@ export default function GetTodaySchedule({ctx}) {
                 setIsLoaded(true)
                 setItems(result.data)        
                 if(result.data != null && result.data.length > 0){
-                    if(is_remind_schedule == 'true'){
+                    if(is_remind_schedule === 'true'){
                         playSound()
 
                         let content = ''

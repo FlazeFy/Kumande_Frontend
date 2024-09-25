@@ -2,13 +2,12 @@ import React from 'react'
 import { isMobile } from '../../../modules/helpers/validator'
 import { storeLocal, getLocal } from '../../../modules/storages/local'
 
-export default function FilterConsumeLimit() {
+export default function FilterConsumeLimit(props) {
     const is_mobile = isMobile()
 
-    function toogle(val) {
+    const toogle = (val) => {
         storeLocal("Table_limit_all_consume",val) 
-
-        window.location.reload(false)
+        props.onchange()
     }
 
     const selectedConsumeLimit = getLocal("Table_limit_all_consume")

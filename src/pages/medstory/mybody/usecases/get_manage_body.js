@@ -109,7 +109,7 @@ export default function GetManageBody({ctx}) {
                     Authorization: `Bearer ${token}`
                 }
             })
-            if(response.status != 200){
+            if(response.status !== 200){
                 window.location.reload(false)
                 return response.data.message
             } else {
@@ -147,7 +147,7 @@ export default function GetManageBody({ctx}) {
                     Authorization: `Bearer ${token}`
                 }
             })
-            if(response.status != 200){
+            if(response.status !== 200){
                 window.location.reload(false)
                 return response.data.message
             } else {
@@ -169,7 +169,7 @@ export default function GetManageBody({ctx}) {
     }
 
     const handleToogleDelete = async (type) => {
-        if(type == 'calorie'){
+        if(type === 'calorie'){
             try {
                 if(!showChecboxCal){
                     setShowChecboxCal(true)
@@ -186,7 +186,7 @@ export default function GetManageBody({ctx}) {
                             Authorization: `Bearer ${token}`
                         }
                     })
-                    if(response.status != 200){
+                    if(response.status !== 200){
                         Swal.fire({
                             title: 'Error!',
                             text: 'Something wrong happen. Call the Admin!',
@@ -209,7 +209,7 @@ export default function GetManageBody({ctx}) {
                     icon: 'error',
                 })  
             }
-        } else if(type == 'body_info'){
+        } else if(type === 'body_info'){
             try {
                 if(!showChecboxBodyInfo){
                     setShowChecboxBodyInfo(true)
@@ -226,7 +226,7 @@ export default function GetManageBody({ctx}) {
                             Authorization: `Bearer ${token}`
                         }
                     })
-                    if(response.status != 200){
+                    if(response.status !== 200){
                         Swal.fire({
                             title: 'Error!',
                             text: 'Something wrong happen. Call the Admin!',

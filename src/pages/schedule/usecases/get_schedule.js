@@ -5,20 +5,16 @@ import { useState, useEffect } from "react"
 import Swal from 'sweetalert2'
 import useSound from 'use-sound'
 import audioUrl from '../../../../public/digital-alarm-2-151919.mp3'
-
-// Modules
 import { getLocal } from '../../../modules/storages/local'
-
-//Font awesome classicon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBowlRice, faCake,  faHeart, faMugSaucer} from "@fortawesome/free-solid-svg-icons"
+import { faHeart} from "@fortawesome/free-solid-svg-icons"
 import ComponentTextIcon from '../../../atoms/text_icon'
 import ComponentAlertBox from '../../../molecules/alert_box'
 import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
 
 export default function GetSchedule({ctx, day, category}) {
     //Initial variable
-    const [playSound, { stop }] = useSound(audioUrl)
+    const [playSound] = useSound(audioUrl)
     const [error, setError] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)
     const [items, setItems] = useState(null)
@@ -37,7 +33,7 @@ export default function GetSchedule({ctx, day, category}) {
                 setIsLoaded(true)
                 let item = []
                 result.data.forEach(el => {
-                    if(el.schedule_time[0].category == category){
+                    if(el.schedule_time[0].category === category){
                         item.push(el)
                     }
                 });
@@ -76,7 +72,7 @@ export default function GetSchedule({ctx, day, category}) {
                             Authorization: `Bearer ${token}`
                         }
                     })
-                    if(response.status == 200){
+                    if(response.status === 200){
                         Swal.fire({
                             title: "Deleted!",
                             text: "Your consume has been removed!",
@@ -114,15 +110,15 @@ export default function GetSchedule({ctx, day, category}) {
         return (
             <div className='d-flex justify-content-start mb-2'>
                 {
-                    items.length > 0     ? (
+                    items.length > 0 && (
                         <div>
                         <h5 className='text-start'>Assigned Consume</h5>
                         {
-                            items.map((elmt) => (
-                                <button key={elmt.id} className='btn btn-tag-removed' data-bs-dismiss="modal" title='Click to remove from schedule' onClick={(e)=>removeConsume(elmt.id, elmt.schedule_consume)}>
+                            items.map((elmt,idx) => (
+                                <button key={'assigned_consume_'+idx} className='btn btn-tag-removed' data-bs-dismiss="modal" title='Click to remove from schedule' onClick={(e)=>removeConsume(elmt.id, elmt.schedule_consume)}>
                                     <div className='d-flex justify-content-between mb-1'>
                                         <div>
-                                        {elmt.is_favorite == 1 ? (
+                                        {elmt.is_favorite === 1 ? (
                                             <FontAwesomeIcon icon={faHeart} className='me-2 text-danger' size='lg' title='Favorite'/>
                                         ) : (
                                             <></>
@@ -134,9 +130,7 @@ export default function GetSchedule({ctx, day, category}) {
                             ))
                         }
                         </div>
-                    ) : (
-                        <></>
-                    )
+                    ) 
                 }
             </div>
         );

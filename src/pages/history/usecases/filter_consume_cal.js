@@ -5,7 +5,7 @@ import { isMobile } from '../../../modules/helpers/validator'
 import ComponentAlertBox from '../../../molecules/alert_box'
 import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
 
-export default function FilterConsumeCal({ctx}) {
+export default function FilterConsumeCal(props) {
     //Initial variable
     const [error, setError] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)
@@ -30,17 +30,17 @@ export default function FilterConsumeCal({ctx}) {
                     setMaxValue(result.data[0].max_calorie)
                     setMinValue(result.data[0].min_calorie)
 
-                    if(getLocal("Table_filter_"+ctx) === undefined){
+                    if(getLocal("Table_filter_"+props.ctx) === undefined){
                         setSelectMaxValue(result.data[0].max_calorie)
                         setSelectMinValue(result.data[0].min_calorie)
                     }
-                    storeLocal(ctx + "_sess", JSON.stringify(result))
+                    storeLocal(props.ctx + "_sess", JSON.stringify(result))
                 }        
             },
             (error) => {
-                if(getLocal(ctx + "_sess") !== undefined){
+                if(getLocal(props.ctx + "_sess") !== undefined){
                     setIsLoaded(true)
-                    const temp = JSON.parse(getLocal(ctx + "_sess"))
+                    const temp = JSON.parse(getLocal(props.ctx + "_sess"))
                     setMaxValue(temp.data[0].max_calorie)
                     setMinValue(temp.data[0].min_calorie)
                 } else {
@@ -50,8 +50,8 @@ export default function FilterConsumeCal({ctx}) {
             }
         )
 
-        if(getLocal("Table_filter_"+ctx) !== undefined){
-            const search = getLocal("Table_filter_"+ctx).split("-")
+        if(getLocal("Table_filter_"+props.ctx) !== undefined){
+            const search = getLocal("Table_filter_"+props.ctx).split("-")
             setSelectMaxValue(search[1])
             setSelectMinValue(search[0])
             setIsLoaded(true)
@@ -66,12 +66,12 @@ export default function FilterConsumeCal({ctx}) {
         }
         const maxVal = e.maxValue
 
-        storeLocal("Table_filter_"+ctx,minVal+"-"+maxVal)
-        window.location.reload()
+        storeLocal("Table_filter_"+props.ctx,minVal+"-"+maxVal)
+        props.onchange()
     }
     
     if (error) {
-        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
+        return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(props.ctx)}/>
     } else if (!isLoaded) {
         return (
             <div>

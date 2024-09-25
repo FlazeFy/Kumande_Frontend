@@ -9,7 +9,7 @@ module.exports = {
   plugins: ["gatsby-plugin-postcss", "gatsby-plugin-image", {
     resolve: 'gatsby-plugin-manifest',
     options: {
-      "icon": "../public/icon.ong"
+      "icon": "./public/logo.png"
     }
   }, "gatsby-plugin-sharp", "gatsby-transformer-sharp", {
     resolve: 'gatsby-source-filesystem',

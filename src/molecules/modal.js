@@ -14,7 +14,7 @@ export default function ComponentModal(props){
             {
                 props.button_template ?? <ComponentButton button_type="modal" icon={props.button_icon} text="Sign Out" class={props.button_class} target={props.id} button_name={props.title}/>
             }
-            <div className="modal fade" id={props.id} aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id={props.id} aria-labelledby="exampleModalLabel">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">

@@ -90,7 +90,7 @@ export default function GetBudgetDashboard({ctx}) {
                 }
             })
 
-            if(response.status == 200){
+            if(response.status === 200){
                 Swal.fire({
                     title: "Success!",
                     text: "Budget saved",
@@ -177,7 +177,7 @@ export default function GetBudgetDashboard({ctx}) {
                                     if(dt.budget_total > largetBudget){
                                         largetBudget = dt.budget_total
                                     }
-                                    if(smallesBudget == 0 || dt.budget_total < smallesBudget){
+                                    if(smallesBudget === 0 || dt.budget_total < smallesBudget){
                                         smallesBudget = dt.budget_total
                                     }
 
@@ -258,7 +258,7 @@ export default function GetBudgetDashboard({ctx}) {
                                                         <div className='d-flex justify-content-start'>
                                                             {
                                                                 Array.from({ length: monthlyItemMaxPage }, (v, i) => (
-                                                                    <button key={'page_'+i} onClick={() => fetchMontlyPayment(monthlyItemMonth, monthlyItemYear, i+1)} className={monthlyItemCurrentPage == i+1 ? 'btn btn-page active':'btn btn-page'}>{i+1}</button>
+                                                                    <button key={'page_'+i} onClick={() => fetchMontlyPayment(monthlyItemMonth, monthlyItemYear, i+1)} className={monthlyItemCurrentPage === i+1 ? 'btn btn-page active':'btn btn-page'}>{i+1}</button>
                                                                 ))
                                                             }
                                                         </div>

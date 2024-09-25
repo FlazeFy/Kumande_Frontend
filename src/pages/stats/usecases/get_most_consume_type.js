@@ -36,7 +36,7 @@ export default function GetMostConsumeType({ctx}) {
         })
         .then(({ status, result }) => {
             setIsLoaded(true)
-            if(status == 200){ 
+            if(status === 200){ 
                 setItems(result.data)
                 const item = result.data
                 storeLocal(ctx + "_sess",JSON.stringify(item))  

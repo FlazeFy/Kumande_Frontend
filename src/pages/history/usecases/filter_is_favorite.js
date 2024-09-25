@@ -2,13 +2,12 @@ import React from 'react'
 import { isMobile } from '../../../modules/helpers/validator'
 import { storeLocal, getLocal } from '../../../modules/storages/local'
 
-export default function FilterIsFavoriteConsume() {
+export default function FilterIsFavoriteConsume(props) {
     const is_mobile = isMobile()
 
-    function toogle(val) {
+    const toogle = (val) => {
         storeLocal("Table_filter_favorite_all_consume",val) 
-
-        window.location.reload(false)
+        props.onchange()
     }
 
     const selectedIsFav = getLocal("Table_filter_favorite_all_consume")

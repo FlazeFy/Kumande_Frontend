@@ -28,11 +28,12 @@ export default function GetAllConsumePagination({ctx}) {
     const keyFav = getLocal("Table_filter_favorite_"+ctx)
     const keyType = getLocal("Table_filter_type_"+ctx)
     const keyLimit = getLocal("Table_limit_"+ctx)
+    const keyPage = getLocal("Table_page_"+ctx)
     const keyCalorie = getLocal("Table_filter_max_min_cal")
     const [consumeMaxPage,setConsumeMaxPage] = useState(1)
     const [consumeCurrPage,setConsumeCurrPage] = useState(1)
 
-    const fetchConsume = (page) => {
+    const fetchConsume = () => {
         if(keyOrder === null){
             storeLocal("Table_order_"+ctx,"DESC")
         }
@@ -48,8 +49,11 @@ export default function GetAllConsumePagination({ctx}) {
         if(keyCalorie === null){
             storeLocal("Table_filter_max_min_cal","all")
         }
+        if(keyPage === null){
+            storeLocal("Table_page_"+ctx,"1")
+        }
 
-        fetch(`http://127.0.0.1:8000/api/v1/consume/limit/${keyLimit}/order/${keyOrder}/favorite/${keyFav}/type/${keyType}/provide/all/calorie/${keyCalorie}?page=${page}`, {
+        fetch(`http://127.0.0.1:8000/api/v1/consume/limit/${keyLimit}/order/${keyOrder}/favorite/${keyFav}/type/${keyType}/provide/all/calorie/${keyCalorie}?page=${keyPage}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -76,10 +80,16 @@ export default function GetAllConsumePagination({ctx}) {
         )
     }
 
-
     useEffect(() => {
-        fetchConsume();
-    }, []);
+        fetchConsume()
+    }, [
+        getLocal("Table_order_all_consume"),
+        getLocal("Table_filter_favorite_" + ctx),
+        getLocal("Table_filter_type_" + ctx),
+        getLocal("Table_limit_" + ctx),
+        getLocal("Table_filter_max_min_cal"),
+        getLocal("Table_page_" + ctx)
+    ]);
 
     if (error) {
         return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
@@ -93,64 +103,58 @@ export default function GetAllConsumePagination({ctx}) {
         let date_before = ''
         
         return (
-            <div>
-                <div className='d-block mx-auto'>
-                    <h3 className='m-2 text-primary'>{getCleanTitleFromCtx(ucFirstWord(ctx))}</h3>
-                    <div className={is_mobile ? 'row' : "d-flex justify-content-start"}>
-                        <div className={is_mobile ? 'col-6' : ''}>
-                            <FilterOrderConsume/>
-                        </div>
-                        <div className={is_mobile ? 'col-6' : ''}>
-                            <FilterIsFavoriteConsume/>
-                        </div>
-                        <div className={is_mobile ? 'col-6' : ''}>
-                            <FilterConsumeType/>
-                        </div>
-                        <div className={is_mobile ? 'col-6' : ''}>
-                            <FilterConsumeLimit/>
-                        </div>
+            <div className='d-block mx-auto'>
+                <h3 className='m-2 text-primary'>{getCleanTitleFromCtx(ucFirstWord(ctx))}</h3>
+                <div className={is_mobile ? 'row' : "d-flex justify-content-start"}>
+                    <div className={is_mobile ? 'col-6' : ''}>
+                        <FilterOrderConsume onchange={fetchConsume}/>
                     </div>
-                    <div className={is_mobile ? 'row' : "d-flex justify-content-start mb-3"}>
-                        <FilterConsumeCal ctx="max_min_cal"/>
-                        <FilterConsumeTag ctx="consume_tag"/>
+                    <div className={is_mobile ? 'col-6' : ''}>
+                        <FilterIsFavoriteConsume onchange={fetchConsume}/>
                     </div>
-                    {
-                        items.length > 0 ?
-                            items.map((elmt, idx) => {
-                                const curr_date = convertDatetime(elmt.created_at,'calendar').substring(0,11)
-
-                                if(date_before == "" || date_before != curr_date){
-                                    date_before = curr_date
-                                    return (
-                                        <div key ={idx}>
-                                            <div className='text-center'>
-                                                <h6 style={{fontSize:"var(--textMD)"}} className='bgd-primary text-white p-2 mb-3 rounded d-inline-block mx-auto'>{curr_date}</h6>
-                                            </div>
-                                            <ComponentContainerConsume items={elmt} type="header"/>
-                                        </div>
-                                    )
-                                } else {
-                                    return (
-                                        <ComponentContainerConsume key ={idx} items={elmt} type="header"/>
-                                    )
-                                }
-                            })
-                        :
-                            <ComponentTextMessageNoData is_with_image={true} url={'/icons/Consume.png'} message="No Consume Found"/>
-                    }
-                    {
-                        items && consumeMaxPage > 0 ? 
-                            <div className='d-flex justify-content-start'>
-                                {
-                                    Array.from({ length: consumeMaxPage }, (v, i) => (
-                                        <button key={'page_'+i} onClick={() => fetchConsume(i+1)} className={consumeCurrPage == i+1 ? 'btn btn-page active':'btn btn-page'}>{i+1}</button>
-                                    ))
-                                }
-                            </div>
-                        :
-                            <></>
-                    }
+                    <div className={is_mobile ? 'col-6' : ''}>
+                        <FilterConsumeType onchange={fetchConsume}/>
+                    </div>
+                    <div className={is_mobile ? 'col-6' : ''}>
+                        <FilterConsumeLimit onchange={fetchConsume}/>
+                    </div>
                 </div>
+                <div className={is_mobile ? 'row' : "d-flex justify-content-start mb-3"}>
+                    <FilterConsumeCal ctx="max_min_cal" onchange={fetchConsume}/>
+                    <FilterConsumeTag ctx="consume_tag" onchange={fetchConsume}/>
+                </div>
+                {
+                    items.length > 0 ?
+                        items.map((elmt, idx) => {
+                            const curr_date = convertDatetime(elmt.created_at,'calendar').substring(0,11)
+
+                            if(date_before === "" || date_before !== curr_date){
+                                date_before = curr_date
+                                return (
+                                    <div key ={idx}>
+                                        <div className='text-center'>
+                                            <h6 style={{fontSize:"var(--textMD)"}} className='bgd-primary text-white p-2 mb-3 rounded d-inline-block mx-auto'>{curr_date}</h6>
+                                        </div>
+                                        <ComponentContainerConsume items={elmt} type="header"/>
+                                    </div>
+                                )
+                            } else {
+                                return <ComponentContainerConsume key ={idx} items={elmt} type="header"/>
+                            }
+                        })
+                    :
+                        <ComponentTextMessageNoData is_with_image={true} url={'/icons/Consume.png'} message="No Consume Found"/>
+                }
+                {
+                    items && consumeMaxPage > 0 &&
+                        <div className='d-flex justify-content-start'>
+                            {
+                                Array.from({ length: consumeMaxPage }, (v, i) => (
+                                    <button key={'page_'+i} onClick={() => fetchConsume(i+1)} className={consumeCurrPage === i+1 ? 'btn btn-page active':'btn btn-page'}>{i+1}</button>
+                                ))
+                            }
+                        </div>
+                }
             </div>
         )
     }

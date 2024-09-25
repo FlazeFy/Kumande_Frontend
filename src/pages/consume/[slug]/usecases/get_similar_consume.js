@@ -52,13 +52,13 @@ export default function GetSimilarConsume({ctx, consume_from, consume_type, prov
                     let item_created_at = []
                     
                     result.data.forEach(el => {
-                        if(el.consume_from == consume_from && item_consume_from.length < 6){
+                        if(el.consume_from === consume_from && item_consume_from.length < 6){
                             item_consume_from.push(el)
-                        } else if(el.consume_type == consume_type && item_consume_type.length < 6){
+                        } else if(el.consume_type === consume_type && item_consume_type.length < 6){
                             item_consume_type.push(el)
-                        } else if(el.consume_detail[0].provide == provide && item_provide.length < 6){
+                        } else if(el.consume_detail[0].provide === provide && item_provide.length < 6){
                             item_provide.push(el)
-                        } else if(el.consume_detail[0].main_ing == main_ing && item_main_ing.length < 6){
+                        } else if(el.consume_detail[0].main_ing === main_ing && item_main_ing.length < 6){
                             item_main_ing.push(el)
                         } else if(item_created_at.length < 6){
                             item_created_at.push(el)
@@ -100,7 +100,7 @@ export default function GetSimilarConsume({ctx, consume_from, consume_type, prov
                             itemsConsumeFrom.map((elmt, idx)=>{
                                 if(elmt.slug_name != slug){
                                     return (
-                                        <div className='col-lg-4 col-md-6 col-sm-12'>
+                                        <div className='col-lg-4 col-md-6 col-sm-12' key={idx}>
                                             <ComponentContainerConsume type="mini" items={elmt} func={(e)=> window.location.href ='/consume/'+elmt.slug_name}/>
                                         </div>
                                     )
@@ -117,7 +117,7 @@ export default function GetSimilarConsume({ctx, consume_from, consume_type, prov
                             itemsConsumeType.map((elmt, idx)=>{
                                 if(elmt.slug_name != slug){
                                     return (
-                                        <div className='col-lg-4 col-md-6 col-sm-12'>
+                                        <div className='col-lg-4 col-md-6 col-sm-12' key={idx}>
                                             <ComponentContainerConsume type="mini" items={elmt} func={(e)=> window.location.href ='/consume/'+elmt.slug_name}/>
                                         </div>
                                     )
@@ -134,7 +134,7 @@ export default function GetSimilarConsume({ctx, consume_from, consume_type, prov
                             itemsProvide.map((elmt, idx)=>{
                                 if(elmt.slug_name != slug){
                                     return (
-                                        <div className='col-lg-4 col-md-6 col-sm-12'>
+                                        <div className='col-lg-4 col-md-6 col-sm-12' key={idx}>
                                             <ComponentContainerConsume type="mini" items={elmt} func={(e)=> window.location.href ='/consume/'+elmt.slug_name}/>
                                         </div>
                                     )
@@ -151,7 +151,7 @@ export default function GetSimilarConsume({ctx, consume_from, consume_type, prov
                             itemsMainIng.map((elmt, idx)=>{
                                 if(elmt.slug_name != slug){
                                     return (
-                                        <div className='col-lg-4 col-md-6 col-sm-12'>
+                                        <div className='col-lg-4 col-md-6 col-sm-12' key={idx}>
                                             <ComponentContainerConsume type="mini" items={elmt} func={(e)=> window.location.href ='/consume/'+elmt.slug_name}/>
                                         </div>
                                     )
@@ -168,7 +168,7 @@ export default function GetSimilarConsume({ctx, consume_from, consume_type, prov
                             itemsCreatedAt.map((elmt, idx)=>{
                                 if(elmt.slug_name != slug){
                                     return (
-                                        <div className='col-lg-4 col-md-6 col-sm-12'>
+                                        <div className='col-lg-4 col-md-6 col-sm-12' key={idx}>
                                             <ComponentContainerConsume type="mini" items={elmt} func={(e)=> window.location.href ='/consume/'+elmt.slug_name}/>
                                         </div>
                                     )

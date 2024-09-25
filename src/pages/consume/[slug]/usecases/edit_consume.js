@@ -64,7 +64,7 @@ export default function EditConsume(props){
     },[])
 
     const selectTag = (i, slug, name, type) => {
-        if(type == 'add'){
+        if(type === 'add'){
             const tagExists = selectedTagAdd.some((elmt) => elmt.props.value.slug_name === slug);
             if (!tagExists) {
                 setSelectedTagAdd(selectedTagAdd.concat(
@@ -108,7 +108,7 @@ export default function EditConsume(props){
         try {
             let consumeTag = props.data.consume_tag 
             if(selectedTagAdd.length > 0){
-                if(consumeTag == null) consumeTag = []
+                if(consumeTag === null) consumeTag = []
                 selectedTagAdd.forEach(element => {
                     consumeTag.push({
                         slug_name:element.props.value.slug_name, 
@@ -119,10 +119,10 @@ export default function EditConsume(props){
             if(selectedTagRemove.length > 0){
                 let tag = []
                 consumeTag = consumeTag.filter(element => 
-                    !selectedTagRemove.some(dt => dt.props.value.slug_name == element.slug_name)
+                    !selectedTagRemove.some(dt => dt.props.value.slug_name === element.slug_name)
                 );
             }
-            if(consumeTag.length == 0){
+            if(consumeTag.length === 0){
                 consumeTag = null
             } else if(consumeTag != null){
                 consumeTag = JSON.stringify(consumeTag)
@@ -147,7 +147,7 @@ export default function EditConsume(props){
                 }
             })
 
-            if(response.status == 200){
+            if(response.status === 200){
                 storeLocal('is_edit_consume','false')
                 props.onchange()
                 Swal.fire({
@@ -213,8 +213,8 @@ export default function EditConsume(props){
                         <div className="form-floating mb-3">
                             <select className="form-select" id="floatingSelect" defaultValue={props.data.consume_from} onChange={(e) => setConsumeFrom(e.target.value)} aria-label="Floating label select example">
                                 {
-                                    consumeFromTokens.map(dt => (
-                                        <option value={dt}>{dt}</option>
+                                    consumeFromTokens.map((dt,idx) => (
+                                        <option value={dt} key={idx}>{dt}</option>
                                     ))
                                 }
                             </select>
@@ -225,8 +225,8 @@ export default function EditConsume(props){
                         <div className="form-floating mb-3">
                             <select className="form-select" id="floatingSelect" defaultValue={props.data.consume_type} onChange={(e) => setConsumeType(e.target.value)} aria-label="Floating label select example">
                                 {
-                                    consumeTypeTokens.map(dt => (
-                                        <option value={dt}>{dt}</option>
+                                    consumeTypeTokens.map((dt,idx) => (
+                                        <option value={dt} key={idx}>{dt}</option>
                                     ))
                                 }
                             </select>
@@ -235,10 +235,10 @@ export default function EditConsume(props){
                     </div>
                 </div>
                 <div className="form-floating mb-3">
-                    <textarea className="form-control" style={{minHeight:"100px"}} onChange={(e) => setConsumeComment(e.target.value)} placeholder="Leave a comment here" id="floatingTextarea">{props.data.consume_comment}</textarea>
+                    <textarea className="form-control" style={{minHeight:"100px"}} onChange={(e) => setConsumeComment(e.target.value)} defaultValue={props.data.consume_comment} placeholder="Leave a comment here" id="floatingTextarea"></textarea>
                     <label htmlFor="floatingTextarea">Comments</label>
                 </div>
-                <div ref={selectedTagAdd} className="mt-2 mx-1 px-3 py-2 rounded mb-3" style={{border: "1.25px solid rgb(223, 226, 230)"}}>
+                <div className="mt-2 mx-1 px-3 py-2 rounded mb-3" style={{border: "1.25px solid rgb(223, 226, 230)"}}>
                     <label style={{marginBottom:"var(--spaceSM)",color:"grey",fontSize:"var(--textXMD)"}}>Attached Tags</label>
                     <ComponentBreakLine length={1}/>
                     {
@@ -247,12 +247,12 @@ export default function EditConsume(props){
                                 {
                                     props.data.consume_tag.map((elmt, index) => (
                                         <button key={index} title="Select this tag" className='btn btn-tag' onClick={() => {
-                                            if(selectedTagRemove.length == 0){
+                                            if(selectedTagRemove.length === 0){
                                                 selectTag(index, elmt.slug_name, elmt.tag_name, 'remove')
                                             } else {
                                                 let found = false
                                                 selectedTagRemove.map((slct, j, index) => {
-                                                    if(slct.props.value == elmt.tags_slug){
+                                                    if(slct.props.value === elmt.tags_slug){
                                                         found = true
                                                     }
                                                 })
@@ -285,17 +285,17 @@ export default function EditConsume(props){
                 <h5>Available Tags</h5>
                 {
                     item != null && (
-                        <div>
+                        <>
                             {
                                 item.map((elmt, index) => (
-                                    (props.data.consume_tag == null || !props.data.consume_tag.some(dt => dt.slug_name == elmt.tag_slug)) &&
+                                    (props.data.consume_tag === null || !props.data.consume_tag.some(dt => dt.slug_name === elmt.tag_slug)) &&
                                     <button key={index} title="Select this tag" className='btn btn-tag' onClick={() => {
-                                        if(selectedTagAdd.length == 0){
+                                        if(selectedTagAdd.length === 0){
                                             selectTag(index, elmt.tag_slug, elmt.tag_name, 'add')
                                         } else {
                                             let found = false
                                             selectedTagAdd.map((slct, j, index) => {
-                                                if(slct.props.value == elmt.tags_slug){
+                                                if(slct.props.value === elmt.tags_slug){
                                                     found = true
                                                 }
                                             })
@@ -307,7 +307,7 @@ export default function EditConsume(props){
                                     }} >{elmt.tag_name}</button>
                                 ))
                             }
-                        </div>
+                        </>
                     ) 
                 }
                 <button className='btn btn-success mt-3' onClick={handleSubmit}><FontAwesomeIcon icon={faFloppyDisk}/> Save Changes</button>

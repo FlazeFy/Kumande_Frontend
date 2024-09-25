@@ -11,6 +11,8 @@ import { getLocal, storeLocal } from '../../../modules/storages/local'
 import { getAge } from '../../../modules/helpers/generator'
 import GetQRCode from './get_qrcode'
 import ComponentAlertBox from '../../../molecules/alert_box'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons'
 
 export default function GetMyProfile({ctx}) {
     //Initial variable
@@ -132,7 +134,7 @@ export default function GetMyProfile({ctx}) {
                     <label htmlFor="floatingSelectGrid">Gender</label>
                 </div>
                 <div className='d-flex justify-content-between'>
-                    <button className='btn btn-success' onClick={handleSubmit}>Save Changes</button>
+                    <button className='btn btn-success' onClick={handleSubmit}><FontAwesomeIcon icon={faFloppyDisk}/> Save Changes</button>
                     <GetQRCode id={id}/>
                 </div>
             </div>

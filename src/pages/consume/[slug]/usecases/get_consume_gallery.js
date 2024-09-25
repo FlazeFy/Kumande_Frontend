@@ -22,6 +22,10 @@ export default function GetConsumeGallery(props) {
     const token = getLocal("token_key")
 
     useEffect(() => {
+        fetchGallery()
+    }, [])
+
+    const fetchGallery = () => {
         fetch(`http://127.0.0.1:8000/api/v1/consume/gallery/${props.slug}`, {
             method: 'GET',
             headers: {
@@ -50,7 +54,7 @@ export default function GetConsumeGallery(props) {
                 })
             }
         )
-    }, [])
+    }
 
     if (error) {
         return <ComponentAlertBox message={error.message} type='danger' context={'consume gallery'}/>
@@ -63,14 +67,23 @@ export default function GetConsumeGallery(props) {
     } else {
         return (
             <div className='container p-3 mt-3'>
-                <ComponentText text_type="sub_heading" body="Gallery"/>
+                <div className='d-flex justify-content-between'>
+                    <ComponentText text_type="sub_heading" body="Gallery"/>
+                    {
+                        items.length > 0 &&
+                            <ComponentModal id={`addGallery`} title={`Add Gallery`} button_class="bgd-primary p-2 text-white"
+                                button_icon={<FontAwesomeIcon icon={faPlus} size="xl" className='me-2'/>}
+                                body={<PostGallery consume_id={props.id} onsubmit={fetchGallery}/>}
+                            />
+                    }
+                </div>
                 <ComponentBreakLine length={1}/>
                 {
                     items.length > 0 ?
                         <div className='row'>
                             {
                                 items.map((dt, idx) => (
-                                    <div className='col-lg-4'>
+                                    <div className='col-lg-4' key={idx}>
                                         <ComponentContainerGalleryManage image_url={dt.gallery_url} id={dt.id} body={dt.gallery_desc} created_at={dt.created_at} title={props.consume_name}/>
                                     </div>
                                 ))
@@ -82,11 +95,7 @@ export default function GetConsumeGallery(props) {
                             <ComponentBreakLine length={1}/>
                             <ComponentModal id={`addGallery`} title={`Add Gallery`} button_class="bgd-primary p-2 text-white"
                                 button_icon={<FontAwesomeIcon icon={faPlus} size="xl" className='me-2'/>}
-                                body={
-                                    <>
-                                        <PostGallery consume_id={props.id}/>
-                                    </>
-                                }
+                                body={<PostGallery consume_id={props.id} onsubmit={fetchGallery}/>}
                             />
                             <ComponentBreakLine length={2}/>
                         </div>

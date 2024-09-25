@@ -63,7 +63,7 @@ const ManageList = forwardRef((props, ref) => {
         .then(res => res.json().then(result => ({ status: res.status, result: result })))
         .then(({ status, result }) => {
             setIsLoaded(true)
-            if (status == 200) { 
+            if (status === 200) { 
                 setItems(result.data)
                 setListName(result.data.list_name)
                 setListDesc(result.data.list_desc)
@@ -100,7 +100,7 @@ const ManageList = forwardRef((props, ref) => {
                 }
             } else {
                 setItems(null)
-                if (status != 404) {
+                if (status !== 404) {
                     Swal.fire({
                         title: 'Error!',
                         text: 'Something wrong happened. Call the Admin!',
@@ -150,7 +150,7 @@ const ManageList = forwardRef((props, ref) => {
         })
         .then(res => res.json().then(result => ({ status: res.status, result: result })))
         .then(({ status, result }) => {
-            if (status == 200) { 
+            if (status === 200) { 
                 setAddConsumeSlug(slug)
                 setAddConsumeCal(result.data.calorie)
                 setAddConsumeFrom(result.data.consume_from)
@@ -163,7 +163,7 @@ const ManageList = forwardRef((props, ref) => {
                     text: 'Consume found',
                     icon: 'success',
                 }) 
-            } else if(status == 409) {
+            } else if(status === 409) {
                 Swal.fire({
                     title: 'Error!',
                     text: result.message,
@@ -177,7 +177,7 @@ const ManageList = forwardRef((props, ref) => {
                 }) 
             }
 
-            if(status != 200){
+            if(status !== 200){
                 cleanAddConsumeForm()
             }
         })
@@ -214,7 +214,7 @@ const ManageList = forwardRef((props, ref) => {
                     'Content-Type': 'application/json'
                 }
             })
-            if(response.status != 200){
+            if(response.status !== 200){
                 Swal.fire({
                     title: 'Error!',
                     text: 'Something wrong happen. Call the Admin!',
@@ -258,7 +258,7 @@ const ManageList = forwardRef((props, ref) => {
                             'Content-Type': 'application/json'
                         }
                     })
-                    if(response.status != 200){
+                    if(response.status !== 200){
                         Swal.fire({
                             title: 'Error!',
                             text: 'Something wrong happen. Call the Admin!',
@@ -304,7 +304,7 @@ const ManageList = forwardRef((props, ref) => {
                     'Content-Type': 'application/json'
                 }
             })
-            if(response.status != 200){
+            if(response.status !== 200){
                 Swal.fire({
                     title: 'Error!',
                     text: 'Something wrong happen. Call the Admin!',
@@ -348,7 +348,7 @@ const ManageList = forwardRef((props, ref) => {
                             'Content-Type': 'application/json'
                         }
                     })
-                    if(response.status != 200){
+                    if(response.status !== 200){
                         Swal.fire({
                             title: 'Error!',
                             text: 'Something wrong happen. Call the Admin!',
@@ -504,7 +504,7 @@ const ManageList = forwardRef((props, ref) => {
                                                                     </td>
                                                                     <td>{addConsumeCal && (<span>{addConsumeCal} Cal</span>)}</td>
                                                                     <td>{addConsumeFrom && addConsumeProvide && (<span><span className='btn btn-success rounded-pill py-0 px-2 me-1' style={{fontSize:"var(--textMD)"}}>{addConsumeFrom}</span> {addConsumeProvide}</span>)}</td>
-                                                                    <td>{addConsumeAvgPrice > 0 ? <span>Rp. {addConsumeAvgPrice.toLocaleString()} ,00</span> : addConsumeAvgPrice == 0 ? <span className='btn btn-success rounded-pill py-0 px-2 me-1'style={{fontSize:"var(--textMD)"}}>Free</span> : <></>}</td>
+                                                                    <td>{addConsumeAvgPrice > 0 ? <span>Rp. {addConsumeAvgPrice.toLocaleString()} ,00</span> : addConsumeAvgPrice === 0 ? <span className='btn btn-success rounded-pill py-0 px-2 me-1'style={{fontSize:"var(--textMD)"}}>Free</span> : <></>}</td>
                                                                     <td>{allowSubmitAddConsume && (<a className='btn btn-success' onClick={(e)=>handleAddConsume(addConsumeSlug,props.id)}><FontAwesomeIcon icon={faCheck}/></a>)}</td>
                                                                 </tr>
                                                             )

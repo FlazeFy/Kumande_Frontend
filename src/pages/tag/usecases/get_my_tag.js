@@ -45,12 +45,12 @@ export default function GetMyTag({ctx}) {
         })
         .then(({ status, result }) => {
             setIsLoaded(true)
-            if(status == 200){ 
+            if(status === 200){ 
                 setItems(result.data)
             } else {
                 setItems(null)
 
-                if(status != 404){
+                if(status !== 404){
                     Swal.fire({
                         title: 'Error!',
                         text: 'Something wrong happen. Call the Admin!',

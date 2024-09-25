@@ -97,7 +97,7 @@ export default function GetMyBodyInfo({ctx}) {
                 }
             })
             
-            if(response.status == 200){
+            if(response.status === 200){
                 setItemsBloodPreasure(response.data.general_analyze_blood_preasure)
                 setSummaryBloodPreasure(response.data.summary_analyze_blood_preasure)
                 setItemsBloodGlucose(response.data.general_analyze_blood_glucose)
@@ -164,9 +164,9 @@ export default function GetMyBodyInfo({ctx}) {
             { name: 'Sodium / 100 g', selector: row => `${row.sodium} mg`, sortable: true },
             { name: 'Status', selector: row => 
                 <div className={
-                    row.sodium_status == 'Very Low' ? 'bgd-primary rounded-pill text-center text-white py-2 px-3' :
-                    row.sodium_status == 'Low' ? 'bgd-success rounded-pill text-center text-white py-2 px-3' :
-                    row.sodium_status == 'Moderate' ? 'bgd-warning rounded-pill text-center text-white py-2 px-3' : 
+                    row.sodium_status === 'Very Low' ? 'bgd-primary rounded-pill text-center text-white py-2 px-3' :
+                    row.sodium_status === 'Low' ? 'bgd-success rounded-pill text-center text-white py-2 px-3' :
+                    row.sodium_status === 'Moderate' ? 'bgd-warning rounded-pill text-center text-white py-2 px-3' : 
                     'bgd-danger rounded-pill text-center text-white py-2 px-3'
                 }>{row.sodium_status}</div>, 
                 sortable: true 
@@ -178,9 +178,9 @@ export default function GetMyBodyInfo({ctx}) {
             { name: 'Sugar / 100 g', selector: row => `${row.sugar} g`, sortable: true },
             { name: 'Sugar Status', selector: row => 
                 <div className={
-                    row.sugar_status == 'Very Low' ? 'bgd-primary rounded-pill text-center text-white py-2 px-3' :
-                    row.sugar_status == 'Low' ? 'bgd-success rounded-pill text-center text-white py-2 px-3' :
-                    row.sugar_status == 'Moderate' ? 'bgd-warning rounded-pill text-center text-white py-2 px-3' : 
+                    row.sugar_status === 'Very Low' ? 'bgd-primary rounded-pill text-center text-white py-2 px-3' :
+                    row.sugar_status === 'Low' ? 'bgd-success rounded-pill text-center text-white py-2 px-3' :
+                    row.sugar_status === 'Moderate' ? 'bgd-warning rounded-pill text-center text-white py-2 px-3' : 
                     'bgd-danger rounded-pill text-center text-white py-2 px-3'
                 }>{row.sugar_status}</div>, 
                 sortable: true 
@@ -188,9 +188,9 @@ export default function GetMyBodyInfo({ctx}) {
             { name: 'Carbohydrates / 100 g', selector: row => `${row.carbohydrate} g`, sortable: true },
             { name: 'Carbohydrates Status', selector: row => 
                 <div className={
-                    row.carbohydrate_status == 'Very Low' ? 'bgd-primary rounded-pill text-center text-white py-2 px-3' :
-                    row.carbohydrate_status == 'Low' ? 'bgd-success rounded-pill text-center text-white py-2 px-3' :
-                    row.carbohydrate_status == 'Moderate' ? 'bgd-warning rounded-pill text-center text-white py-2 px-3' : 
+                    row.carbohydrate_status === 'Very Low' ? 'bgd-primary rounded-pill text-center text-white py-2 px-3' :
+                    row.carbohydrate_status === 'Low' ? 'bgd-success rounded-pill text-center text-white py-2 px-3' :
+                    row.carbohydrate_status === 'Moderate' ? 'bgd-warning rounded-pill text-center text-white py-2 px-3' : 
                     'bgd-danger rounded-pill text-center text-white py-2 px-3'
                 }>{row.carbohydrate_status}</div>, 
                 sortable: true 
@@ -198,9 +198,9 @@ export default function GetMyBodyInfo({ctx}) {
             { name: 'Dietary Fiber / 100 g', selector: row => `${row.dietary_fiber} g`, sortable: true },
             { name: 'Dietary Fiber Status', selector: row => 
                 <div className={
-                    row.dietary_fiber_status == 'Very Low' ? 'bgd-primary rounded-pill text-center text-white py-2 px-3' :
-                    row.dietary_fiber_status == 'Low' ? 'bgd-success rounded-pill text-center text-white py-2 px-3' :
-                    row.dietary_fiber_status == 'Moderate' ? 'bgd-warning rounded-pill text-center text-white py-2 px-3' : 
+                    row.dietary_fiber_status === 'Very Low' ? 'bgd-primary rounded-pill text-center text-white py-2 px-3' :
+                    row.dietary_fiber_status === 'Low' ? 'bgd-success rounded-pill text-center text-white py-2 px-3' :
+                    row.dietary_fiber_status === 'Moderate' ? 'bgd-warning rounded-pill text-center text-white py-2 px-3' : 
                     'bgd-danger rounded-pill text-center text-white py-2 px-3'
                 }>{row.dietary_fiber_status}</div>, 
                 sortable: true 
@@ -212,9 +212,9 @@ export default function GetMyBodyInfo({ctx}) {
             { name: 'Saturated Fats / 100 g', selector: row => `${row.saturated_fats} g`, sortable: true },
             { name: 'Status', selector: row => 
                 <div className={
-                    row.saturated_fats_status == 'Very Low' ? 'bgd-primary rounded-pill text-center text-white py-2 px-3' :
-                    row.saturated_fats_status == 'Low' ? 'bgd-success rounded-pill text-center text-white py-2 px-3' :
-                    row.saturated_fats_status == 'Moderate' ? 'bgd-warning rounded-pill text-center text-white py-2 px-3' : 
+                    row.saturated_fats_status === 'Very Low' ? 'bgd-primary rounded-pill text-center text-white py-2 px-3' :
+                    row.saturated_fats_status === 'Low' ? 'bgd-success rounded-pill text-center text-white py-2 px-3' :
+                    row.saturated_fats_status === 'Moderate' ? 'bgd-warning rounded-pill text-center text-white py-2 px-3' : 
                     'bgd-danger rounded-pill text-center text-white py-2 px-3'
                 }>{row.saturated_fats_status}</div>, 
                 sortable: true 
@@ -236,11 +236,11 @@ export default function GetMyBodyInfo({ctx}) {
 
             // Gout Status : Fasting (Source : https://www.medicalnewstoday.com/articles/uric-acid-level)
             gout_status = 
-            items.gender == 'male' ?
+            items.gender === 'male' ?
                 items.gout > 7.0 ? 'High' :
                     items.gout >= 2.5 ? 'Normal' :
                     'Low'
-            : items.gender == 'female' ?
+            : items.gender === 'female' ?
                 items.gout > 6.0 ? 'High' :
                 items.gout >= 1.5 ? 'Normal' :
                 'Low' : ''
@@ -252,8 +252,8 @@ export default function GetMyBodyInfo({ctx}) {
                 items.cholesterol >= 120 ? 'Normal' :
                 'Low'
 
-            top_gout = items.gender == 'male' ? 7.0 : 6.0
-            bottom_gout = items.gender == 'male' ? 2.5 : 1.5
+            top_gout = items.gender === 'male' ? 7.0 : 6.0
+            bottom_gout = items.gender === 'male' ? 2.5 : 1.5
 
             // Blood Preasure (Source : https://www.health.harvard.edu/heart-health/reading-the-new-blood-pressure-guidelines)
             const blood_pressure_split = items.blood_pressure.split('/')

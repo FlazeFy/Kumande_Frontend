@@ -18,7 +18,7 @@ export default function PostAllergic({fetchAllergic, count, total_found}) {
     const handleAddAllergic = async () => {
         const data = {
             allergic_context: allergicName,
-            allergic_desc: allergicDesc && allergicDesc.trim() == "" ? null : allergicDesc,
+            allergic_desc: allergicDesc && allergicDesc.trim() === "" ? null : allergicDesc,
         }
 
         setAllergicName("")
@@ -32,7 +32,7 @@ export default function PostAllergic({fetchAllergic, count, total_found}) {
                 }
             })
 
-            if(response.status == 200){
+            if(response.status === 200){
                 fetchAllergic()
                 Swal.fire({
                     title: "Success!",
@@ -66,9 +66,9 @@ export default function PostAllergic({fetchAllergic, count, total_found}) {
                     <img style={{height:"140px",bottom:"0"}} src={'/icons/Allergic.png'}/>
                 </div>
                 <div className='text-start py-4'>
-                    <p className='mb-0'>{count == 0 ? 'You have some allergic and want to monitor all your food? You will receive warning alert' : 'From our analyze for all your consume history'}</p>
-                    <p className='mb-0'>{count == 0 && total_found == 0 ? 'About the possible food that possible be your allergic' : total_found > 0 ? `We have found ${total_found.length}`:'All of your food is safe!'}</p>
-                    <h2>{count == 0 ? 'Start Monitoring Your Consume' : 'Add More Allergic'}</h2>
+                    <p className='mb-0'>{count === 0 ? 'You have some allergic and want to monitor all your food? You will receive warning alert' : 'From our analyze for all your consume history'}</p>
+                    <p className='mb-0'>{count === 0 && total_found === 0 ? 'About the possible food that possible be your allergic' : total_found > 0 ? `We have found ${total_found.length}`:'All of your food is safe!'}</p>
+                    <h2>{count === 0 ? 'Start Monitoring Your Consume' : 'Add More Allergic'}</h2>
                 </div>
             </button>
             <div className="modal fade" id={`addAllergic`} aria-labelledby="exampleModalLabel" aria-hidden="true">

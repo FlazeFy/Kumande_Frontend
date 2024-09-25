@@ -2,13 +2,12 @@ import React from 'react'
 import { isMobile } from '../../../modules/helpers/validator'
 import { storeLocal, getLocal } from '../../../modules/storages/local'
 
-export default function FilterConsumeType() {
+export default function FilterConsumeType(props) {
     const is_mobile = isMobile()
 
-    function toogle(val) {
+    const toogle = (val) => {
         storeLocal("Table_filter_type_all_consume",val) 
-
-        window.location.reload(false)
+        props.onchange()
     }
 
     const selectedConsumeType = getLocal("Table_filter_type_all_consume")

@@ -51,7 +51,7 @@ export default function GetListReminder({ctx}) {
         try {
             let response
 
-            if(method == 'delete'){            
+            if(method === 'delete'){            
                 response = await Axios.delete(`http://127.0.0.1:8000/api/v1/reminder/rel/${id}`, {
                     headers: {
                         'Accept': 'application/json',
@@ -59,7 +59,7 @@ export default function GetListReminder({ctx}) {
                         'Authorization': `Bearer ${token}`,
                     }
                 })
-            } else if(method == 'post'){
+            } else if(method === 'post'){
                 let data = {
                     reminder_id : id
                 }
@@ -73,7 +73,7 @@ export default function GetListReminder({ctx}) {
                 })
             }
             
-            if(response.status == 200){
+            if(response.status === 200){
                 fetchReminders()
                 Swal.fire({
                     title: "Success!",
@@ -144,8 +144,8 @@ export default function GetListReminder({ctx}) {
                                                         dt.reminder_attachment.map((ctx, cidx)=> {
                                                             return (
                                                                 <div className='btn btn-success rounded-pill ms-1 mb-2' key={`reminder_attachment_${cidx}`}>
-                                                                    <FontAwesomeIcon className='me-1' icon={ctx.attachment_type == 'location'? faLocationDot : ctx.attachment_type == 'url' ? faLink : ctx.attachment_type == 'image' ? faImage : ""}/> 
-                                                                        {ctx.attachment_type == 'location' ? ctx.attachment_name : ctx.attachment_type == 'url' || 'image' ? `Click to open the ${ctx.attachment_type}` : ""}
+                                                                    <FontAwesomeIcon className='me-1' icon={ctx.attachment_type === 'location'? faLocationDot : ctx.attachment_type === 'url' ? faLink : ctx.attachment_type === 'image' ? faImage : ""}/> 
+                                                                        {ctx.attachment_type === 'location' ? ctx.attachment_name : ctx.attachment_type === 'url' || 'image' ? `Click to open the ${ctx.attachment_type}` : ""}
                                                                 </div>
                                                             )
                                                         })

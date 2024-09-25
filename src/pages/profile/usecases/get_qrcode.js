@@ -3,7 +3,6 @@ import Swal from 'sweetalert2'
 import QRCode from 'qrcode'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQrcode, faXmark } from '@fortawesome/free-solid-svg-icons'
-import { getCleanTitleFromCtx } from '../../../modules/helpers/converter'
 import ComponentAlertBox from '../../../molecules/alert_box'
 
 export default function GetQRCode({ id }) {

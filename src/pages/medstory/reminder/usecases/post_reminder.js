@@ -277,7 +277,7 @@ export default function PostListReminder({fetchReminders}) {
         let newData = []
 
         data.forEach((el,idxData)=>{
-            if(idxData != idx){
+            if(idxData !== idx){
                 newData.push(el)
             }
         })
@@ -290,13 +290,13 @@ export default function PostListReminder({fetchReminders}) {
         let reminderContextFinal = []
         let reminder_attachment = []
 
-        if(reminderType == "Every Month"){
+        if(reminderType === "Every Month"){
             reminderContext.forEach(el => {
                 reminderContextFinal.push({
                     time: `Day ${String(parseInt(el.time)).padStart(2, '0')}`
                 })
             });
-        } else if(reminderType == "Every Year"){
+        } else if(reminderType === "Every Year"){
             reminderContext.forEach(el => {
                 reminderContextFinal.push({
                     time: `${el.time.split(" ")[0]} ${getMonthName(el.time.split(" ")[1]-1)}`
@@ -304,19 +304,19 @@ export default function PostListReminder({fetchReminders}) {
             });
         }
 
-        if (reminderAttachmentType == "location"){
+        if (reminderAttachmentType === "location"){
             reminder_attachment.push({
                 attachment_type: "location",
                 attachment_context: reminderAttachmentCoor,
                 attachment_name: reminderAttachmentName
             })
-        } else if (reminderAttachmentType == "url"){
+        } else if (reminderAttachmentType === "url"){
             reminder_attachment.push({
                 attachment_type: "url",
                 attachment_context: reminderAttachmentURL,
                 attachment_name: null
             })
-        } else if (reminderAttachmentType == "image"){
+        } else if (reminderAttachmentType === "image"){
             reminder_attachment.push({
                 attachment_type: "image",
                 attachment_context: reminderAttachmentURL,
@@ -329,7 +329,7 @@ export default function PostListReminder({fetchReminders}) {
             reminder_body: reminderBody,
             reminder_type: reminderType,
             reminder_context: JSON.stringify(reminderContextFinal),
-            reminder_attachment: reminder_attachment != null ? JSON.stringify(reminder_attachment) : null
+            reminder_attachment: reminder_attachment !== null ? JSON.stringify(reminder_attachment) : null
         }
 
         try {
@@ -341,7 +341,7 @@ export default function PostListReminder({fetchReminders}) {
                 }
             })
             
-            if(response.status == 200){
+            if(response.status === 200){
                 fetchReminders()
                 Swal.fire({
                     title: "Success!",

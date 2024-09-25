@@ -1,10 +1,5 @@
 "use client"
-import { faBowlRice, faCake, faEdit, faMugSaucer } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
-
-// Atoms
-import ComponentButton from '../atoms/button'
 import ComponentText from "../atoms/text"
 import ComponentTextIcon from '../atoms/text_icon'
 import ComponentTextMessageNoData from "../atoms/text_message_no_data"

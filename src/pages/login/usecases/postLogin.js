@@ -73,7 +73,7 @@ export default function PostLogin() {
                   'Content-Type': 'multipart/form-data'
                 }
             })
-            if(response.status == 200){
+            if(response.status === 200){
                 storeLocal('token_key', response.data.token)
                 window.location.href = '/dashboard'
             }
@@ -81,9 +81,9 @@ export default function PostLogin() {
             if (error.response) {
                 const statusCode = error.response.status
                 
-                if(statusCode == 401 || statusCode == 422){
+                if(statusCode === 401 || statusCode === 422){
                     let msg = ''
-                    if(statusCode == 401){
+                    if(statusCode === 401){
                         msg = error.response.data.message
                     } else {
                         msg = getStringValJson(error.response.data.result)

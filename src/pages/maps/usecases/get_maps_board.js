@@ -11,7 +11,6 @@ export default function GetMapsboard({ctx}) {
     const [error, setError] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)
     const [items, setItems] = useState([])
-    const token = getLocal("token_key")
 
     const Marker = ({text}) => (
         <div className='position-relative'>

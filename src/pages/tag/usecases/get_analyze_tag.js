@@ -2,12 +2,10 @@
 import React, { forwardRef, useImperativeHandle, useRef } from 'react'
 import { useState, useEffect } from "react"
 import Swal from 'sweetalert2'
-
-//Font awesome classicon
-import { faBowlRice, faCake, faMugSaucer, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { getLocal } from '../../../modules/storages/local'
-import { convertDatetime, numberToPrice, ucFirstChar } from '../../../modules/helpers/converter'
+import { convertDatetime, numberToPrice } from '../../../modules/helpers/converter'
 import ComponentTextIcon from '../../../atoms/text_icon'
 
 const GetAnalyzeTag = forwardRef((props, ref) => {
@@ -41,7 +39,7 @@ const GetAnalyzeTag = forwardRef((props, ref) => {
         .then(res => res.json().then(result => ({ status: res.status, result: result })))
         .then(({ status, result }) => {
             setIsLoaded(true)
-            if (status == 200) { 
+            if (status === 200) { 
                 setItems(result.data)
                 if(!items){
                     setMessageRes(result.message)

@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 import Axios from 'axios'
 
 // Modules
-import { getLocal, storeLocal } from '../../../modules/storages/local'
+import { getLocal } from '../../../modules/storages/local'
 
 export default function PostTag({fetchTag}) {
     //Initial variable
@@ -40,7 +40,7 @@ export default function PostTag({fetchTag}) {
                     Authorization: `Bearer ${token}`
                 }
             })
-            if(response.status != 200){
+            if(response.status !== 200){
                 Swal.fire({
                     title: 'Error!',
                     text: 'Something wrong happen. Call the Admin!',

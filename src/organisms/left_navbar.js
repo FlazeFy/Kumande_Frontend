@@ -95,7 +95,7 @@ export default function ComponentLeftNavbar(props) {
 
     return  (
         <nav id="sidebar" className="navbar">
-            <ul className="list-unstyled components mb-3 w-100">
+            <ul className="list-unstyled components mb-3 w-100" style={{overflowY:"auto", maxHeight:"98vh"}}>
                 <h2 className="mt-3"><FontAwesomeIcon icon={faUtensils} size="lg" className='me-3'/> Kumande</h2>
                 {
                     list_menu.map((dt, idx)=>{

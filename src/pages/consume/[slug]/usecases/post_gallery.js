@@ -8,7 +8,6 @@ import { v4 } from "uuid"
 import { storage } from '../../../../modules/firebase/init'
 
 // Component
-import { getStringValJson } from '../../../../modules/helpers/generator'
 import ComponentForm from '../../../../organisms/container_form'
 import ComponentBreakLine from '../../../../atoms/breakline'
 import { getLocal } from '../../../../modules/storages/local'
@@ -71,6 +70,7 @@ export default function PostGallery(props) {
 
     // Services
     const handleSubmit = async (e) => {
+        Swal.showLoading()
         const data = {
             consume_id: props.consume_id,
             gallery_desc: galleryDesc,
@@ -86,7 +86,9 @@ export default function PostGallery(props) {
                 }
             })
             
+            Swal.hideLoading()
             if(response.status == 200){
+                props.onsubmit()
                 Swal.fire({
                     title: "Success!",
                     text: response.data.message,
@@ -96,7 +98,7 @@ export default function PostGallery(props) {
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
-                    text: "Something went wrong!",
+                    text: response.data.message,
                 })
             }
         } catch (error) {

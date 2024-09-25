@@ -37,7 +37,7 @@ export const convertDatetime = (val, type) => {
         if(val){
             const result = new Date(val)
     
-            if (type == "full") {
+            if (type === "full") {
                 const now = new Date(Date.now())
                 const yesterday = new Date()
                 const tomorrow = new Date()
@@ -53,13 +53,13 @@ export const convertDatetime = (val, type) => {
                 } else {
                     return ` ${result.getFullYear()}/${(result.getMonth() + 1)}/${("0" + result.getDate()).slice(-2)} ${("0" + result.getHours()).slice(-2)}:${("0" + result.getMinutes()).slice(-2)}`
                 }
-            } else if (type == "24h" || type == "12h") {
+            } else if (type === "24h" || type === "12h") {
                 return `${("0" + result.getHours()).slice(-2)}:${("0" + result.getMinutes()).slice(-2)}`;
-            } else if (type == "datetime") {
+            } else if (type === "datetime") {
                 return ` ${result.getFullYear()}/${(result.getMonth() + 1)}/${("0" + result.getDate()).slice(-2)} ${("0" + result.getHours()).slice(-2)}:${("0" + result.getMinutes()).slice(-2)}`
-            } else if (type == "date") {
+            } else if (type === "date") {
                 return `${result.getFullYear()}-${("0" + (result.getMonth() + 1)).slice(-2)}-${("0" + result.getDate()).slice(-2)}`
-            } else if (type == "calendar") {
+            } else if (type === "calendar") {
                 const result = new Date(val)
                 const offsetHours = getUTCHourOffset()
                 result.setUTCHours(result.getUTCHours() + offsetHours)
@@ -85,13 +85,13 @@ export const getUTCHourOffset = (val, type) => {
 }
 
 export const convertSignedNumber = (num, ctx) => {
-    if(ctx == "+"){
+    if(ctx === "+"){
         if(num < 0){
             return num * -1
         } else {
             return num
         }
-    } else if (ctx == "-"){
+    } else if (ctx === "-"){
         if(num > 0){
             return num * -1
         } else {

@@ -124,7 +124,7 @@ export default function PostConsume() {
                 }
             })
 
-            if(response.status == 200){
+            if(response.status === 200){
                 Swal.fire({
                     title: "Success!",
                     text: "Consume saved",
@@ -176,7 +176,7 @@ export default function PostConsume() {
             paymentPriceRef.current.value = 0
             setPaymentMethod(val)
 
-            if(val == "Free" || val == "Gift"){
+            if(val === "Free" || val === "Gift"){
                 paymentPriceRef.current.readOnly = true
             } else {
                 paymentPriceRef.current.readOnly = false
@@ -380,12 +380,12 @@ export default function PostConsume() {
                             {
                                 item.map((elmt, index) => (
                                     <button key={index} title="Select this tag" className='btn btn-tag' onClick={() => {
-                                        if(selectedTag.length == 0){
+                                        if(selectedTag.length === 0){
                                             selectTag(index, elmt.tag_slug, elmt.tag_name)
                                         } else {
                                             let found = false
                                             selectedTag.map((slct, j, index) => {
-                                                if(slct.props.value == elmt.tags_slug){
+                                                if(slct.props.value === elmt.tags_slug){
                                                     found = true
                                                 }
                                             })
@@ -436,7 +436,7 @@ export default function PostConsume() {
                         </div>
                     </div>
                 </div>
-                <button className='btn btn-success mt-3' ref={paymentMethodRef} onClick={handleSubmit}><FontAwesomeIcon icon={faFloppyDisk}/> {paymentMethod == "Gift" || paymentMethod == "Free" ? "Save Consume":"Save Consume & Payment"}</button>
+                <button className='btn btn-success mt-3' ref={paymentMethodRef} onClick={handleSubmit}><FontAwesomeIcon icon={faFloppyDisk}/> {paymentMethod === "Gift" || paymentMethod === "Free" ? "Save Consume":"Save Consume & Payment"}</button>
             </div>
         )
     }
