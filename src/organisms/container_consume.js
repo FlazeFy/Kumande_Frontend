@@ -59,7 +59,9 @@ export default function ComponentContainerConsume({items, type, func, fetchConsu
                         : 
                             <></>
                     }
-                    <a className='text-secondary me-3'>{items['consume_from']}</a>
+                    {
+                        type == 'detail' && <a className='text-secondary me-3'>{items['consume_from']}</a>
+                    }
                 </div>
                 <div>{items['consume_comment']}</div>
                 <ComponentBreakLine length={1}/>

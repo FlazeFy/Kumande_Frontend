@@ -11,6 +11,8 @@ import Swal from 'sweetalert2'
 import { getLocal, storeLocal } from '../../../../modules/storages/local'
 import ComponentAlertBox from '../../../../molecules/alert_box'
 import { getCleanTitleFromCtx } from '../../../../modules/helpers/converter'
+import ComponentBreakLine from '../../../../atoms/breakline'
+import ComponentTextMessageNoData from '../../../../atoms/text_message_no_data'
 
 export default function EditConsume(props){
     //Initial variable
@@ -29,7 +31,8 @@ export default function EditConsume(props){
     const [consumeFrom, setConsumeFrom] = useState(props.data.consume_from)
     const [consumeType, setConsumeType] = useState(props.data.consume_type)
     const [consumeComment, setConsumeComment] = useState(props.data.consume_comment)
-    const [selectedTag, setSelectedTag] = useState([])
+    const [selectedTagAdd, setSelectedTagAdd] = useState([])
+    const [selectedTagRemove, setSelectedTagRemove] = useState([])
 
     useEffect(() => {
         fetch(`http://127.0.0.1:8000/api/v1/tag`, {
@@ -60,28 +63,39 @@ export default function EditConsume(props){
         )
     },[])
 
-    const selectTag = (i, slug, name) => {
-        const tagExists = selectedTag.some((elmt) => elmt.props.value.slug_name === slug);
-        if (!tagExists) {
-            setSelectedTag(selectedTag.concat(
-                <button key={i} className='btn btn-tag' value={{slug_name:slug, tag_name:name}} title="Unselect this tag" onClick={() => removeTag(slug)}>
-                    {name}
-                </button>
-            ));
+    const selectTag = (i, slug, name, type) => {
+        if(type == 'add'){
+            const tagExists = selectedTagAdd.some((elmt) => elmt.props.value.slug_name === slug);
+            if (!tagExists) {
+                setSelectedTagAdd(selectedTagAdd.concat(
+                    <button key={i} className='btn btn-tag' value={{slug_name:slug, tag_name:name}} title="Unselect this tag" onClick={() => removeTag(slug)}>
+                        {name}
+                    </button>
+                ));
+            }
+        } else {
+            const tagExists = selectedTagRemove.some((elmt) => elmt.props.value.slug_name === slug);
+            if (!tagExists) {
+                setSelectedTagRemove(selectedTagRemove.concat(
+                    <button key={i} className='btn btn-tag' value={{slug_name:slug, tag_name:name}} title="Unselect this tag" onClick={() => removeTag(slug)}>
+                        {name}
+                    </button>
+                ));
+            }
         }
     };
 
     const removeTag = (slug) => {        
         const newTag = []
 
-        if(selectedTag.length != 0){
-            selectedTag.forEach(element => {
+        if(selectedTagAdd.length != 0){
+            selectedTagAdd.forEach(element => {
                 if(element.props.value.slug_name !== slug){
                     newTag.push(element)
                 }
             });
         } 
-        setSelectedTag(selectedTag)
+        setSelectedTagAdd(selectedTagAdd)
     }
 
     const handleSubmit = async (e) => {
@@ -92,17 +106,26 @@ export default function EditConsume(props){
         }]
 
         try {
-            let consumeTag = []
-            if(selectedTag.length > 0){
-                selectedTag.forEach(element => {
+            let consumeTag = props.data.consume_tag 
+            if(selectedTagAdd.length > 0){
+                if(consumeTag == null) consumeTag = []
+                selectedTagAdd.forEach(element => {
                     consumeTag.push({
                         slug_name:element.props.value.slug_name, 
                         tag_name:element.props.value.tag_name
                     })
                 });
-                consumeTag = JSON.stringify(consumeTag)
-            } else {
+            } 
+            if(selectedTagRemove.length > 0){
+                let tag = []
+                consumeTag = consumeTag.filter(element => 
+                    !selectedTagRemove.some(dt => dt.props.value.slug_name == element.slug_name)
+                );
+            }
+            if(consumeTag.length == 0){
                 consumeTag = null
+            } else if(consumeTag != null){
+                consumeTag = JSON.stringify(consumeTag)
             }
 
             let data = {
@@ -215,44 +238,77 @@ export default function EditConsume(props){
                     <textarea className="form-control" style={{minHeight:"100px"}} onChange={(e) => setConsumeComment(e.target.value)} placeholder="Leave a comment here" id="floatingTextarea">{props.data.consume_comment}</textarea>
                     <label htmlFor="floatingTextarea">Comments</label>
                 </div>
-
-                <h5>Tags</h5>
+                <div ref={selectedTagAdd} className="mt-2 mx-1 px-3 py-2 rounded mb-3" style={{border: "1.25px solid rgb(223, 226, 230)"}}>
+                    <label style={{marginBottom:"var(--spaceSM)",color:"grey",fontSize:"var(--textXMD)"}}>Attached Tags</label>
+                    <ComponentBreakLine length={1}/>
+                    {
+                        props.data.consume_tag != null ? (
+                            <div>
+                                {
+                                    props.data.consume_tag.map((elmt, index) => (
+                                        <button key={index} title="Select this tag" className='btn btn-tag' onClick={() => {
+                                            if(selectedTagRemove.length == 0){
+                                                selectTag(index, elmt.slug_name, elmt.tag_name, 'remove')
+                                            } else {
+                                                let found = false
+                                                selectedTagRemove.map((slct, j, index) => {
+                                                    if(slct.props.value == elmt.tags_slug){
+                                                        found = true
+                                                    }
+                                                })
+            
+                                                if(!found){
+                                                    selectTag(index, elmt.slug_name, elmt.tag_name, 'remove')
+                                                }
+                                            }
+                                        }} >{elmt.tag_name}</button>
+                                    ))
+                                }
+                            </div>
+                        ) : <ComponentTextMessageNoData message="No tag used"/>
+                    }
+                    {
+                        selectedTagAdd.length > 0 && <div>
+                            <label style={{marginBottom:"var(--spaceSM)",color:"grey",fontSize:"var(--textXMD)"}}>Selected Tag to <b>Add</b></label>
+                            <ComponentBreakLine length={1}/>
+                            {selectedTagAdd}
+                        </div>
+                    }
+                    {
+                        selectedTagRemove.length > 0 && <div>
+                            <label style={{marginBottom:"var(--spaceSM)",color:"grey",fontSize:"var(--textXMD)"}}>Selected Tag to <b>Remove</b></label>
+                            <ComponentBreakLine length={1}/>
+                            {selectedTagRemove}
+                        </div>
+                    }
+                </div> 
+                <h5>Available Tags</h5>
                 {
-                    item != null ? (
+                    item != null && (
                         <div>
                             {
                                 item.map((elmt, index) => (
+                                    (props.data.consume_tag == null || !props.data.consume_tag.some(dt => dt.slug_name == elmt.tag_slug)) &&
                                     <button key={index} title="Select this tag" className='btn btn-tag' onClick={() => {
-                                        if(selectedTag.length == 0){
-                                            selectTag(index, elmt.tag_slug, elmt.tag_name)
+                                        if(selectedTagAdd.length == 0){
+                                            selectTag(index, elmt.tag_slug, elmt.tag_name, 'add')
                                         } else {
                                             let found = false
-                                            selectedTag.map((slct, j, index) => {
+                                            selectedTagAdd.map((slct, j, index) => {
                                                 if(slct.props.value == elmt.tags_slug){
                                                     found = true
                                                 }
                                             })
         
                                             if(!found){
-                                                selectTag(index, elmt.tag_slug, elmt.tag_name)
+                                                selectTag(index, elmt.tag_slug, elmt.tag_name, 'add')
                                             }
                                         }
                                     }} >{elmt.tag_name}</button>
                                 ))
                             }
                         </div>
-                    ) : (
-                        <div></div> 
-                    )
-                }
-                {
-                    selectedTag.length > 0 ?
-                    <div ref={selectedTag}>
-                        <h5>Selected Tag</h5>
-                        {selectedTag}
-                    </div> 
-                    : 
-                    <></>
+                    ) 
                 }
                 <button className='btn btn-success mt-3' onClick={handleSubmit}><FontAwesomeIcon icon={faFloppyDisk}/> Save Changes</button>
             </div>
