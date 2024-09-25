@@ -11,6 +11,7 @@ import { add_firestore } from '../../../modules/firebase/command'
 import ComponentRadialChart from '../../../molecules/radial_chart'
 import DeleteBudget from './delete_bugdet'
 import ComponentAlertBox from '../../../molecules/alert_box'
+import ComponentTextMessageImageNoData from '../../../molecules/text_message_image_no_data'
 
 export default function GetBudgetDashboard({ctx}) {
     //Initial variable
@@ -133,11 +134,6 @@ export default function GetBudgetDashboard({ctx}) {
                 setMonthlyItemMaxPage(result.data.last_page)
             } else {
                 setMonthlyItem(null)
-                Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "No payment for this month!",
-                })
             }
         } catch (error) {
             Swal.fire({
@@ -223,55 +219,59 @@ export default function GetBudgetDashboard({ctx}) {
                                             <button type="button" className="btn_close_modal" id="btn_close_modal" data-bs-dismiss="modal" aria-label="Close"><FontAwesomeIcon icon={faXmark}/></button>
                                         </div>
                                         <div className="modal-body text-center p-4">
-                                            <table className='table table-bordered'>
-                                                <thead>
-                                                    <tr>
-                                                        <td>Consume Name</td>
-                                                        <td>Consume Type</td>
-                                                        <td>Method</td>
-                                                        <td>Price</td>
-                                                        <td>Props</td>
-                                                        <td>Action</td>
-                                                    </tr>
-                                                </thead>
-                                                <tbody className='text-start'>
-                                                    {
-                                                        monthlyItem && monthlyItem.map((dt, idx) => {
-                                                            return (
-                                                                <tr key={`tbody_payment_${idx}`} className="payment-detail">
-                                                                    <td>{dt.consume_name}</td>
-                                                                    <td>{dt.consume_type}</td>
-                                                                    <td>{dt.payment_method}</td>
-                                                                    <td className='payment-price'>Rp. {numberToPrice(dt.payment_price)}</td>
-                                                                    <td>
-                                                                        <h6 className='mb-0'>Created At</h6>
-                                                                        <p className='mb-0'>{convertDatetime(dt.created_at,'calendar')}</p>
-                                                                    </td>
-                                                                    <td>
-                                                                        <button className='btn btn-warning w-100'><FontAwesomeIcon icon={faEdit}/> Edit</button>
-                                                                    </td>
-                                                                </tr>
-                                                            )
-                                                        })
-                                                    }
-                                                </tbody>
-                                            </table>
                                             {
-                                                monthlyItemMaxPage > 0 ?
-                                                    <div className='d-flex justify-content-start'>
-                                                        {
-                                                            Array.from({ length: monthlyItemMaxPage }, (v, i) => (
-                                                                <button key={'page_'+i} onClick={() => fetchMontlyPayment(monthlyItemMonth, monthlyItemYear, i+1)} className={monthlyItemCurrentPage == i+1 ? 'btn btn-page active':'btn btn-page'}>{i+1}</button>
-                                                            ))
-                                                        }
-                                                    </div>
+                                                monthlyItem ?
+                                                    <>
+                                                        <table className='table table-bordered'>
+                                                            <thead>
+                                                                <tr>
+                                                                    <td>Consume Name</td>
+                                                                    <td>Consume Type</td>
+                                                                    <td>Method</td>
+                                                                    <td>Price</td>
+                                                                    <td>Props</td>
+                                                                    <td>Action</td>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody className='text-start'>
+                                                                {
+                                                                    monthlyItem && monthlyItem.map((dt, idx) => {
+                                                                        return (
+                                                                            <tr key={`tbody_payment_${idx}`} className="payment-detail">
+                                                                                <td>{dt.consume_name}</td>
+                                                                                <td>{dt.consume_type}</td>
+                                                                                <td>{dt.payment_method}</td>
+                                                                                <td className='payment-price'>Rp. {numberToPrice(dt.payment_price)}</td>
+                                                                                <td>
+                                                                                    <h6 className='mb-0'>Created At</h6>
+                                                                                    <p className='mb-0'>{convertDatetime(dt.created_at,'calendar')}</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <button className='btn btn-warning w-100'><FontAwesomeIcon icon={faEdit}/> Edit</button>
+                                                                                </td>
+                                                                            </tr>
+                                                                        )
+                                                                    })
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                        <div className='d-flex justify-content-start'>
+                                                            {
+                                                                Array.from({ length: monthlyItemMaxPage }, (v, i) => (
+                                                                    <button key={'page_'+i} onClick={() => fetchMontlyPayment(monthlyItemMonth, monthlyItemYear, i+1)} className={monthlyItemCurrentPage == i+1 ? 'btn btn-page active':'btn btn-page'}>{i+1}</button>
+                                                                ))
+                                                            }
+                                                        </div>
+                                                    </>
                                                 :
-                                                    <></>
+                                                    <ComponentTextMessageImageNoData image_url={'/icons/BudgetData.png'} body="No Payment found for this month dan year"/>                         
                                             }
                                             <hr></hr>
                                             <span className='d-flex justify-content-start mt-3'>
                                                 <DeleteBudget id={budgetId} fetchData={fetchData}/>
-                                                <a className="btn btn-success ms-2" href={`/document/payment/${monthlyItemMonth}_${monthlyItemYear}`}><FontAwesomeIcon icon={faPrint}/> Preview Doc</a>
+                                                {
+                                                    monthlyItem && <a className="btn btn-success ms-2" href={`/document/payment/${monthlyItemMonth}_${monthlyItemYear}`}><FontAwesomeIcon icon={faPrint}/> Preview Doc</a>
+                                                }
                                             </span>
                                         </div>
                                     </div>

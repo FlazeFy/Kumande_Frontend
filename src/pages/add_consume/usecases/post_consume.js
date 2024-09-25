@@ -66,9 +66,9 @@ export default function PostConsume() {
                     text: 'Something wrong happen. Call the Admin!',
                     icon: 'error',
                 })   
-                if(getLocal(ctx + "_sess") !== undefined){
+                if(getLocal("tag_sess") !== undefined){
                     setIsLoaded(true)
-                    setItem(JSON.parse(getLocal(ctx + "_sess")))
+                    setItem(JSON.parse(getLocal("tag_sess")))
                 } else {
                     setIsLoaded(true)
                     setError(error)
@@ -234,13 +234,15 @@ export default function PostConsume() {
                     }
                     const tags = data.consume_tag
 
-                    tags.forEach((el,i) => {
-                        setSelectedTag(selectedTag.concat(
-                            <button key={i} className='btn btn-tag' value={{slug_name:el.slug_name, tag_name:el.tag_name}} title="Unselect this tag" onClick={() => removeTag(el.slug_name)}>
-                                {el.tag_name}
-                            </button>
-                        ));
-                    });
+                    if(tags){
+                        tags.forEach((el,i) => {
+                            setSelectedTag(selectedTag.concat(
+                                <button key={i} className='btn btn-tag' value={{slug_name:el.slug_name, tag_name:el.tag_name}} title="Unselect this tag" onClick={() => removeTag(el.slug_name)}>
+                                    {el.tag_name}
+                                </button>
+                            ));
+                        });
+                    }
 
                     setExistingHistory(
                         data.payment != null ?

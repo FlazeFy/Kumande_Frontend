@@ -5,6 +5,8 @@ import Swal from 'sweetalert2'
 
 import ComponentButton from '../../../atoms/button'
 import { getLocal } from '../../../modules/storages/local'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 export default function DeleteBudget(props) {
     //Initial variable
@@ -64,5 +66,5 @@ export default function DeleteBudget(props) {
         })
     }
 
-    return <ComponentButton onclick={(e)=>handleSubmit(props.id)} button_name='Delete Budget' button_type='danger'/>
+    return <ComponentButton onclick={(e)=>handleSubmit(props.id)} button_name={<span><FontAwesomeIcon icon={faTrash}/> Delete Budget</span>} button_type='danger'/>
 }

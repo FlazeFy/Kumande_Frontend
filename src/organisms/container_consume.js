@@ -35,7 +35,7 @@ export default function ComponentContainerConsume({items, type, func, fetchConsu
 
     if(type != 'mini'){
         return (
-            <div className={type != 'detail'?'consume-box':'mt-4 mb-2 container p-4'} onClick={handleClick} style={{borderLeft:getFavorite(items['is_favorite'])}}>
+            <div className={type != 'detail'?'consume-box':'mb-2 container p-4'} onClick={handleClick} style={{borderLeft:getFavorite(items['is_favorite'])}}>
                 <div className='d-flex justify-content-between mb-2'>
                     <div>
                         {
@@ -59,6 +59,7 @@ export default function ComponentContainerConsume({items, type, func, fetchConsu
                         : 
                             <></>
                     }
+                    <a className='text-secondary me-3'>{items['consume_from']}</a>
                 </div>
                 <div>{items['consume_comment']}</div>
                 <ComponentBreakLine length={1}/>

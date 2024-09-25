@@ -10,7 +10,9 @@ import GetConsumeGallery from "./usecases/get_consume_gallery"
 import ComponentAlertBox from "../../../molecules/alert_box"
 import { getCleanTitleFromCtx } from "../../../modules/helpers/converter"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faPrint } from "@fortawesome/free-solid-svg-icons"
+import { faEdit, faPrint } from "@fortawesome/free-solid-svg-icons"
+import GetToggleEdit from "./usecases/toggle_edit"
+import EditConsume from "./usecases/edit_consume"
 
 export default function ConsumeDetail({ params }) {
   //Initial variable
@@ -73,10 +75,16 @@ export default function ConsumeDetail({ params }) {
           <div id="content" className="p-4 p-md-5">
             <ComponentLeftNavbarToggle/>
             <div className="d-flex justify-content-start" style={{marginLeft:"60px",marginTop:"2.5px"}}>
-              <a className="btn btn-success" href={`/document/consume/${item.slug_name}`}><FontAwesomeIcon icon={faPrint}/> Preview Doc</a>
+              <GetToggleEdit onchange={fetchConsume}/>
+              <a className="btn btn-primary" href={`/document/consume/${item.slug_name}`}><FontAwesomeIcon icon={faPrint}/> Preview Doc</a>
             </div>
             <div id="content-body">
-              <ComponentContainerConsume fetchConsume={fetchConsume} ctx="consume_detail" items={item} type="detail"/>
+              {
+                getLocal('is_edit_consume') == 'true' ?
+                  <EditConsume data={item} ctx='edit_consume' onchange={fetchConsume}/>
+                :
+                  <ComponentContainerConsume fetchConsume={fetchConsume} ctx="consume_detail" items={item} type="detail"/>
+              }
               <GetConsumeGallery id={item.id} slug={item.slug_name} consume_name={item.consume_name}/>
               <GetSimilarConsume ctx={`similar_consume`} provide={item.consume_detail[0].provide} main_ing={item.consume_detail[0].main_ing} 
                 consume_from={item.consume_from} consume_type={item.consume_type} month={month} year={year} slug={item.slug_name}/>
