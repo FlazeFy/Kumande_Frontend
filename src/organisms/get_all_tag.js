@@ -2,7 +2,6 @@ import React from 'react'
 import { useState, useEffect } from "react"
 import ComponentBreakLine from '../atoms/breakline'
 import ComponentTextForm from '../atoms/text_form'
-import { getCleanTitleFromCtx } from '../modules/helpers/converter'
 import { getLocal } from '../modules/storages/local'
 import ComponentAlertBox from '../molecules/alert_box'
 
@@ -67,15 +66,16 @@ export default function ComponentGetAllTag({url, cls, func}) {
                     items.map((val, i, index) => {
                         return (
                             <button key={i} title="Select this tag" className={cls} onClick={() => {
-                                if(selectedTag.length == 0){
+                                if(selectedTag.length === 0){
                                     func(val['tags_slug'])
                                     selectTag(i, val['tags_slug'], val['tags_name'])
                                 } else {
                                     let found = false
                                     selectedTag.map((slct, j, index) => {
-                                        if(slct.props.value == val['tags_slug']){
+                                        if(slct.props.value === val['tags_slug']){
                                             found = true
                                         }
+                                        return null
                                     })
 
                                     if(!found){

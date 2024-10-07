@@ -10,7 +10,7 @@ import GetConsumeGallery from "./usecases/get_consume_gallery"
 import ComponentAlertBox from "../../../molecules/alert_box"
 import { getCleanTitleFromCtx } from "../../../modules/helpers/converter"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faEdit, faPrint } from "@fortawesome/free-solid-svg-icons"
+import { faPrint } from "@fortawesome/free-solid-svg-icons"
 import GetToggleEdit from "./usecases/toggle_edit"
 import EditConsume from "./usecases/edit_consume"
 
@@ -80,7 +80,7 @@ export default function ConsumeDetail({ params }) {
             </div>
             <div id="content-body">
               {
-                getLocal('is_edit_consume') == 'true' ?
+                getLocal('is_edit_consume') === 'true' ?
                   <EditConsume data={item} ctx='edit_consume' onchange={fetchConsume}/>
                 :
                   <ComponentContainerConsume fetchConsume={fetchConsume} ctx="consume_detail" items={item} type="detail"/>

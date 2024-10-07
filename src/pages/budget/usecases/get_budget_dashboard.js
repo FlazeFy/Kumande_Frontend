@@ -351,9 +351,9 @@ export default function GetBudgetDashboard({ctx}) {
                                         {
                                             items != null ?
                                                 <>
-                                                    <a className='mt-2 mb-3 btn btn-warning text-white me-2' onClick={(e)=>budgetAmmount.current.value = smallesBudget} style={{fontSize:"var(--textMD)"}}><FontAwesomeIcon icon={faAngleDown}/> Smallest Budget</a>
-                                                    <a className='mt-2 mb-3 btn btn-danger me-2' onClick={(e)=>budgetAmmount.current.value = largetBudget} style={{fontSize:"var(--textMD)"}}><FontAwesomeIcon icon={faAngleUp}/> Largest Budget</a>
-                                                    <a className='mt-2 mb-3 btn btn-primary' onClick={(e)=>budgetAmmount.current.value = items[items.length -1].budget_total} style={{fontSize:"var(--textMD)"}}><FontAwesomeIcon icon={faRotateBackward}/> Last Budget</a>
+                                                    <button className='mt-2 mb-3 btn btn-warning text-white me-2' onClick={(e)=>budgetAmmount.current.value = smallesBudget} style={{fontSize:"var(--textMD)"}}><FontAwesomeIcon icon={faAngleDown}/> Smallest Budget</button>
+                                                    <button className='mt-2 mb-3 btn btn-danger me-2' onClick={(e)=>budgetAmmount.current.value = largetBudget} style={{fontSize:"var(--textMD)"}}><FontAwesomeIcon icon={faAngleUp}/> Largest Budget</button>
+                                                    <button className='mt-2 mb-3 btn btn-primary' onClick={(e)=>budgetAmmount.current.value = items[items.length -1].budget_total} style={{fontSize:"var(--textMD)"}}><FontAwesomeIcon icon={faRotateBackward}/> Last Budget</button>
                                                 </>
                                             :
                                                 <></>

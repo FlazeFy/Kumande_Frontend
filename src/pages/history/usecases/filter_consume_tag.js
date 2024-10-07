@@ -78,13 +78,13 @@ export default function FilterConsumeTag(props) {
             <>
                 <div className={is_mobile ?'W-100 p-2 rounded mb-2':'w-50 p-2 rounded ms-2'} style={{border:"1px solid #DFE2E6", cursor:"pointer"}} title="Click to select tag"
                     data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        <label className='text-secondary'>Tags</label>
+                        <h6 className='text-secondary'>Tags</h6>
                         <p className='tag-filter-holder'>
                             {
                                 tagSelected != null && tagSelected.length > 0 ?
                                     tagSelected.map((element,idx) => {
                                             return (
-                                                <a key={`tag_name_${idx}`}>{element.tag_name}</a>
+                                                <a key={`tag_name_${idx}`} href={`/tag/${element.tag_slug}`}>{element.tag_name}</a>
                                             );
                                         })
                                     :
@@ -110,8 +110,8 @@ export default function FilterConsumeTag(props) {
                                             tagSelected.map(element => {
                                                 if(element.tag_slug === elmt.tag_slug){
                                                     found = true
-                                                    return
                                                 }
+                                                return null
                                             })
                                         :
                                             <></>                                        

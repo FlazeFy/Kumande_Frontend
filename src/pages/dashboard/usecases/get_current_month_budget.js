@@ -11,9 +11,7 @@ export default function GetCurrentMonthBudget({ctx}) {
     const [error, setError] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)
     const [items, setItems] = useState(null)
-    const [totalAll, setTotalAll] = useState(0)
     const token = getLocal("token_key")
-    const [resMsgAll, setResMsgAll] = useState([])
     const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Des']
     const now = new Date()
     
@@ -35,7 +33,6 @@ export default function GetCurrentMonthBudget({ctx}) {
             (result) => {
                 setIsLoaded(true)
                 setItems(result.data) 
-                setTotalAll(result.total_all)
             },
             (error) => {
                 if(getLocal(ctx + "_sess") !== undefined){
@@ -85,7 +82,7 @@ export default function GetCurrentMonthBudget({ctx}) {
 
                             return(
                                 <div key={`month_budget_${idx}`}>
-                                    <button className='container p-3 text-center bg-white'>
+                                    <button className='container p-3 text-center bg-white budget-plan-section'>
                                         <h4 className='mb-0 budget-plan-title'>Budget in {dt.month} {dt.year}</h4>
                                         <p className='mb-0 text-secondary' style={{fontSize:"var(--textMD)"}}>
                                             {dt.payment_history.total_item === 0 ? (

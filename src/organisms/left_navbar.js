@@ -104,6 +104,7 @@ export default function ComponentLeftNavbar(props) {
                         } else if('label_menu' in dt) {
                             return <div key={`left_bar_${idx}`}>{dt.label_menu}</div>
                         }
+                        return null
                     })
                 }                
                 <ComponentSignOut/>

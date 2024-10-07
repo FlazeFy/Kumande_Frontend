@@ -67,7 +67,7 @@ export default function ComponentRadialChart({val, label, custom}) {
     };
 
     if(custom){
-        if(custom.type == 'half'){
+        if(custom.type === 'half'){
             chart.options.plotOptions.radialBar.startAngle = -90
             chart.options.plotOptions.radialBar.endAngle = 90
         }

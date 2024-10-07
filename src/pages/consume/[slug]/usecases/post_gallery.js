@@ -44,7 +44,7 @@ export default function PostGallery(props) {
             handleChange: (event) => {
                 event = event.target.files[0]
 
-                if (event == null) return
+                if (event === null) return
                     const imageRef = ref(storage, `consume/${event.name + v4()}`)
                     uploadBytes(imageRef, event).then((snapshot) => {
                         getDownloadURL(snapshot.ref).then((url) => {
@@ -87,7 +87,7 @@ export default function PostGallery(props) {
             })
             
             Swal.hideLoading()
-            if(response.status == 200){
+            if(response.status === 200){
                 props.onsubmit()
                 Swal.fire({
                     title: "Success!",

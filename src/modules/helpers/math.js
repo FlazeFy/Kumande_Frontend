@@ -12,7 +12,7 @@ export const isNumInRange = (current, index, range) => {
 }
 
 export const countHalf = (val) => {
-    if(val != 0){
+    if(val !== 0){
         let res = Math.round(val / 2)
         return res
     } else {

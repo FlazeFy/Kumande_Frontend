@@ -14,7 +14,7 @@ export default function ComponentContainerTag(props) {
             <div className='d-flex justify-content-between'>
                 <ComponentText text_type="sub_heading" body={props.container_title}/>
                 {
-                    props.is_editable && <a className='btn btn-primary py-0'><FontAwesomeIcon icon={faEdit}/></a>
+                    props.is_editable && <button className='btn btn-primary py-0'><FontAwesomeIcon icon={faEdit}/></button>
                 }
             </div>
             {

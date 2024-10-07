@@ -13,7 +13,7 @@ export default function ComponentContainerSchedule({items,time}) {
     const is_mobile = isMobile()
 
     return (
-        <div className='container bg-white p-2 d-flex justify-content-start'>
+        <div className='container bg-white p-2 d-flex justify-content-start time-section-holder'>
             {
                 is_mobile ?
                     <></>
@@ -36,10 +36,11 @@ export default function ComponentContainerSchedule({items,time}) {
                 }/>
                 {
                     items.map((data, idx) => {
-                        if(data['schedule_time'][0]['category'] == ucFirstChar(time)){
+                        if(data['schedule_time'][0]['category'] === ucFirstChar(time)){
                             total++
                             return <ComponentTextIcon key={`schedule_time_${idx}`} text_type={data['consume_type']} body={data['schedule_consume']}/>
                         }
+                        return null
                     })
                 }
                 {

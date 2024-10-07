@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 
 // Component
 import { storeLocal } from '../../../modules/storages/local'
-import { getStringValJson } from '../../../modules/helpers/generator'
+import { getErrorMessage } from '../../../modules/helpers/generator'
 import ComponentForm from '../../../organisms/container_form'
 
 export default function PostLogin() {
@@ -27,7 +27,7 @@ export default function PostLogin() {
             placeholder: 'Type email',
             is_required: true,
             is_obsecure: false,
-            max: 36,
+            // max: 36,
             handleChange: (event) => {
                 setEmail(event.target.value)
             },
@@ -41,7 +41,7 @@ export default function PostLogin() {
             placeholder: 'Type password',
             is_required: true,
             is_obsecure: true,
-            max: 36,
+            // max: 36,
             handleChange: (event) => {
                 setPassword(event.target.value)
             },
@@ -51,7 +51,7 @@ export default function PostLogin() {
             type: 'submit',
             class: 'btn btn-success rounded-pill',
             id:'submit-btn',
-            label: 'Submit',
+            label: 'Sign In',
             placeholder: null,
             toogle_disabled: false,
             handleClick: (event) => {
@@ -81,21 +81,26 @@ export default function PostLogin() {
             if (error.response) {
                 const statusCode = error.response.status
                 
-                if(statusCode === 401 || statusCode === 422){
-                    let msg = ''
-                    if(statusCode === 401){
-                        msg = error.response.data.message
-                    } else {
-                        msg = getStringValJson(error.response.data.result)
-                    }
+                // if(statusCode === 401 || statusCode === 422){
+                //     let msg = ''
+                //     if(statusCode === 401){
+                //         msg = error.response.data.message
+                //     } else {
+                //         msg = getErrorMessage(error.response.data.result)
+                //     }
 
-                    Swal.fire({
-                        title: 'Error!',
-                        text: msg,
-                        icon: 'error',
-                    });
-                    setResMsgAll(error.response.message)
-                }
+                //     Swal.fire({
+                //         title: 'Error!',
+                //         text: msg,
+                //         icon: 'error',
+                //     });
+                //     setResMsgAll(error.response.message)
+                // }
+                Swal.fire({
+                    title: 'Error!',
+                    html: `<div class='err-handler' id='login-failed-msg'><b>Validation failed</b> : <div class='text-secondary' style='font-size:var(--textLG);'>${getErrorMessage(error.response.data.message)}</div></div>`,
+                    icon: 'error',
+                })
             } else {
                 Swal.fire({
                     title: 'Error!',

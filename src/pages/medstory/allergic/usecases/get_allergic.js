@@ -181,6 +181,7 @@ export default function GetAllergic({ctx}) {
                 if(dt.detected_on){
                     total_found_allergic += dt.detected_on.length
                 }
+                return null
             })
         }
 
@@ -247,7 +248,7 @@ export default function GetAllergic({ctx}) {
                                                 <textarea className="form-control" style={{height:"100px"}} defaultValue={allergicDesc} onChange={(e) => setAllergicDesc(e.target.value)} id="floatingInput"></textarea>
                                                 <label htmlFor="floatingInput">Description</label>
                                             </div>
-                                            <a className='fst-italic text-secondary' style={{fontSize:"var(--textMD)"}}>Created at {convertDatetime(createdAt,'calendar')}</a>
+                                            <span className='fst-italic text-secondary' style={{fontSize:"var(--textMD)"}}>Created at {convertDatetime(createdAt,'calendar')}</span>
                                             <button className='w-100 btn btn-success mt-2 py-2' data-bs-dismiss="modal" onClick={(e) => handleUpdateAllergic(idAllergic)}><FontAwesomeIcon icon={faFloppyDisk}/> Save Changes</button>
                                             <button className='w-100 btn btn-danger mt-2 py-2' data-bs-dismiss="modal" onClick={(e) => handleDeleteAllergic(idAllergic)}><FontAwesomeIcon icon={faTrash}/> Delete Allergic</button>
                                         </div>

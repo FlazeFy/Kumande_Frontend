@@ -23,7 +23,6 @@ export default function EditConsume(props){
     const token = getLocal("token_key")
     
     // Form
-    const [existingHistory, setExistingHistory] = useState(null)
     const [consumeName, setConsumeName] = useState(props.data.consume_name)
     const [consumeProvide, setConsumeProvide] = useState(props.data.consume_detail[0]['provide'])
     const [consumeMainIng, setConsumeMainIng] = useState(props.data.consume_detail[0]['main_ing'])
@@ -88,7 +87,7 @@ export default function EditConsume(props){
     const removeTag = (slug) => {        
         const newTag = []
 
-        if(selectedTagAdd.length != 0){
+        if(selectedTagAdd.length !== 0){
             selectedTagAdd.forEach(element => {
                 if(element.props.value.slug_name !== slug){
                     newTag.push(element)
@@ -192,7 +191,6 @@ export default function EditConsume(props){
                     <input type="text" className="form-control" defaultValue={props.data.consume_detail[0]['provide']} onChange={(e) => setConsumeProvide(e.target.value)} id="floatingInput"></input>
                     <label htmlFor="floatingInput">Provide</label>
                 </div>
-                {existingHistory}
                 <div className='row mb-3'>
                     <div className='col'>
                         <div className="form-floating">
@@ -238,7 +236,7 @@ export default function EditConsume(props){
                     <label htmlFor="floatingTextarea">Comments</label>
                 </div>
                 <div className="mt-2 mx-1 px-3 py-2 rounded mb-3" style={{border: "1.25px solid rgb(223, 226, 230)"}}>
-                    <label style={{marginBottom:"var(--spaceSM)",color:"grey",fontSize:"var(--textXMD)"}}>Attached Tags</label>
+                    <h6 style={{marginBottom:"var(--spaceSM)",color:"grey",fontSize:"var(--textXMD)"}}>Attached Tags</h6>
                     <ComponentBreakLine length={1}/>
                     {
                         props.data.consume_tag !== null ? (
@@ -254,6 +252,7 @@ export default function EditConsume(props){
                                                     if(slct.props.value === elmt.tags_slug){
                                                         found = true
                                                     }
+                                                    return null
                                                 })
             
                                                 if(!found){
@@ -268,14 +267,14 @@ export default function EditConsume(props){
                     }
                     {
                         selectedTagAdd.length > 0 && <div>
-                            <label style={{marginBottom:"var(--spaceSM)",color:"grey",fontSize:"var(--textXMD)"}}>Selected Tag to <b>Add</b></label>
+                            <h6 style={{marginBottom:"var(--spaceSM)",color:"grey",fontSize:"var(--textXMD)"}}>Selected Tag to <b>Add</b></h6>
                             <ComponentBreakLine length={1}/>
                             {selectedTagAdd}
                         </div>
                     }
                     {
                         selectedTagRemove.length > 0 && <div>
-                            <label style={{marginBottom:"var(--spaceSM)",color:"grey",fontSize:"var(--textXMD)"}}>Selected Tag to <b>Remove</b></label>
+                            <h6 style={{marginBottom:"var(--spaceSM)",color:"grey",fontSize:"var(--textXMD)"}}>Selected Tag to <b>Remove</b></h6>
                             <ComponentBreakLine length={1}/>
                             {selectedTagRemove}
                         </div>
@@ -297,6 +296,7 @@ export default function EditConsume(props){
                                                 if(slct.props.value === elmt.tags_slug){
                                                     found = true
                                                 }
+                                                return null
                                             })
         
                                             if(!found){
@@ -309,6 +309,7 @@ export default function EditConsume(props){
                         </>
                     ) 
                 }
+                <span className='err-msg'>{resMsgAll}</span>
                 <button className='btn btn-success mt-3' onClick={handleSubmit}><FontAwesomeIcon icon={faFloppyDisk}/> Save Changes</button>
             </div>
         )

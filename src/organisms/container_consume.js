@@ -5,7 +5,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendar, faEdit, faHeart, faLocationDot } from "@fortawesome/free-solid-svg-icons"
 import ComponentBreakLine from '../atoms/breakline'
-import { convertDatetime } from '../modules/helpers/converter'
+import { convertDatetime, ucFirstChar } from '../modules/helpers/converter'
 import ManagePayment from '../pages/consume/[slug]/usecases/manage_payment'
 import { isMobile } from '../modules/helpers/validator'
 import ComponentTextMessageNoData from '../atoms/text_message_no_data'
@@ -14,13 +14,14 @@ import ComponentContainerMaps from '../molecules/container_maps'
 import ComponentButton from '../atoms/button'
 import ComponentText from '../atoms/text'
 import ComponentTextMessageImageNoData from '../molecules/text_message_image_no_data'
+import ComponentAlertBox from '../molecules/alert_box'
 
 export default function ComponentContainerConsume({items, type, func, fetchConsume}) {
     // Initial Variable
     const is_mobile = isMobile()
 
     const getFavorite = (val) => {
-        if(val == 1){
+        if(val === 1){
             return 'var(--spaceSM) solid var(--dangerBG)'
         } else {
             return 'none'
@@ -39,34 +40,38 @@ export default function ComponentContainerConsume({items, type, func, fetchConsu
                 <div className='d-flex justify-content-between mb-2'>
                     <div>
                         {
-                            items['is_favorite'] == 1 && <FontAwesomeIcon icon={faHeart} className='me-2 text-danger' size='lg' title='Favorite'/>
+                            items['is_favorite'] === 1 && <FontAwesomeIcon icon={faHeart} className='me-2 text-danger' size='lg' title='Favorite'/>
                         }
                         <ComponentTextIcon text_style={{fontWeight:500,fontSize:"var(--textXLG)"}} text_type={items.consume_type} body={items.consume_name}/>
                     </div>
                     {
                         type !== 'detail' && !is_mobile ?
                             <div style={{fontWeight:"500"}}>
-                                <a className='text-secondary me-3'>{items['consume_from']}</a>
-                                <a className='bgd-success rounded py-2 px-3 text-white'>
+                                <span className='text-secondary me-3'>{items['consume_from']}</span>
+                                <span className='bgd-success rounded py-2 px-3 text-white'>
                                 {
                                     items['is_payment'] == null ?
                                         'Free'
                                     :
                                         `Rp. ${items['payment_price'].toLocaleString()}`
                                 }
-                                </a>
+                                </span>
                             </div>
                         : 
                             <></>
                     }
                     {
-                        type == 'detail' && <a className='text-secondary me-3'>{items['consume_from']}</a>
+                        type === 'detail' && <a className='text-secondary me-3'>{items['consume_from']}</a>
                     }
                 </div>
+                {
+                    items['allergic'] && <ComponentAlertBox message={`You have allergic from this ingredient based on the consume name : ${items['allergic'].map(obj => ucFirstChar(obj.allergic_context)).join(', ')}`} type='allergic'/>
+
+                }
                 <div>{items['consume_comment']}</div>
                 <ComponentBreakLine length={1}/>
                 {
-                    type == 'detail' && <hr></hr>
+                    type === 'detail' && <hr></hr>
                 }
                 <div className='row'>
                     <div className='col'>
@@ -119,7 +124,7 @@ export default function ComponentContainerConsume({items, type, func, fetchConsu
                         }
                     </div>
                     {
-                        type == 'detail' && typeof items['consume_detail'][0]['provide_lat'] !== "undefined" &&
+                        type === 'detail' && typeof items['consume_detail'][0]['provide_lat'] !== "undefined" &&
                             <div className='col'>
                                 <ComponentContainerMaps 
                                     container_title="Maps"
@@ -130,7 +135,7 @@ export default function ComponentContainerConsume({items, type, func, fetchConsu
                     }
                 </div>
                 {
-                    type == 'detail' ?
+                    type === 'detail' ?
                         <>
                             <hr></hr>
                             <div className='row mt-2'>
@@ -206,16 +211,14 @@ export default function ComponentContainerConsume({items, type, func, fetchConsu
                                                                         <h6 className='m-0'>Created At</h6>
                                                                         <p className='m-0'><FontAwesomeIcon icon={faCalendar}/> At {convertDatetime(item.created_at, 'calendar')}</p>
                                                                         {
-                                                                            item.updated_at ?
+                                                                            item.updated_at &&
                                                                                 <>                                                                    
                                                                                     <h6 className='m-0'>Updated At</h6>
                                                                                     <p className='m-0'><FontAwesomeIcon icon={faCalendar}/> At {convertDatetime(item.updated_at, 'calendar')}</p>
                                                                                 </>
-                                                                            :
-                                                                                <></>
                                                                         }
                                                                     </td>
-                                                                    <td><a className='btn btn-warning'><FontAwesomeIcon icon={faEdit}/></a></td>
+                                                                    <td><button className='btn btn-warning'><FontAwesomeIcon icon={faEdit}/></button></td>
                                                                 </tr>
                                                             )
                                                         })
@@ -231,15 +234,15 @@ export default function ComponentContainerConsume({items, type, func, fetchConsu
                             <div className="row mt-2 text-center">
                                 <div className='col-lg-4 col-md-6'>
                                     <h6>Created At</h6>
-                                    <a className='text-secondary'><FontAwesomeIcon icon={faCalendar}/> At {convertDatetime(items['created_at'], 'calendar')}</a>
+                                    <span className='text-secondary'><FontAwesomeIcon icon={faCalendar}/> At {convertDatetime(items['created_at'], 'calendar')}</span>
                                 </div>
                                 <div className='col-lg-4 col-md-6'>
                                     <h6>Updated At</h6>
-                                    <a className='text-secondary'>{items['updated_at'] ? <><FontAwesomeIcon icon={faCalendar}/> At {convertDatetime(items['updated_at'], 'calendar')}</> : '-'}</a>
+                                    <span className='text-secondary'>{items['updated_at'] ? <><FontAwesomeIcon icon={faCalendar}/> At {convertDatetime(items['updated_at'], 'calendar')}</> : '-'}</span>
                                 </div>
                                 <div className='col-lg-4 col-md-6'>
                                     <h6>Deleted At</h6>
-                                    <a className='text-secondary'>{items['deleted_at'] ? <><FontAwesomeIcon icon={faCalendar}/> At {convertDatetime(items['deleted_at'], 'calendar')}</> : '-'}</a>
+                                    <span className='text-secondary'>{items['deleted_at'] ? <><FontAwesomeIcon icon={faCalendar}/> At {convertDatetime(items['deleted_at'], 'calendar')}</> : '-'}</span>
                                 </div>
                             </div>
                         </>

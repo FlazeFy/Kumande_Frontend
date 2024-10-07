@@ -11,7 +11,6 @@ import ComponentTextMessageNoData from '../../../atoms/text_message_no_data'
 import ComponentContainerTag from '../../../molecules/container_tag'
 
 const ManageList = forwardRef((props, ref) => {
-    const [isLoaded, setIsLoaded] = useState(false)
     const [items, setItems] = useState(null)
     const token = getLocal("token_key")
 
@@ -59,7 +58,6 @@ const ManageList = forwardRef((props, ref) => {
         })
         .then(res => res.json().then(result => ({ status: res.status, result: result })))
         .then(({ status, result }) => {
-            setIsLoaded(true)
             if (status === 200) { 
                 setItems(result.data)
                 setListName(result.data.list_name)
@@ -121,16 +119,12 @@ const ManageList = forwardRef((props, ref) => {
         .then(res => res.json())
             .then(
             (result) => {
-                setIsLoaded(true)
                 setItemsConsumeName(result.data)
             },
             (error) => {
                 if(getLocal(ctx + "_sess") !== undefined){
-                    setIsLoaded(true)
                     setItems(JSON.parse(getLocal(ctx + "_sess")))
-                } else {
-                    setIsLoaded(true)
-                }
+                } 
             }
         )
     }
@@ -472,7 +466,7 @@ const ManageList = forwardRef((props, ref) => {
                                                                         <td>{dt.calorie} Cal</td>
                                                                         <td><span className='btn btn-success rounded-pill py-0 px-2 me-1' style={{fontSize:"var(--textMD)"}}>{dt.consume_from}</span>{dt.provide}</td>
                                                                         <td>Rp. {dt.average_price.toLocaleString()},00</td>
-                                                                        <td><a className='btn btn-danger' onClick={(e)=>handleRemoveConsume(dt.id)} aria-label="Remove Consume"><FontAwesomeIcon icon={faTrash}/></a></td>
+                                                                        <td><button className='btn btn-danger' onClick={(e)=>handleRemoveConsume(dt.id)} aria-label="Remove Consume"><FontAwesomeIcon icon={faTrash}/></button></td>
                                                                     </tr>
                                                                 )
                                                             }))
@@ -498,7 +492,7 @@ const ManageList = forwardRef((props, ref) => {
                                                                     <td>{addConsumeCal && (<span>{addConsumeCal} Cal</span>)}</td>
                                                                     <td>{addConsumeFrom && addConsumeProvide && (<span><span className='btn btn-success rounded-pill py-0 px-2 me-1' style={{fontSize:"var(--textMD)"}}>{addConsumeFrom}</span> {addConsumeProvide}</span>)}</td>
                                                                     <td>{addConsumeAvgPrice > 0 ? <span>Rp. {addConsumeAvgPrice.toLocaleString()} ,00</span> : addConsumeAvgPrice === 0 ? <span className='btn btn-success rounded-pill py-0 px-2 me-1'style={{fontSize:"var(--textMD)"}}>Free</span> : <></>}</td>
-                                                                    <td>{allowSubmitAddConsume && (<a className='btn btn-success' onClick={(e)=>handleAddConsume(addConsumeSlug,props.id)}><FontAwesomeIcon icon={faCheck}/></a>)}</td>
+                                                                    <td>{allowSubmitAddConsume && (<a className='btn btn-success' href={null} onClick={(e)=>handleAddConsume(addConsumeSlug,props.id)}><FontAwesomeIcon icon={faCheck}/></a>)}</td>
                                                                 </tr>
                                                             )
                                                         }

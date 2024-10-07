@@ -19,7 +19,6 @@ export default function GetSchedule({ctx, day, category}) {
     const [isLoaded, setIsLoaded] = useState(false)
     const [items, setItems] = useState(null)
     const token = getLocal("token_key")
-    const [resMsgAll, setResMsgAll] = useState([])
 
     useEffect(() => {
         fetch(`http://127.0.0.1:8000/api/v1/schedule/day/`+day, {
@@ -92,7 +91,6 @@ export default function GetSchedule({ctx, day, category}) {
                         title: "Oops...",
                         text: "Something went wrong!",
                     })
-                    setResMsgAll(error)
                 }
             }
         });

@@ -62,14 +62,22 @@ export const getAllDay = () => {
     return newDays
 }
 
-export const getStringValJson = (val) => {
+export const getErrorMessage = (val) => {
     let msg = ''
-    for (const [key, value] of Object.entries(val)) {
-        value.forEach(message => {
-            msg += message
-        });
-    }
+    
+    if(typeof val === 'object'){
+        const keys = Object.keys(val)
 
+        keys.forEach(dt => {
+            val[dt].forEach(valdt => {
+                msg += `<li>${valdt}</li> `
+            });
+        });
+    } else if(typeof val === 'string'){
+        msg = val
+    } else {
+        msg = `Can't generated failed message`
+    }
     return msg
 }
 

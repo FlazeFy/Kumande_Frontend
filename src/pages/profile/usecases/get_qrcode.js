@@ -42,9 +42,9 @@ export default function GetQRCode({ id }) {
     } else {
         return (
             <>
-                <a className="btn btn-primary" data-bs-toggle="modal" id="sign-out-btn" data-bs-target={"#qrcodeModal"}>
+                <button className="btn btn-primary" data-bs-toggle="modal" id="sign-out-btn" data-bs-target={"#qrcodeModal"}>
                     <FontAwesomeIcon icon={faQrcode} className='me-2'/> Multi Login
-                </a>
+                </button>
                 <div className="modal fade" id={"qrcodeModal"} aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">

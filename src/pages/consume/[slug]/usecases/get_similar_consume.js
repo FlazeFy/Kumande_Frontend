@@ -44,6 +44,7 @@ export default function GetSimilarConsume({ctx, consume_from, consume_type, prov
             .then(
             (result) => {
                 setIsLoaded(true)
+                setError(null)
                 if(result.data != null){
                     let item_consume_from = []
                     let item_consume_type = []
@@ -73,6 +74,7 @@ export default function GetSimilarConsume({ctx, consume_from, consume_type, prov
                 }        
             },
             (error) => {
+                setError(true)
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
@@ -93,86 +95,91 @@ export default function GetSimilarConsume({ctx, consume_from, consume_type, prov
     } else {
         return (
             <div className='container p-3 mt-3'>
-                <h5>Similar Consume From <a className='btn btn-primary rounded-pill py-1 ms-1' style={{fontSize:"var(--textMD)"}}>{ucFirstWord(consume_from)}</a></h5>
+                <h5>Similar Consume From <span className='btn btn-primary rounded-pill py-1 ms-1' style={{fontSize:"var(--textMD)"}}>{ucFirstWord(consume_from)}</span></h5>
                 <div className='row'>
                     {
                         itemsConsumeFrom.length > 0 ?
                             itemsConsumeFrom.map((elmt, idx)=>{
-                                if(elmt.slug_name != slug){
+                                if(elmt.slug_name !== slug){
                                     return (
                                         <div className='col-lg-4 col-md-6 col-sm-12' key={idx}>
                                             <ComponentContainerConsume type="mini" items={elmt} func={(e)=> window.location.href ='/consume/'+elmt.slug_name}/>
                                         </div>
                                     )
                                 }
+                                return null
                             })
                         :
                             <ComponentTextMessageNoData is_with_image={false}  message="No Data Found"/>
                     }
                 </div>
-                <h5>Similar Consume Type <a className='btn btn-primary rounded-pill py-1 ms-1' style={{fontSize:"var(--textMD)"}}>{ucFirstWord(consume_type)}</a></h5>
+                <h5>Similar Consume Type <span className='btn btn-primary rounded-pill py-1 ms-1' style={{fontSize:"var(--textMD)"}}>{ucFirstWord(consume_type)}</span></h5>
                 <div className='row'>
                     {
                         itemsConsumeType.length > 0 ?
                             itemsConsumeType.map((elmt, idx)=>{
-                                if(elmt.slug_name != slug){
+                                if(elmt.slug_name !== slug){
                                     return (
                                         <div className='col-lg-4 col-md-6 col-sm-12' key={idx}>
                                             <ComponentContainerConsume type="mini" items={elmt} func={(e)=> window.location.href ='/consume/'+elmt.slug_name}/>
                                         </div>
                                     )
                                 }
+                                return null
                             })
                         :
                             <ComponentTextMessageNoData is_with_image={false}  message="No Data Found"/>
                     }
                 </div>
-                <h5>Similar Provide <a className='btn btn-primary rounded-pill py-1 ms-1' style={{fontSize:"var(--textMD)"}}>{ucFirstWord(provide)}</a></h5>
+                <h5>Similar Provide <span className='btn btn-primary rounded-pill py-1 ms-1' style={{fontSize:"var(--textMD)"}}>{ucFirstWord(provide)}</span></h5>
                 <div className='row'>
                     {
                         itemsProvide.length > 0 ?
                             itemsProvide.map((elmt, idx)=>{
-                                if(elmt.slug_name != slug){
+                                if(elmt.slug_name !== slug){
                                     return (
                                         <div className='col-lg-4 col-md-6 col-sm-12' key={idx}>
                                             <ComponentContainerConsume type="mini" items={elmt} func={(e)=> window.location.href ='/consume/'+elmt.slug_name}/>
                                         </div>
                                     )
                                 }
+                                return null
                             })
                         :
                             <ComponentTextMessageNoData is_with_image={false}  message="No Data Found"/>
                     }
                 </div>
-                <h5>Similar Main Ingredient <a className='btn btn-primary rounded-pill py-1 ms-1' style={{fontSize:"var(--textMD)"}}>{ucFirstWord(main_ing)}</a></h5>
+                <h5>Similar Main Ingredient <span className='btn btn-primary rounded-pill py-1 ms-1' style={{fontSize:"var(--textMD)"}}>{ucFirstWord(main_ing)}</span></h5>
                 <div className='row'>
                     {
                         itemsMainIng.length > 0 ?
                             itemsMainIng.map((elmt, idx)=>{
-                                if(elmt.slug_name != slug){
+                                if(elmt.slug_name !== slug){
                                     return (
                                         <div className='col-lg-4 col-md-6 col-sm-12' key={idx}>
                                             <ComponentContainerConsume type="mini" items={elmt} func={(e)=> window.location.href ='/consume/'+elmt.slug_name}/>
                                         </div>
                                     )
                                 }
+                                return null
                             })
                         :
                             <ComponentTextMessageNoData is_with_image={false}  message="No Data Found"/>
                     }
                 </div>
-                <h5>Similar Date Created In<a className='btn btn-primary rounded-pill py-1 ms-1' style={{fontSize:"var(--textMD)"}}>{getMonthName(month)} {year}</a></h5>
+                <h5>Similar Date Created In<span className='btn btn-primary rounded-pill py-1 ms-1' style={{fontSize:"var(--textMD)"}}>{getMonthName(month)} {year}</span></h5>
                 <div className='row'>
                     {
                         itemsCreatedAt.length > 0 ?
                             itemsCreatedAt.map((elmt, idx)=>{
-                                if(elmt.slug_name != slug){
+                                if(elmt.slug_name !== slug){
                                     return (
                                         <div className='col-lg-4 col-md-6 col-sm-12' key={idx}>
                                             <ComponentContainerConsume type="mini" items={elmt} func={(e)=> window.location.href ='/consume/'+elmt.slug_name}/>
                                         </div>
                                     )
                                 }
+                                return null
                             })
                         :
                             <ComponentTextMessageNoData is_with_image={false}  message="No Data Found"/>

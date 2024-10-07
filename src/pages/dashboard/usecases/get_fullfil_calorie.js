@@ -56,9 +56,11 @@ export default function GetFullfilCalorie({ctx}) {
             </div>
         )
     } else {
-        return <ComponentButtonContentImg button_title="Today Calories" icon_url='/icons/Calorie.png' button_content={
-            <h4 id="today_calories"><b>{item[0]['total']}</b> / {item[0]['target']} Cal</h4>
-        }/>
+        return <div id='today-calorie-holder'>
+                <ComponentButtonContentImg button_title="Today Calories" icon_url='/icons/Calorie.png' button_content={
+                <h4 id="today_calories"><b>{item[0]['total']}</b> / {item[0]['target']} Cal</h4>
+            }/>
+        </div>
     }
 }
   

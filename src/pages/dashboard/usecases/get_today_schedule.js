@@ -126,7 +126,7 @@ export default function GetTodaySchedule({ctx}) {
         return (
             <div className='container-fluid p-0' style={{background:"var(--primaryColor)"}}>
                 <ComponentText text_type="main_heading" body={<span className='text-white m-2'>{ucFirstWord(ctx)}</span>} />
-                <div className='row'>
+                <div className='row' id='time-daily-schedule-holder'>
                     <div className={`col-lg-4 col-md-4 col-sm-6 ${is_mobile ? '' : 'pe-0'}`}>
                         <ComponentContainerSchedule time="breakfast" items={items} />
                     </div>

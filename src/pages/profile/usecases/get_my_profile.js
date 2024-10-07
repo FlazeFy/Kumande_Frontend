@@ -133,6 +133,7 @@ export default function GetMyProfile({ctx}) {
                     </select>
                     <label htmlFor="floatingSelectGrid">Gender</label>
                 </div>
+                <span className='err-msg'>{resMsgAll}</span>
                 <div className='d-flex justify-content-between'>
                     <button className='btn btn-success' onClick={handleSubmit}><FontAwesomeIcon icon={faFloppyDisk}/> Save Changes</button>
                     <GetQRCode id={id}/>

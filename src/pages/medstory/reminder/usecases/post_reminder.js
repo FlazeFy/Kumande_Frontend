@@ -168,7 +168,7 @@ export default function PostListReminder({fetchReminders}) {
             case "none":
                 return (
                     <div className="form-floating mb-2">
-                        <a className='fst-italic text-secondary mb-1'>- No Attachment -</a>
+                        <span className='fst-italic text-secondary mb-1'>- No Attachment -</span>
                     </div>
                 )
             case "location":
@@ -206,7 +206,7 @@ export default function PostListReminder({fetchReminders}) {
                         <div className="form-floating mb-2">
                             <input type="text" className="form-control" id="url-input" onChange={(e)=> checkUrl(e.target.value)}></input>
                             <label htmlFor="selectDay">URL</label>
-                            <a className='err-msg' ref={validateURLRef}></a>
+                            <span className='err-msg' ref={validateURLRef}></span>
                         </div>
                     </>
                 )
@@ -214,7 +214,7 @@ export default function PostListReminder({fetchReminders}) {
                 return (
                     <>
                         <img className='w-100' ref={uploadedImageRef} alt='uploaded image'></img>
-                        <a className='err-msg' ref={uploadFileStatusRef}></a>
+                        <span className='err-msg' ref={uploadFileStatusRef}></span>
                         <div className="input-group mb-2">
                             <button className="btn btn-outline-secondary" type="button" id="inputGroupFileAddon03">Upload</button>
                             <input type="file" className="form-control" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" aria-label="Upload" 

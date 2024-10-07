@@ -14,7 +14,6 @@ export default function GetListStarted({ ctx }) {
     // Initial state variables
     const [error, setError] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)
-    const [items, setItem] = useState(null)
     const [chunkedItems, setChunkedItems] = useState([])
     const token = getLocal("token_key")
 
@@ -28,7 +27,6 @@ export default function GetListStarted({ ctx }) {
             .then(
                 (result) => {
                     setIsLoaded(true)
-                    setItem(result.data)
 
                     const chunkArray = (array, size) => {
                         const chunked = []
@@ -42,7 +40,6 @@ export default function GetListStarted({ ctx }) {
                 (error) => {
                     if (getLocal(ctx + "_sess") !== undefined) {
                         setIsLoaded(true)
-                        setItem(JSON.parse(getLocal(ctx + "_sess")))
                     } else {
                         setIsLoaded(true)
                         setError(error)
@@ -83,7 +80,7 @@ export default function GetListStarted({ ctx }) {
                 <div className='col-lg-4 mx-auto text-center'>
                     <img className='img img-fluid' src={'/icons/Confused.png'} alt={'/icons/Confused.png'} />
                     <h5>Confused how to manage your consume schedule? Do you want to group all in similiar list or your favorite food?</h5>
-                    <a className='btn btn-success px-4 py-3 rounded-pill mt-4'><FontAwesomeIcon icon={faAdd} className='me-2'/> Make List Now!</a>
+                    <button className='btn btn-success px-4 py-3 rounded-pill mt-4'><FontAwesomeIcon icon={faAdd} className='me-2'/> Make List Now!</button>
                 </div>
             </div>
         );

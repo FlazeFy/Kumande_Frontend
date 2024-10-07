@@ -23,7 +23,7 @@ export default function ComponentSignOut() {
                     Authorization: `Bearer ${keyToken}`
                 }
             })
-            if(response.status != 200){
+            if(response.status !== 200){
                 window.location.reload(false)
                 return response.data.message
             } else {

@@ -16,7 +16,6 @@ export default function GetListReminder({ctx}) {
     const [isLoaded, setIsLoaded] = useState(false)
     const token = getLocal("token_key")
     const [items, setItems] = useState(null)
-    const [resMsgAll, setResMsgAll] = useState([])
     
     const fetchReminders = () => {
         fetch(`http://127.0.0.1:8000/api/v1/reminder`, {
@@ -91,9 +90,8 @@ export default function GetListReminder({ctx}) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "Something went wrong!"+error,
+                text: "Something went wrong!",
             })
-            setResMsgAll(error)
         }
     }
 
@@ -106,7 +104,6 @@ export default function GetListReminder({ctx}) {
             </div>
         )
     } else {
-
         return (
             <div className='row pt-2'>
                 <h4>Reminder List</h4>

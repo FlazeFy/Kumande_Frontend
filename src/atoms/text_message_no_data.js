@@ -10,6 +10,6 @@ export default function ComponentTextMessageNoData(props){
             </div>
         )
     } else {
-        return <a className='fst-italic text-secondary'>- {props.message} -</a>
+        return <span className='fst-italic text-secondary'>- {props.message} -</span>
     }
 }

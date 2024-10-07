@@ -27,12 +27,12 @@ export default function FilterConsumeCal(props) {
             (result) => {
                 setIsLoaded(true)
                 if(result.data != null){
-                    setMaxValue(result.data[0].max_calorie)
-                    setMinValue(result.data[0].min_calorie)
+                    setMaxValue(result.data.max_calorie)
+                    setMinValue(result.data.min_calorie)
 
                     if(getLocal("Table_filter_"+props.ctx) === undefined){
-                        setSelectMaxValue(result.data[0].max_calorie)
-                        setSelectMinValue(result.data[0].min_calorie)
+                        setSelectMaxValue(result.data.max_calorie)
+                        setSelectMinValue(result.data.min_calorie)
                     }
                     storeLocal(props.ctx + "_sess", JSON.stringify(result))
                 }        
@@ -41,8 +41,8 @@ export default function FilterConsumeCal(props) {
                 if(getLocal(props.ctx + "_sess") !== undefined){
                     setIsLoaded(true)
                     const temp = JSON.parse(getLocal(props.ctx + "_sess"))
-                    setMaxValue(temp.data[0].max_calorie)
-                    setMinValue(temp.data[0].min_calorie)
+                    setMaxValue(temp.data.max_calorie)
+                    setMinValue(temp.data.min_calorie)
                 } else {
                     setIsLoaded(true)
                     setError(error)
@@ -81,7 +81,7 @@ export default function FilterConsumeCal(props) {
     } else {
         return (
             <div className={is_mobile ?'W-100 p-2 rounded mb-2':'w-50 p-2 rounded'} style={{border:"1px solid #DFE2E6"}}>
-                <label className='text-secondary'>Calorie</label>
+                <h6 className='text-secondary'>Calorie</h6>
                 <MultiRangeSlider
                     min={minValue}
                     max={maxValue}

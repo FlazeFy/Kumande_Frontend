@@ -61,7 +61,7 @@ export default function GetAnalyticPaymentMonth({ctx}) {
         return (
             <div className='container-fluid p-0' style={{background:"var(--primaryColor)"}}>
                 <ComponentText text_type="main_heading" body={<span className='text-white m-2'>{ucFirstWord(ctx)}</span>} />
-                <div className='row'>
+                <div className='row' id='category-analytic-holder'>
                     <div className={`col-lg-3 col-md-3 col-sm-6 col-6 pe-0`}>
                         <ComponentButtonPrice styles={"var(--warningBG)"} button_title="Total" button_price={item[0]['total']} button_caption="this month"/>
                     </div>

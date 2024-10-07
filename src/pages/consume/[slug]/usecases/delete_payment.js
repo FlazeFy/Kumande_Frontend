@@ -30,7 +30,7 @@ export default function DeletePayment(props) {
                         }
                     })
                     
-                    if(response.status == 200){
+                    if(response.status === 200){
                         Swal.fire({
                             title: "Success!",
                             text: response.data.message,

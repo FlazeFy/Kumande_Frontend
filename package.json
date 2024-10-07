@@ -8,10 +8,10 @@
     "gatsby"
   ],
   "scripts": {
-    "develop": "gatsby develop",
-    "start": "gatsby develop",
-    "build": "gatsby build",
-    "serve": "gatsby serve",
+    "develop": "gatsby develop -p 3001",
+    "start": "gatsby develop -p 3001",
+    "build": "gatsby build -p 3001",
+    "serve": "gatsby serve -p 3001",
     "clean": "gatsby clean",
     "test": "jest"
   },

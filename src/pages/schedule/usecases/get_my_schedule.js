@@ -33,7 +33,6 @@ export default function GetMySchedule(props) {
     const [selectedConsume, setSelectedConsume] = useState([])
     const [totalCalories, setTotalCalories] = useState(0)
     const [totalPrice, setTotalPrice] = useState(0)
-    const [resMsgAll, setResMsgAll] = useState([])
     const [reloadSchedule, setReloadSchedule] = useState(null)
 
     const [availableConsumeMaxPage,setAvailableConsumeMaxPage] = useState(1)
@@ -167,15 +166,15 @@ export default function GetMySchedule(props) {
                         <a style={{ fontWeight: "500", fontSize: "var(--textXMD)" }}>Detail</a>
                         <ComponentBreakLine length={1} />
                         <div className='d-inline'>
-                            <a className='btn btn-success rounded-pill px-3 py-1 me-1 mb-1' style={{ fontSize: "var(--textMD)" }}>
+                            <span className='btn btn-success rounded-pill px-3 py-1 me-1 mb-1' style={{ fontSize: "var(--textMD)" }}>
                                 {elmt['consume_detail'][0]['provide']}
-                            </a>
-                            <a className='btn btn-warning rounded-pill px-3 py-1 me-1 mb-1' style={{ fontSize: "var(--textMD)" }}>
+                            </span>
+                            <span className='btn btn-warning rounded-pill px-3 py-1 me-1 mb-1' style={{ fontSize: "var(--textMD)" }}>
                                 {elmt['consume_detail'][0]['calorie']} Cal
-                            </a>
-                            <a className='btn btn-danger rounded-pill px-3 py-1' style={{ fontSize: "var(--textMD)" }}>
+                            </span>
+                            <span className='btn btn-danger rounded-pill px-3 py-1' style={{ fontSize: "var(--textMD)" }}>
                                 {elmt['consume_detail'][0]['main_ing']}
-                            </a>
+                            </span>
                         </div>
                     </button>
                 </div>
@@ -268,7 +267,6 @@ export default function GetMySchedule(props) {
                 title: "Oops...",
                 text: "Something went wrong!",
             })
-            setResMsgAll(error)
         }
     }
 

@@ -12,7 +12,6 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PostGallery from './post_gallery'
 import ComponentAlertBox from '../../../../molecules/alert_box'
-import { getCleanTitleFromCtx } from '../../../../modules/helpers/converter'
 
 export default function GetConsumeGallery(props) {
     //Initial variable
@@ -42,7 +41,7 @@ export default function GetConsumeGallery(props) {
         .then(
             ({ status, body }) => {
                 setIsLoaded(true)
-                if (status == 200) {
+                if (status === 200) {
                     setItems(body.data.data)
                 }
             },

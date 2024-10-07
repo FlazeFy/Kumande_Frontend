@@ -9,7 +9,6 @@ import { convertDatetime, numberToPrice } from '../../../modules/helpers/convert
 import ComponentTextIcon from '../../../atoms/text_icon'
 
 const GetAnalyzeTag = forwardRef((props, ref) => {
-    const [isLoaded, setIsLoaded] = useState(false)
     const [items, setItems] = useState(null)
     const [messageRes, setMessageRes] = useState('...')
     const token = getLocal("token_key")
@@ -38,7 +37,6 @@ const GetAnalyzeTag = forwardRef((props, ref) => {
         })
         .then(res => res.json().then(result => ({ status: res.status, result: result })))
         .then(({ status, result }) => {
-            setIsLoaded(true)
             if (status === 200) { 
                 setItems(result.data)
                 if(!items){

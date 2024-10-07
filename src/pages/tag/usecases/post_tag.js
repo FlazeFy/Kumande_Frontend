@@ -78,23 +78,23 @@ export default function PostTag({fetchTag}) {
                         </tr>
                         <tr>
                             <td colSpan={3}>
-                                <a className='fst-italic text-secondary mb-1'>
+                                <span className='fst-italic text-secondary mb-1'>
                                     <button className='btn btn-success w-100' style={{borderRadius:"0"}} onClick={(e)=>handleSubmit()}><FontAwesomeIcon icon={faPlus}/> Add New Tag</button>
-                                </a>
+                                </span>
                             </td>
                             <td colSpan={1}>
-                                <a className='fst-italic text-secondary mb-1'>
+                                <span className='fst-italic text-secondary mb-1'>
                                     <button className='btn btn-danger w-100' style={{borderRadius:"0"}} onClick={(e)=>handleCloseNewTag()} aria-label="Close New Tag"><FontAwesomeIcon icon={faXmark}/></button>
-                                </a>
+                                </span>
                             </td>
                         </tr>
                     </>
                 :
                     <tr>
                         <td colSpan={4}>
-                            <a className='fst-italic text-secondary mb-1'>
+                            <span className='fst-italic text-secondary mb-1'>
                                 <button className='btn btn-success w-100' style={{borderRadius:"0"}} onClick={(e)=>handleAddNewTag()}><FontAwesomeIcon icon={faPlus}/> Add New Tag</button>
-                            </a>
+                            </span>
                         </td>
                     </tr>
             }

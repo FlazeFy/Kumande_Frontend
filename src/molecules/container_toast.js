@@ -1,6 +1,5 @@
 // components/ComponentCustomToast.js
 import React from 'react';
-import { toast } from 'react-toastify';
 
 const ComponentCustomToast = ({ msg }) => {
   return (

@@ -155,6 +155,7 @@ export default function PostConsume() {
                 if(element.props.value.slug_name !== slug){
                     newTag.push(element)
                 }
+                return null
             });
         } 
         setSelectedTag(selectedTag)
@@ -248,7 +249,7 @@ export default function PostConsume() {
                         data.payment !== null ?
                             <div className='row mt-2 ps-1 mx-1 p-1 rounded mb-3' style={{border:"1.25px solid #DFE2E6"}}>
                                 <div className='col'>
-                                    <label className='text-secondary' style={{fontSize:"var(--textMD)"}}>Consume History</label>
+                                    <h6 className='text-secondary' style={{fontSize:"var(--textMD)"}}>Consume History</h6>
                                     {
                                         data.payment.length > 0 ? 
                                             <ol>
@@ -263,7 +264,7 @@ export default function PostConsume() {
                                     }
                                 </div>
                                 <div className='col'>
-                                    <label className='text-secondary' style={{fontSize:"var(--textMD)"}}>Schedule</label>
+                                    <h6 className='text-secondary' style={{fontSize:"var(--textMD)"}}>Schedule</h6>
                                     {
                                         data.schedule.length > 0 ? 
                                             <ol>
@@ -375,7 +376,7 @@ export default function PostConsume() {
 
                 <h5>Tags</h5>
                 {
-                    item !== null ? (
+                    item !== null && (
                         <div>
                             {
                                 item.map((elmt, index) => (
@@ -388,6 +389,7 @@ export default function PostConsume() {
                                                 if(slct.props.value === elmt.tags_slug){
                                                     found = true
                                                 }
+                                                return null
                                             })
         
                                             if(!found){
@@ -398,9 +400,7 @@ export default function PostConsume() {
                                 ))
                             }
                         </div>
-                    ) : (
-                        <div></div> 
-                    )
+                    ) 
                 }
                 {
                     selectedTag.length > 0 ?
