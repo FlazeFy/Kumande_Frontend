@@ -112,7 +112,7 @@ export default function GetTodaySchedule({ctx}) {
                 }
             }
         )
-    }, [playSound]);
+    }, [playSound, ctx, day, is_remind_schedule, stop, token]);
 
     if (error) {
         return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>

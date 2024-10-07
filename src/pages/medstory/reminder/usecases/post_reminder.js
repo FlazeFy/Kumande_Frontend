@@ -213,7 +213,7 @@ export default function PostListReminder({fetchReminders}) {
             case "image":
                 return (
                     <>
-                        <img className='w-100' ref={uploadedImageRef} alt='uploaded image'></img>
+                        <img className='w-100' ref={uploadedImageRef} alt='uploaded file'></img>
                         <span className='err-msg' ref={uploadFileStatusRef}></span>
                         <div className="input-group mb-2">
                             <button className="btn btn-outline-secondary" type="button" id="inputGroupFileAddon03">Upload</button>

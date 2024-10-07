@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useState, useEffect } from "react"
 import { getLocal } from '../../../../modules/storages/local'
 import ComponentRadialChart from '../../../../molecules/radial_chart'
@@ -30,7 +30,7 @@ export default function GetMyBodyInfo({ctx}) {
     const [summaryGout, setSummaryGout] = useState(null)
     const [itemsGout, setGeneralGout] = useState(null)
     
-    const fetchBodyInfo = () => {
+    const fetchBodyInfo = useCallback(() => {
         return fetch(`http://127.0.0.1:8000/api/v1/user/body_info`, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -66,7 +66,7 @@ export default function GetMyBodyInfo({ctx}) {
                 throw error
             }
         })
-    }
+    }, [token, ctx])
 
     const fetchAnalyze = async (blood_pressure, blood_glucose, calorie, height, weight, gout) => {
         const formatDate = (date) => {
@@ -136,7 +136,7 @@ export default function GetMyBodyInfo({ctx}) {
             .catch(error => {
                 console.error('Error:', error);
             });
-    }, []);
+    }, [fetchBodyInfo]);
     
     if (error) {
         return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>

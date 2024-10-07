@@ -56,7 +56,7 @@ export default function FilterConsumeCal(props) {
             setSelectMinValue(search[0])
             setIsLoaded(true)
         }
-    },[])
+    },[token,props.ctx])
    
 
     const handleInput = (e) => {

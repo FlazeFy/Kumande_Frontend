@@ -12,10 +12,11 @@ export default function GetCurrentMonthBudget({ctx}) {
     const [isLoaded, setIsLoaded] = useState(false)
     const [items, setItems] = useState(null)
     const token = getLocal("token_key")
-    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Des']
-    const now = new Date()
     
     useEffect(() => {
+        const now = new Date()
+        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Des']
+
         fetch(`http://127.0.0.1:8000/api/v1/budget/dashboard`, {
             method: 'POST',
             headers: {
@@ -44,7 +45,7 @@ export default function GetCurrentMonthBudget({ctx}) {
                 }
             }
         )
-    },[])
+    },[ctx,token])
 
     if (error) {
         return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>
@@ -59,6 +60,7 @@ export default function GetCurrentMonthBudget({ctx}) {
         let largetBudget = 0
         let smallesBudget = 0
         
+        const now = new Date()
         let currentYear = now.getFullYear() - 1
         let years = []
         for (let i = 0; i < 6; i++) {

@@ -1,5 +1,5 @@
 "use client"
-import React, { forwardRef, useRef, useImperativeHandle } from 'react'
+import React, { forwardRef, useRef, useImperativeHandle, useCallback } from 'react'
 import { useState, useEffect } from "react"
 import { getLocal } from '../../../modules/storages/local'
 import Swal from 'sweetalert2'
@@ -29,28 +29,12 @@ const ManageList = forwardRef((props, ref) => {
 
     // Toogle
     const [showInputRow, setShowInputRow] = useState(false)
-
     // Ref
     const listNameRef = useRef(null)
     const listDescRef = useRef(null)
-
     const modalRef = useRef(null)
 
-    useEffect(() => {
-        const handleShow = () => {
-            if (props.id) {
-                fetchDetail()
-            }
-        }
-        const modalElement = modalRef.current
-        modalElement.addEventListener('shown.bs.modal', handleShow)
-
-        return () => {
-            modalElement.removeEventListener('shown.bs.modal', handleShow)
-        }
-    }, [props.id])
-
-    const fetchDetail = () => {
+    const fetchDetail = useCallback(() => {
         fetch(`http://127.0.0.1:8000/api/v1/list/detail/${props.id}`, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -103,11 +87,25 @@ const ManageList = forwardRef((props, ref) => {
         .catch(error => {                
             Swal.fire({
                 title: 'Error!',
-                text: 'Something wrong happened. Call the Admin!'+error,
+                text: 'Something wrong happened. Call the Admin!',
                 icon: 'error',
             }) 
         })
-    }
+    }, [props.id, token])
+
+    useEffect(() => {
+        const handleShow = () => {
+            if (props.id) {
+                fetchDetail()
+            }
+        }
+        const modalElement = modalRef.current
+        modalElement.addEventListener('shown.bs.modal', handleShow)
+
+        return () => {
+            modalElement.removeEventListener('shown.bs.modal', handleShow)
+        }
+    }, [props.id, fetchDetail])
 
     const getConsumeList = () => {
         const ctx =1
@@ -492,7 +490,7 @@ const ManageList = forwardRef((props, ref) => {
                                                                     <td>{addConsumeCal && (<span>{addConsumeCal} Cal</span>)}</td>
                                                                     <td>{addConsumeFrom && addConsumeProvide && (<span><span className='btn btn-success rounded-pill py-0 px-2 me-1' style={{fontSize:"var(--textMD)"}}>{addConsumeFrom}</span> {addConsumeProvide}</span>)}</td>
                                                                     <td>{addConsumeAvgPrice > 0 ? <span>Rp. {addConsumeAvgPrice.toLocaleString()} ,00</span> : addConsumeAvgPrice === 0 ? <span className='btn btn-success rounded-pill py-0 px-2 me-1'style={{fontSize:"var(--textMD)"}}>Free</span> : <></>}</td>
-                                                                    <td>{allowSubmitAddConsume && (<a className='btn btn-success' href={null} onClick={(e)=>handleAddConsume(addConsumeSlug,props.id)}><FontAwesomeIcon icon={faCheck}/></a>)}</td>
+                                                                    <td>{allowSubmitAddConsume && (<button className='btn btn-success' onClick={(e)=>handleAddConsume(addConsumeSlug,props.id)} aria-label="Add Consume"><FontAwesomeIcon icon={faCheck}/></button>)}</td>
                                                                 </tr>
                                                             )
                                                         }
@@ -530,7 +528,7 @@ const ManageList = forwardRef((props, ref) => {
                                                                             <button className='btn btn-success w-100' style={{borderRadius:"0"}} onClick={toogleAddConsume}><FontAwesomeIcon icon={faPlus}/> Add</button>
                                                                         </td>
                                                                         <td colSpan={1} className="p-0">
-                                                                            <button className='btn btn-danger w-100' style={{borderRadius:"0"}} onClick={closeAddConsume}><FontAwesomeIcon icon={faXmark}/></button>
+                                                                            <button className='btn btn-danger w-100' style={{borderRadius:"0"}} onClick={closeAddConsume} aria-label="Close Add Consume"><FontAwesomeIcon icon={faXmark}/></button>
                                                                         </td>
                                                                     </>
                                                                 :

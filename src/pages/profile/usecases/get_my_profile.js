@@ -58,7 +58,7 @@ export default function GetMyProfile({ctx}) {
                 }
             }
         )
-    },[])
+    },[ctx,token])
 
     // Services
     const handleSubmit = async (e) => {

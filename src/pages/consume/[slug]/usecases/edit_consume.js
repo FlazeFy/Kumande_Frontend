@@ -60,7 +60,7 @@ export default function EditConsume(props){
                 }
             }
         )
-    },[])
+    },[token])
 
     const selectTag = (i, slug, name, type) => {
         if(type === 'add'){

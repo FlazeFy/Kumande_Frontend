@@ -37,7 +37,7 @@ export default function ComponentGetAllTag({url, cls, func}) {
                 }
             }
         )
-    },[])
+    })
 
     const removeTag = (slug) => {        
         let updatedTags = selectedTag.filter((val, i) => val.props.value !== slug)

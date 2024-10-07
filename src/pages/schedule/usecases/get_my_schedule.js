@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useState, useEffect } from "react"
 import Axios from 'axios'
 import Swal from 'sweetalert2'
@@ -34,7 +34,6 @@ export default function GetMySchedule(props) {
     const [totalCalories, setTotalCalories] = useState(0)
     const [totalPrice, setTotalPrice] = useState(0)
     const [reloadSchedule, setReloadSchedule] = useState(null)
-
     const [availableConsumeMaxPage,setAvailableConsumeMaxPage] = useState(1)
     const [availableConsumeCurrPage,setAvailableConsumeCurrPage] = useState(1)
 
@@ -43,19 +42,7 @@ export default function GetMySchedule(props) {
     const [scheduleCategory, setScheduleCategory] = useState("")
     const [scheduleTime, setScheduleTime] = useState("")
 
-    useEffect(() => {
-        fetchSchedule()
-    },[])
-
-    const getFavorite = (val) => {
-        if(val === 1){
-            return 'var(--spaceSM) solid var(--dangerBG)'
-        } else {
-            return 'none'
-        }
-    }
-
-    const fetchSchedule = () => {
+    const fetchSchedule = useCallback(() => {
         fetch(`http://127.0.0.1:8000/api/v1/schedule`, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -77,6 +64,18 @@ export default function GetMySchedule(props) {
                 }
             }
         )
+    }, [token, props.ctx])
+
+    useEffect(() => {
+        fetchSchedule()
+    },[fetchSchedule])
+
+    const getFavorite = (val) => {
+        if(val === 1){
+            return 'var(--spaceSM) solid var(--dangerBG)'
+        } else {
+            return 'none'
+        }
     }
 
     function getAvailableConsume(keyPage){
@@ -163,7 +162,7 @@ export default function GetMySchedule(props) {
                                 <ComponentTextIcon text_type={elmt['consume_type']} body={elmt['consume_name']}/>
                             </div>
                         </div>
-                        <a style={{ fontWeight: "500", fontSize: "var(--textXMD)" }}>Detail</a>
+                        <span style={{ fontWeight: "500", fontSize: "var(--textXMD)" }}>Detail</span>
                         <ComponentBreakLine length={1} />
                         <div className='d-inline'>
                             <span className='btn btn-success rounded-pill px-3 py-1 me-1 mb-1' style={{ fontSize: "var(--textMD)" }}>

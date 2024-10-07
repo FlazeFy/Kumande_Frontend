@@ -58,7 +58,7 @@ export default function GetBodyData({ctx}) {
                 }
             }
         )
-    },[])
+    },[ctx,token])
 
     if (error) {
         return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>

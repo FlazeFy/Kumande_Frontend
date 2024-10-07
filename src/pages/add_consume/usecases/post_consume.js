@@ -75,7 +75,7 @@ export default function PostConsume() {
                 }
             }
         )
-    },[])
+    },[token])
 
     // Services
     const handleSubmit = async (e) => {

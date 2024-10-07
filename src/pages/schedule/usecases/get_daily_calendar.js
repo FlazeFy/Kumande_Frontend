@@ -1,10 +1,8 @@
 "use client"
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useState, useEffect } from "react"
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
-
-// Modules
 import { getCleanTitleFromCtx, ucFirstWord } from '../../../modules/helpers/converter'
 import { getTodayDate } from '../../../modules/helpers/generator'
 import { getLocal } from '../../../modules/storages/local'
@@ -31,11 +29,7 @@ export default function GetDailyCalendar(props) {
         }
     }
 
-    useEffect(() => {
-        fetchCalendar()
-    }, [props.ctx,month, year])
-
-    const fetchCalendar = () => {
+    const fetchCalendar = useCallback(() => {
         fetch(getUrl(props.ctx, month, year), {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -57,7 +51,11 @@ export default function GetDailyCalendar(props) {
                 }
             }
         )
-    }
+    }, [token, props.ctx, month, year])
+
+    useEffect(() => {
+        fetchCalendar()
+    }, [fetchCalendar])
 
     const handleMonthChange = (info) => {
         setCurrentMonth(info.view.currentStart.getMonth() + 1)

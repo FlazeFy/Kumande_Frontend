@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useState, useEffect } from "react"
 import { getCleanTitleFromCtx, ucFirstWord, convertDatetime } from '../../../modules/helpers/converter'
 
@@ -33,7 +33,7 @@ export default function GetAllConsumePagination({ctx}) {
     const [consumeMaxPage,setConsumeMaxPage] = useState(1)
     const [consumeCurrPage,setConsumeCurrPage] = useState(1)
 
-    const fetchConsume = () => {
+    const fetchConsume = useCallback(() => {
         if(keyOrder === null){
             storeLocal("Table_order_"+ctx,"DESC")
         }
@@ -78,11 +78,12 @@ export default function GetAllConsumePagination({ctx}) {
                 }
             }
         )
-    }
+    },[ctx, keyCalorie, keyFav, keyLimit, keyOrder, keyPage, token, keyType])
 
     useEffect(() => {
         fetchConsume()
     }, [
+        fetchConsume,
         getLocal("Table_order_all_consume"),
         getLocal("Table_filter_favorite_" + ctx),
         getLocal("Table_filter_type_" + ctx),

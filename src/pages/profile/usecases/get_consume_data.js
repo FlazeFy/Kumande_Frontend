@@ -40,7 +40,7 @@ export default function GetConsumeData({ctx}) {
                 }
             }
         )
-    },[])
+    },[ctx,token])
 
     if (error) {
         return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>

@@ -1,5 +1,5 @@
 "use client"
-import React, { useRef } from 'react'
+import React, { useCallback, useRef } from 'react'
 import { getLocal } from '../../../modules/storages/local'
 import { useState, useEffect } from "react"
 import GetListStarted from './get_list_started'
@@ -26,11 +26,7 @@ export default function GetListDashboard({ctx}) {
         setListData(id)
     }
     
-    useEffect(() => {
-        fetchData()
-    },[])
-
-    const fetchData = async () => {
+    const fetchData = useCallback(() => {
         fetch(`http://127.0.0.1:8000/api/v1/list/limit/20/order/desc`, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -55,8 +51,11 @@ export default function GetListDashboard({ctx}) {
                 setError(error)
             }
         })
-    }
+    }, [token,ctx])
 
+    useEffect(() => {
+        fetchData()
+    },[fetchData])
 
     if (error) {
         return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>

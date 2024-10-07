@@ -1,6 +1,6 @@
 import { faChartSimple, faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useRef } from 'react'
+import React, { useCallback, useRef } from 'react'
 import { useState, useEffect } from "react"
 import Swal from 'sweetalert2'
 import ComponentTextMessageNoData from '../../../atoms/text_message_no_data'
@@ -30,11 +30,7 @@ export default function GetMyTag({ctx}) {
         setAnalyzeTagData(dt)
     }
 
-    useEffect(() => {
-        fetchTag()
-    },[])
-
-    const fetchTag = () => {
+    const fetchTag = useCallback(() => {
         fetch(`http://127.0.0.1:8000/api/v1/tag/my`, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -68,7 +64,11 @@ export default function GetMyTag({ctx}) {
                 setError(error)
             }
         })
-    }
+    }, [token, ctx])
+
+    useEffect(() => {
+        fetchTag()
+    },[fetchTag])
 
     if (error) {
         return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>

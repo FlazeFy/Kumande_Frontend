@@ -1,5 +1,5 @@
 "use client"
-import React, { forwardRef, useImperativeHandle, useRef } from 'react'
+import React, { forwardRef, useCallback, useImperativeHandle, useRef } from 'react'
 import { useState, useEffect } from "react"
 import Swal from 'sweetalert2'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
@@ -12,24 +12,9 @@ const GetAnalyzeTag = forwardRef((props, ref) => {
     const [items, setItems] = useState(null)
     const [messageRes, setMessageRes] = useState('...')
     const token = getLocal("token_key")
-
     const modalRef = useRef(null)
 
-    useEffect(() => {
-        const handleShow = () => {
-            if (props.dt) {
-                fetchTag()
-            }
-        }
-        const modalElement = modalRef.current
-        modalElement.addEventListener('shown.bs.modal', handleShow)
-
-        return () => {
-            modalElement.removeEventListener('shown.bs.modal', handleShow)
-        }
-    }, [props.dt])
-
-    const fetchTag = () => {
+    const fetchTag = useCallback(() => {
         fetch(`http://127.0.0.1:8000/api/v1/tag/analyze/${props.dt.tag_slug}`, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -60,7 +45,21 @@ const GetAnalyzeTag = forwardRef((props, ref) => {
                 icon: 'error',
             }) 
         })
-    }
+    }, [token, props, items])
+
+    useEffect(() => {
+        const handleShow = () => {
+            if (props.dt) {
+                fetchTag()
+            }
+        }
+        const modalElement = modalRef.current
+        modalElement.addEventListener('shown.bs.modal', handleShow)
+
+        return () => {
+            modalElement.removeEventListener('shown.bs.modal', handleShow)
+        }
+    }, [props.dt,fetchTag])
 
     useImperativeHandle(ref, () => ({
         fetchTag

@@ -37,7 +37,7 @@ export default function ComponentDropDownDctDynamic({elmt, url, ctx, act, change
                 }
             )
         }
-    },[])
+    },[ctx,url])
 
     if (error) {
         return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>

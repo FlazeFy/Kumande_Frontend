@@ -1,7 +1,7 @@
 "use client"
 import { faBell, faClock, faImage, faLink, faLocationDot } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useState, useEffect } from "react"
 import { getLocal } from '../../../../modules/storages/local'
 import Swal from 'sweetalert2'
@@ -17,7 +17,7 @@ export default function GetListReminder({ctx}) {
     const token = getLocal("token_key")
     const [items, setItems] = useState(null)
     
-    const fetchReminders = () => {
+    const fetchReminders = useCallback(() => {
         fetch(`http://127.0.0.1:8000/api/v1/reminder`, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -39,11 +39,11 @@ export default function GetListReminder({ctx}) {
                 }
             }
         )
-    }
+    }, [token, ctx])
 
     useEffect(() => {
         fetchReminders();
-    }, []);
+    }, [fetchReminders]);
 
     // Services
     const handleClick = async (method, id) => {

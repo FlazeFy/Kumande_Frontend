@@ -47,7 +47,7 @@ export default function GetAnalyticPaymentMonth({ctx}) {
                 }
             }
         )
-    },[])
+    },[ctx, mon, token, yr])
 
     if (error) {
         return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>

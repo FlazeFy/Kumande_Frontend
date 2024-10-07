@@ -1,7 +1,7 @@
 "use client"
 import { faCalculator, faClockRotateLeft, faDroplet, faPaperPlane, faPlus, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useState, useEffect } from "react"
 import { getLocal } from '../../../../modules/storages/local'
 import Swal from 'sweetalert2'
@@ -38,7 +38,7 @@ export default function GetManageBody({ctx}) {
     const [gout, setGout] = useState(null)
     const [cholesterol, setCholesterol] = useState(null)
     
-    const fetchManageBody = () => {
+    const fetchManageBody = useCallback(() => {
         fetch(`http://127.0.0.1:8000/api/v1/user/my_body_history`, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -61,11 +61,11 @@ export default function GetManageBody({ctx}) {
                 })  
             }
         )
-    }
+    }, [token])
 
     useEffect(() => {
         fetchManageBody()
-    }, []);
+    }, [fetchManageBody]);
 
     // Add
     const handleAddNewTestClick = () => {

@@ -82,7 +82,7 @@ export default function GetSimilarConsume({ctx, consume_from, consume_type, prov
                 })
             }
         )
-    },[])
+    },[consume_from, consume_type, main_ing, month, provide, token,year])
 
     if (error) {
         return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>

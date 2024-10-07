@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useState } from "react"
 import { getLocal } from "../../../../modules/storages/local"
 import Swal from 'sweetalert2'
@@ -26,7 +26,7 @@ export default function GetAllergic({ctx}) {
     const [idAllergic, setIdAllergic] = useState(null)
 
 
-    const fetchAllergic = () => {
+    const fetchAllergic = useCallback(() => {
         fetch(`http://127.0.0.1:8000/api/v1/analytic/allergic`, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -56,11 +56,11 @@ export default function GetAllergic({ctx}) {
                 setError(error)
             }
         })
-    }
+    }, [token, ctx])
 
     useEffect(() => {
         fetchAllergic()
-    }, []);
+    }, [fetchAllergic]);
 
     const openEditAllergicModal = (dt) => {
         setAllergicName(dt.allergic_context)
@@ -231,7 +231,7 @@ export default function GetAllergic({ctx}) {
                             <ComponentTextMessageNoData is_with_image={false}  message="No Data Found"/>
                     }
                     {
-                        itemsAllergic ?
+                        itemsAllergic &&
                             <div className="modal fade" id={`manageAllergic`} aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div className="modal-dialog">
                                     <div className="modal-content">
@@ -255,8 +255,6 @@ export default function GetAllergic({ctx}) {
                                     </div>
                                 </div>
                             </div>
-                        :
-                            <></>
                     }
                 </div>
             </>

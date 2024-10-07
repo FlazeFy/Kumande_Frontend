@@ -45,7 +45,7 @@ export default function GetFullfilCalorie({ctx}) {
                 }
             }
         )
-    },[])
+    },[ctx, date, token])
 
     if (error) {
         return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>

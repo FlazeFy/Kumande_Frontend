@@ -51,7 +51,7 @@ export default function GetMapsboard({ctx}) {
                 }
             }
         )
-    },[])
+    },[ctx])
 
     if (error) {
         return <ComponentAlertBox message={error.message} type='danger' context={getCleanTitleFromCtx(ctx)}/>

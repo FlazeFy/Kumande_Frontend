@@ -53,7 +53,7 @@ export default function GetSchedule({ctx, day, category}) {
                 }
             }
         )
-    }, [playSound]);
+    }, [playSound, category, day, token, ctx]);
 
     // Services
     const removeConsume = (id, consume_name, e) => {

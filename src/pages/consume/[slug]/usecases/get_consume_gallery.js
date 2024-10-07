@@ -46,6 +46,7 @@ export default function GetConsumeGallery(props) {
                 }
             },
             (error) => {
+                setError(error)
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
